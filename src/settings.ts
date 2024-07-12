@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: [".env", `.env.${process.env.NODE_ENV}`] });
 
 export const AppSettings = {
-  PORT: process.env.PORT || "3000",
+  PORT: process.env.EXPOSED_PORT,
   SERCURITY: {
     AUTH_PROVIDER: process.env.AUTH_PROVIDER,
     ALGORITHM: process.env.CRYPTOGRAPHY_ALGORITHM,
@@ -17,7 +17,23 @@ export const AppSettings = {
       PUT: process.env.PUT_N_PATCH_RIGHT,
       PATCH: process.env.PUT_N_PATCH_RIGHT,
       DELETE: process.env.DELETE_RIGHT,
-    }
+    },
+    TOKEN: {
+      ACCESS: {
+        SIGNATURE: process.env.ACCESS_TOKEN_SIGNATURE,
+        LIFE: process.env.ACCESS_TOKEN_LIFE,
+      },
+
+      REFRESH: {
+        SIGNATURE: process.env.REFRESH_TOKEN_SIGNATURE,
+        LIFE: process.env.REFRESH_TOKEN_LIFE,
+      },
+
+      OTP: {
+        SIGNATURE: process.env.OTP_TOKEN_SIGNATURE,
+        LIFE: process.env.OTP_TOKEN_LIFE,
+      },
+    },
   },
   /**
    * Each database has many differences in implementation, so the configuarations of each
@@ -27,7 +43,7 @@ export const AppSettings = {
    * Settings for MongoDBs, including cluster settings, each cluster has many database...
    */
   MONGO: {
-    SIMPLE_API: {
+    MAIN: {
       DOMAIN: process.env.MONGO_MAIN_DOMAIN,
       USERNAME: process.env.MONGO_MAIN_USERNAME,
       PASSWORD: process.env.MONGO_MAIN_PASSWORD,
@@ -35,44 +51,70 @@ export const AppSettings = {
        * THIS PROPERTY MUST BE THE SAME IN VARIOUS TYPE OF DATABASE FOR CONSISTANCE
        */
       DBS: {
-        BOOK: {
-          NAME: "book",
+        dongnaitravelapp: {
+          NAME: "dongnaitravelapp",
           OBJECTS: {
-            BOOK: "book",
-            TYPE: "type",
-            AUTHOR: "author"
-          }
+            MAPS: "maps",
+            PHOTOS: "photos",
+            REVIEWS: "reviews",
+            USERS: "users",
+            BLOGS: "blogs",
+            BLOG_COMMENTS: "blog_comments",
+            BLOG_CONTENT: "blog_content",
+            CONTENT: "content",
+          },
         },
-        USER: {
-          NAME: "user",
-          OBJECTS: {
-            USER: "user",
-            ROLE: "role",
-            TOKEN: "token"
-          }
-        }
-      }
-    }
+      },
+    },
   },
 
-  /**
-   * Settings for MySQL, including many cluster settings, clusters in mysql are configurated manually
-   */
-  MYSQL: {
-    SIMPLE_API: {
-      DOMAIN: process.env.MYSQL_MAIN_DOMAIN,
-      USERNAME: process.env.MYSQL_MAIN_USERNAME,
-      PASSWORD: process.env.MYSQL_MAIN_PASSWORD,
-      /**
-       * THIS PROPERTY MUST BE THE SAME IN VARIOUS TYPE OF DATABASE FOR CONSISTANCE
-       */
-      DB: {
-        NAME: "TUNA_TEST",
-        OBJECTS: {
-          COURSES: "COURSES",
-          TEACHERS: "TEACHERS"
-        }
-      }
-    }
-  }
-}
+  SERVICES: {
+    CLOUDINARY: {
+      NAME: process.env.CLOUDINARY_CLOUD_NAME,
+      API_KEY: process.env.CLOUDINARY_API_KEY,
+      API_SECRET: process.env.CLOUDINARY_API_SECRET,
+    },
+
+    REDIS: {
+      HOST: process.env.REDIS_HOST,
+      PORT: process.env.REDIS_PORT,
+      USERNAME: process.env.REDIS_USERNAME,
+      PASSWORD: process.env.REDIS_PASSWORD,
+    },
+
+    GAPI_ROUTE: {
+      ENDPOINTS: {
+        COMPUTE_ROUTES: process.env.COMPUTE_ROUTES_ENDPOINT,
+        COMPUTE_ROUTES_MATRIX: process.env.COMPUTE_ROUTES_MATRIX_ENDPOINT,
+      },
+    },
+
+    GAPI_MAP: {
+      API_KEY: process.env.GAPI_MAP_API_KEY,
+      ENPOINTS: {
+        PLACE_TEXT_SEARCH: process.env.PLACE_TEXT_SEARCH_BASE_URL,
+        PLACE_DETAILS: process.env.PLACE_DETAILS_BASE_URL,
+        PLACE_PHOTOS: process.env.PLACE_PHOTOS_BASE_URL,
+        DIRECTION_GCP: process.env.DIRECTION_GCP_BASE_URL,
+        GEOCODING: process.env.GEOCODING_ENDPOINT,
+      },
+    },
+
+    GITHUB_FSN: {
+      API_KEY: process.env.ORS_API_KEY,
+    },
+
+    CHATGPT: {
+      API_KEY: process.env.CHATGPT_API_KEY,
+    },
+
+    WEARTHER: {
+      ENDPOINT: process.env.OPEN_WEATHER_BASE_URL,
+      API_KEY: process.env.OPEN_WEATHER_API_KEY,
+    },
+
+    OPENROUTESERVICE: {
+      ENDPOINT: process.env.DIRECTION_ORS_ENDPOINT,
+    },
+  },
+};

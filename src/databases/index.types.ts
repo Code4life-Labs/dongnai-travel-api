@@ -1,4 +1,4 @@
-export type BaseMultipleQuery = {
+export type BaseMultipleRecordsQuery = {
   limit?: string;
   skip?: string;
 };

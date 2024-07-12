@@ -15,25 +15,23 @@ import { Services } from "./services";
 import { Middlewares } from "./middlewares";
 
 // Import Modules
-import { BookModule } from "./modules/book.module";
+import { PlaceModule } from "./modules/place.module";
 import { AuthModule } from "./modules/auth.module";
-import { CourseModule } from "./modules/course.module";
 
 // Run app
-(async function() {
+(async function () {
   const dbs = new Databases();
   const serv = new Services(dbs);
   const middlewares = new Middlewares(dbs, serv);
 
   const serverSettings = {
-    port: AppSettings.PORT
+    port: AppSettings.PORT!,
   };
 
   const myServer = new MyServer(serverSettings);
   const builder = new ServerBuilder(myServer);
 
-  const book = new BookModule(dbs, serv, middlewares);
-  const course = new CourseModule(dbs, serv, middlewares);
+  const place = new PlaceModule(dbs, serv, middlewares);
   const auth = new AuthModule(dbs, serv, middlewares);
 
   // Build databases
@@ -43,14 +41,18 @@ import { CourseModule } from "./modules/course.module";
   await builder.buildGlobalMiddlewares([
     cors({ origin: "*" }),
     json(),
-    urlencoded({ extended: true })
+    urlencoded({ extended: true }),
   ]);
 
   // Build modules
-  await builder.buildModules([auth, book, course]);
+  await builder.buildModules([auth, place]);
 
-  if(!builder.canStartup())
-    throw new Error("Server can be started up now. Please make sure databases are connected, modules and middlewares are set up");
+  if (!builder.canStartup())
+    throw new Error(
+      "Server can be started up now. Please make sure databases are connected, modules and middlewares are set up"
+    );
 
-  await myServer.startup(function(port) { console.log(`You server run at PORT::${port}`); });
+  await myServer.startup(function (port) {
+    console.log(`You server run at PORT::${port}`);
+  });
 })();

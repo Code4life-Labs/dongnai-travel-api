@@ -23,7 +23,6 @@
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
-    "mysql2": "^3.10.0",
     "node-cron": "^3.0.3"
   },
   "devDependencies": {

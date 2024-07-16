@@ -15,9 +15,9 @@ export class Base {
   /**
    * Use this function to wrap a function that can cause errors. The result of this function
    * is `HTTPResponse` so it's suitable to use with controller's handlers.
-   * @param ctx 
-   * @param fn 
-   * @returns 
+   * @param ctx
+   * @param fn
+   * @returns
    */
   protected async handleResponseError<T, C>(
     ctx: C,
@@ -25,12 +25,16 @@ export class Base {
     fn: (this: C, result: HTTPResponse<T>) => Promise<HTTPResponse<T>>
   ) {
     let result = this.utils.http.generateHTTPResponse<T>(200);
-    
+
     try {
       result = await fn.call(ctx, result);
     } catch (error: any) {
       let code = result.code === 200 ? 500 : result.code;
-      result = this.utils.http.generateHTTPResponse<T>(code, undefined, error.message);
+      result = this.utils.http.generateHTTPResponse<T>(
+        code,
+        undefined,
+        error.message
+      );
     } finally {
       return res.status(result.code).json(result);
     }
@@ -38,24 +42,26 @@ export class Base {
 
   /**
    * Use this function to wrap a function that can cause errors. The result of this function
-   * is `Interchange` so it's suitable to use with some local components.
-   * @param ctx 
-   * @param fn 
-   * @returns 
+   * is `Interchange` so it's suitable to use with local components.
+   * @param ctx
+   * @param fn
+   * @returns
    */
   protected async handleInterchangeError<T, C>(
     ctx: C,
-    fn: (this: C, result: Interchange<T>) => Promise<Interchange<T>> | Interchange<T>
+    fn: (
+      this: C,
+      result: Interchange<T>
+    ) => Promise<Interchange<T>> | Interchange<T>
   ) {
     let result = this.utils.http.generateInterchange<T>(1);
-    
+
     try {
       let maybePromisedData = fn.call(ctx, result);
       // If function is an async function
-      if(maybePromisedData instanceof Promise)
+      if (maybePromisedData instanceof Promise)
         result = await maybePromisedData;
-      else 
-        result = maybePromisedData;
+      else result = maybePromisedData;
     } catch (error: any) {
       result.code = 0;
       result.message = error.message;

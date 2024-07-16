@@ -6,3 +6,8 @@ export type BaseMultipleRecordsQuery = {
 export type BaseParams = {
   id: string;
 };
+
+export type BaseModel = {
+  createdAt: number;
+  updatedAt: number;
+};

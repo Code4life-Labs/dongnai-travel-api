@@ -1,5 +1,6 @@
 // Import types
-import type { BaseMultipleRecordsQuery } from "../../index.types";
+import type { ObjectId } from "mongodb";
+import type { BaseMultipleRecordsQuery, BaseModel } from "../../index.types";
 
 export type Mongo_Place_AddressComoponent = {
   shortName: string;
@@ -25,8 +26,8 @@ export type Mongo_Place_PlusCode = {
   globalCode: string;
 };
 
-export type Mongo_Place_Content = {
-  _id: string;
+export type Mongo_Place_ContentModel = {
+  _id: ObjectId | string;
   plainText: {
     vi: string;
     en: string;
@@ -39,13 +40,16 @@ export type Mongo_Place_Content = {
     vi: { female: string; male: string };
     en: { female: string; male: string };
   };
-  createdAt: number;
-  updatedAt: number;
-};
+} & BaseModel;
+
+export type Mongo_Place_PhotoModel = {
+  _id: ObjectId | string;
+  photos: Array<string>;
+} & BaseModel;
 
 // Use for base type of place
 type $Extendable = {
-  _id: string;
+  _id: ObjectId | string;
   addressComponents: Array<Mongo_Place_AddressComoponent>;
   businessStatus: "OPERATIONAL" | "CLOSED";
   geometry: Mongo_Place_Geometry;
@@ -60,9 +64,7 @@ type $Extendable = {
   isRecommended: boolean;
   userFavoritesTotal: number;
   visitsTotal: number;
-  updatedAt: number;
-  createdAt: number;
-};
+} & BaseModel;
 
 // The complete Place data structure (Place Document)
 export type Mongo_PlaceModel = {
@@ -73,7 +75,7 @@ export type Mongo_PlaceModel = {
 
 // The actual place data structure (A data that is joined from multiple documents)
 export type Mongo_Place = {
-  content: Mongo_Place_Content;
+  content: Mongo_Place_ContentModel;
   photos: Array<string>;
   isLiked: boolean;
   isVisited: boolean;
@@ -81,7 +83,12 @@ export type Mongo_Place = {
 
 export type Mongo_PlaceQuery = {};
 
-export type Mongo_PlacesQuery = BaseMultipleRecordsQuery;
+export type Mongo_PlacesQuery = {
+  types?: string;
+  name?: string;
+  quality?: string;
+  isRecommended?: string;
+} & BaseMultipleRecordsQuery;
 
 export type Mongo_PlaceParams = {
   id?: string;

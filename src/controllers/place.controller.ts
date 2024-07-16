@@ -33,9 +33,7 @@ export class PlaceController extends Controller {
       res,
       async function (o) {
         let query = req.query as Mongo_PlacesQuery;
-        let result = await this.dbs.mongo.place.queryMultiply<Mongo_Place>(
-          query
-        );
+        let result = await this.dbs.mongo.place.queryMultiply(query);
 
         if (!result.code) throw new Error(result.message!);
 
@@ -50,22 +48,22 @@ export class PlaceController extends Controller {
   ///
   /// ALL THE ROUTE HAS /: WILDCARD WILL BE DEFINED HERE
   ///
-  // async ["get::/:id"](req: Request, res: Response) {
-  //   return await this.handleResponseError<Mongo_Place, this>(
-  //     this,
-  //     res,
-  //     async function (o) {
-  //       let query = req.query as Mongo_PlaceQuery;
-  //       let params = req.params as Mongo_PlaceParams;
-  //       let result = await this.dbs.mongo.place.query(query, params);
+  async ["get::/:id"](req: Request, res: Response) {
+    return await this.handleResponseError<Mongo_Place, this>(
+      this,
+      res,
+      async function (o) {
+        let query = req.query as Mongo_PlaceQuery;
+        let params = req.params as Mongo_PlaceParams;
+        let result = await this.dbs.mongo.place.query(query, params);
 
-  //       if (!result.code) throw new Error(result.message!);
+        if (!result.code) throw new Error(result.message!);
 
-  //       o.data = result.data;
-  //       o.success!.message = result.message!;
+        o.data = result.data;
+        o.success!.message = result.message!;
 
-  //       return o;
-  //     }
-  //   );
-  // }
+        return o;
+      }
+    );
+  }
 }

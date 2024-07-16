@@ -1,7 +1,11 @@
-import Joi, { ObjectSchema } from "joi";
+import { ObjectId } from "mongodb";
+import Joi from "joi";
 
 // Import classes
 import { Model } from "src/classes/Database";
+
+// Import objects
+import { Place } from "../objects/place";
 
 // Import mongodb settings
 import { AppSettings } from "src/settings";
@@ -24,8 +28,9 @@ export class PlaceModel
   extends Model<MongoDB, Mongo_PlaceModel>
   implements IModel<Mongo_PlaceModel>
 {
-  private __localUtils!: MongoUtils;
-  private __dbInfo!: Mongo_DBInformations;
+  private _localUtils!: MongoUtils;
+  private _dbInfo!: Mongo_DBInformations;
+  private _place!: Place;
 
   constructor(
     mongos: Mongo_Instances,
@@ -36,39 +41,85 @@ export class PlaceModel
       mongos.MAIN.db(dbInformations.dongnaitravelapp.NAME),
       dbInformations.dongnaitravelapp.OBJECTS.MAPS
     );
-    this.schema = Joi.object<Mongo_PlaceModel>({
-      addressComponents: Joi.array().items(Joi.object()),
-      businessStatus: Joi.string(),
-      geometry: Joi.object(),
-      phoneNumber: Joi.string(),
-      name: Joi.string(),
-      plusCode: Joi.string(),
-      rating: Joi.number(),
-      types: Joi.array().items(Joi.string()),
-      url: Joi.string(),
-      website: Joi.string(),
-      userRatingsTotal: Joi.number(),
-      userFavoritesTotal: Joi.number().default(0),
-      visitsTotal: Joi.number().default(0),
-      isRecommended: Joi.boolean(),
-      placeId: Joi.string(),
-      contentId: Joi.string().required(),
-      photosId: Joi.string().required(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    });
-    this.__localUtils = localUtils;
-    this.__dbInfo = dbInformations;
+    this._place = new Place(localUtils);
+    this.schema = Place.Schemas.Model;
+    this._localUtils = localUtils;
+    this._dbInfo = dbInformations;
   }
 
-  private __getCollection() {
+  private _getCollection() {
     return super.getCollection(
-      this.__localUtils.getCollection<Mongo_PlaceModel>
+      this._localUtils.getCollection<Mongo_PlaceModel>
     );
   }
 
-  async queryMultiply<Mongo_Place>(...args: [Mongo_PlacesQuery]) {
-    const __collection = this.__getCollection();
+  async query(...args: [Mongo_PlaceQuery, Mongo_PlaceParams]) {
+    const _collection = this._getCollection();
+
+    return await this.handleInterchangeError<Mongo_Place, this>(
+      this,
+      async function (o) {
+        // If request has params
+        if (
+          this.utils.boolean.isEmpty(args[1]) ||
+          this.utils.boolean.isEmpty(args[1].id)
+        )
+          throw new Error("The [id] is required");
+
+        const pipeline = [
+          {
+            $match: this._localUtils.pipeline.getMatchIdQuery(args[1].id),
+          },
+          // Look-up Stage
+          // Get all related documents in `photos` collection and merge
+          this._localUtils.pipeline.getLookupStage(
+            this._dbInfo.dongnaitravelapp.OBJECTS.PHOTOS,
+            "photosId",
+            "_id",
+            "photos",
+            [
+              this._localUtils.pipeline.getProjectStage(
+                this._place.photos.getFields()
+              ),
+            ]
+          ),
+          // Look-up Stage
+          // Get all related documents in `content` collection and merge
+          this._localUtils.pipeline.getLookupStage(
+            this._dbInfo.dongnaitravelapp.OBJECTS.CONTENT,
+            "contentId",
+            "_id",
+            "content",
+            [
+              this._localUtils.pipeline.getProjectStage(
+                this._place.content.getFields()
+              ),
+            ]
+          ),
+          // this._localUtils.pipeline.getProjectStage(
+          //   [],
+          //   ["placeId", "contentId", "photosId"]
+          // ),
+          this._localUtils.pipeline.getUnwindStage("photos"),
+          this._localUtils.pipeline.getUnwindStage("content"),
+          { $limit: 1 },
+          { $skip: 0 },
+        ];
+
+        const result = _collection.aggregate<Mongo_Place>(pipeline);
+
+        if (!result) throw new Error(`Place isn't found`);
+
+        o.data = (await result.toArray())[0];
+        o.message = "Query place successfully";
+
+        return o;
+      }
+    );
+  }
+
+  async queryMultiply(...args: [Mongo_PlacesQuery]) {
+    const _collection = this._getCollection();
 
     return await this.handleInterchangeError<Array<Mongo_Place>, this>(
       this,
@@ -77,57 +128,34 @@ export class PlaceModel
 
         // If request has queries
         if (args[0]) {
+          const criteria = this._place.query.get(args[0]);
+          const sort = this._place.query.getQualitySort(args[0]);
+
           const matchStage = {
-            $match: this.__localUtils.pipeline.and(),
+            $match:
+              criteria.length < 2
+                ? criteria[0]
+                  ? criteria[0]
+                  : {}
+                : this._localUtils.pipeline.and(criteria),
           };
 
-          // If query has `types`
-          // if (args[0].types)
-          //   matchStage.$match.$and.push(
-          //     this.__localUtils.pipeline.getMatchElementArrayQuery(
-          //       "types",
-          //       this.__localUtils.pipeline.getMatchArrayQuery(
-          //         "value",
-          //         args[0].types
-          //       )
-          //     )
-          //   );
-
-          // If match stage is empty
-          if (matchStage.$match.$and.length === 0)
-            matchStage.$match = {} as any;
-
           pipeline.push(
-            // Look-up Stage
-            // Get all related documents in `photos` collection and merge
-            this.__localUtils.pipeline.getLookupStage(
-              this.__dbInfo.dongnaitravelapp.OBJECTS.PHOTOS,
-              "photosId",
-              "_id",
-              "photos"
+            this._localUtils.pipeline.getProjectStage(
+              this._place.getReducedFields()
             ),
-            // Look-up Stage
-            // Get all related documents in `content` collection and merge
-            this.__localUtils.pipeline.getLookupStage(
-              this.__dbInfo.dongnaitravelapp.OBJECTS.CONTENT,
-              "contentId",
-              "_id",
-              "content"
-            ),
-            // this.__localUtils.pipeline.getProjectStage(
-            //   [],
-            //   ["placeId", "contentId", "photosId"]
-            // ),
-            this.__localUtils.pipeline.getUnwindStage("photos"),
-            this.__localUtils.pipeline.getUnwindStage("content"),
             // Match
             // Depend on
             matchStage
           );
+
+          if (sort) {
+            pipeline.push(sort);
+          }
         }
 
         pipeline.push(
-          ...this.__localUtils.pipeline.getLimitnSkipStage(
+          ...this._localUtils.pipeline.getLimitnSkipStage(
             parseInt(args[0].limit || "10"),
             parseInt(args[0].skip || "0")
           )
@@ -135,35 +163,12 @@ export class PlaceModel
 
         console.log("Pipeline:", pipeline);
 
-        const cursor = __collection.aggregate(pipeline);
-        o.data = (await cursor.toArray()) as Array<Mongo_Place>;
+        const cursor = _collection.aggregate<Mongo_Place>(pipeline);
+        o.data = await cursor.toArray();
         o.message = "Query places successfully";
 
         return o;
       }
     );
   }
-
-  // async query(...args: [Mongo_PlacesQuery, Mongo_PlaceParams]) {
-  //   const __collection = this.__getCollection();
-
-  //   return await this.handleInterchangeError<Mongo_Place, this>(
-  //     this,
-  //     async function (o) {
-  //       const pipeline = [];
-
-  //       // If request has params
-  //       if (!args[0]) throw new Error("The [token] is required");
-
-  //       const result = await __collection.findOne({ value: args[0] });
-
-  //       if (!result) throw new Error(`The token isn't found`);
-
-  //       o.data = result as Mongo_Place;
-  //       o.message = "Query token successfully";
-
-  //       return o;
-  //     }
-  //   );
-  // }
 }

@@ -25,7 +25,7 @@ export class PlaceQuery {
    * @param query
    * @returns
    */
-  getQualitySort(query: Mongo_PlacesQuery) {
+  getSortByQuality(query: Mongo_PlacesQuery) {
     const { quality } = query;
     let sort;
 
@@ -54,7 +54,8 @@ export class PlaceQuery {
   }
 
   /**
-   * Return criteria of place that is used in $match
+   * Return criteria of place that is used in $match.
+   * This method is a central to process query of `place`.
    * @param query
    */
   get(query: Mongo_PlacesQuery) {
@@ -78,8 +79,6 @@ export class PlaceQuery {
         isRecommended: isRecommended === "true" ? true : false,
       });
     }
-
-    console.log("Criteria:", criteria);
 
     return criteria;
   }

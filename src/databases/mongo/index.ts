@@ -6,6 +6,7 @@ import { Database } from "../../classes/Database";
 // Import from local
 // Import models
 import { PlaceModel } from "./models/place.model";
+import { BlogModel } from "./models/blog.model";
 
 // Import settings
 import { AppSettings } from "src/settings";
@@ -25,6 +26,7 @@ export type Mongo_DBInformations = {
 
 export class MongoDatabase extends Database<Mongo_Instances, MongoUtils> {
   place!: PlaceModel;
+  blog!: BlogModel;
 
   constructor() {
     super(new MongoUtils());
@@ -42,6 +44,12 @@ export class MongoDatabase extends Database<Mongo_Instances, MongoUtils> {
     }
 
     this.place = new PlaceModel(
+      this.instances,
+      this.localUtils,
+      __settings.MAIN.DBS
+    );
+
+    this.blog = new BlogModel(
       this.instances,
       this.localUtils,
       __settings.MAIN.DBS

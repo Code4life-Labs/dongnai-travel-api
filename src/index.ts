@@ -16,6 +16,7 @@ import { Middlewares } from "./middlewares";
 
 // Import Modules
 import { PlaceModule } from "./modules/place.module";
+import { BlogModule } from "./modules/blog.module";
 import { AuthModule } from "./modules/auth.module";
 
 // Run app
@@ -31,9 +32,6 @@ import { AuthModule } from "./modules/auth.module";
   const myServer = new MyServer(serverSettings);
   const builder = new ServerBuilder(myServer);
 
-  const place = new PlaceModule(dbs, serv, middlewares);
-  const auth = new AuthModule(dbs, serv, middlewares);
-
   // Build databases
   await builder.buildDatabases(dbs);
 
@@ -45,7 +43,11 @@ import { AuthModule } from "./modules/auth.module";
   ]);
 
   // Build modules
-  await builder.buildModules([auth, place]);
+  await builder.buildModules(
+    [PlaceModule, BlogModule, AuthModule].map(
+      (C) => new C(dbs, serv, middlewares)
+    )
+  );
 
   if (!builder.canStartup())
     throw new Error(

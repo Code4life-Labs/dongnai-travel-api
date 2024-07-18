@@ -1,11 +1,10 @@
-import { ObjectId } from "mongodb";
 import Joi from "joi";
 
 // Import classes
 import { Model } from "src/classes/Database";
 
 // Import objects
-import { Place } from "../objects/place";
+import { Blog } from "../objects/blog";
 
 // Import types
 import type { MongoDB } from "../index.types";
@@ -13,20 +12,21 @@ import type { IModel } from "src/types/database.types";
 import type { MongoUtils } from "../utils";
 import type { Mongo_Instances, Mongo_DBInformations } from "..";
 import type {
-  Mongo_Place,
-  Mongo_PlaceModel,
-  Mongo_PlaceQuery,
-  Mongo_PlacesQuery,
-  Mongo_PlaceParams,
-} from "../types/place";
+  Mongo_Blog,
+  Mongo_Blog_ContentModel,
+  Mongo_BlogModel,
+  Mongo_BlogParams,
+  Mongo_BlogQuery,
+  Mongo_BlogsQuery,
+} from "../types/blog";
 
-export class PlaceModel
-  extends Model<MongoDB, Mongo_PlaceModel>
-  implements IModel<Mongo_PlaceModel>
+export class BlogModel
+  extends Model<MongoDB, Mongo_BlogModel>
+  implements IModel<Mongo_Blog>
 {
   private _localUtils!: MongoUtils;
   private _dbInfo!: Mongo_DBInformations;
-  private _place!: Place;
+  private _blog!: Blog;
 
   constructor(
     mongos: Mongo_Instances,
@@ -35,24 +35,22 @@ export class PlaceModel
   ) {
     super(
       mongos.MAIN.db(dbInformations.dongnaitravelapp.NAME),
-      dbInformations.dongnaitravelapp.OBJECTS.MAPS
+      dbInformations.dongnaitravelapp.OBJECTS.BLOGS
     );
-    this._place = new Place(localUtils);
-    this.schema = Place.Schemas.Model;
+    this._blog = new Blog(localUtils);
+    this.schema = Blog.Schemas.Model;
     this._localUtils = localUtils;
     this._dbInfo = dbInformations;
   }
 
   private _getCollection() {
-    return super.getCollection(
-      this._localUtils.getCollection<Mongo_PlaceModel>
-    );
+    return super.getCollection(this._localUtils.getCollection<Mongo_BlogModel>);
   }
 
-  async query(...args: [Mongo_PlaceQuery, Mongo_PlaceParams]) {
+  async query(...args: [Mongo_BlogQuery, Mongo_BlogParams]) {
     const _collection = this._getCollection();
 
-    return await this.handleInterchangeError<Mongo_Place, this>(
+    return await this.handleInterchangeError<Mongo_Blog, this>(
       this,
       async function (o) {
         // If request has params
@@ -69,62 +67,74 @@ export class PlaceModel
           // Look-up Stage
           // Get all related documents in `photos` collection and merge
           this._localUtils.pipeline.getLookupStage(
-            this._dbInfo.dongnaitravelapp.OBJECTS.PHOTOS,
-            "photosId",
+            this._dbInfo.dongnaitravelapp.OBJECTS.USERS,
+            "authorId",
             "_id",
-            "photos",
+            "author",
             [
               this._localUtils.pipeline.getProjectStage(
-                this._place.photos.getFields()
+                this._blog.author.getFields()
               ),
             ]
           ),
           // Look-up Stage
           // Get all related documents in `content` collection and merge
           this._localUtils.pipeline.getLookupStage(
-            this._dbInfo.dongnaitravelapp.OBJECTS.CONTENT,
+            this._dbInfo.dongnaitravelapp.OBJECTS.BLOG_CONTENT,
             "contentId",
             "_id",
             "content",
             [
               this._localUtils.pipeline.getProjectStage(
-                this._place.content.getFields()
+                this._blog.content.getFields()
               ),
             ]
           ),
-          this._localUtils.pipeline.getUnwindStage("photos"),
+          // Look-up Stage
+          // Get all related documents in `place` collection and merge
+          this._localUtils.pipeline.getLookupStage(
+            this._dbInfo.dongnaitravelapp.OBJECTS.MAPS,
+            "mentionedPlaceIds",
+            "_id",
+            "mentionedPlaces",
+            [
+              this._localUtils.pipeline.getProjectStage(
+                this._blog.mentionedPlaces.getFields()
+              ),
+            ]
+          ),
+          this._localUtils.pipeline.getUnwindStage("author"),
           this._localUtils.pipeline.getUnwindStage("content"),
           this._localUtils.pipeline.getProjectStage(
-            this._place.getCompleteFields()
+            this._blog.getCompleteFields()
           ),
           { $limit: 1 },
           { $skip: 0 },
         ];
 
-        const result = _collection.aggregate<Mongo_Place>(pipeline);
+        const result = _collection.aggregate<Mongo_Blog>(pipeline);
 
-        if (!result) throw new Error(`Place isn't found`);
+        if (!result) throw new Error(`Blog isn't found`);
 
         o.data = (await result.toArray())[0];
-        o.message = "Query place successfully";
+        o.message = "Query blog successfully";
 
         return o;
       }
     );
   }
 
-  async queryMultiply(...args: [Mongo_PlacesQuery]) {
+  async queryMultiply(...args: [Mongo_BlogsQuery]) {
     const _collection = this._getCollection();
 
-    return await this.handleInterchangeError<Array<Mongo_Place>, this>(
+    return await this.handleInterchangeError<Array<Mongo_Blog>, this>(
       this,
       async function (o) {
         let pipeline: Array<any> = [];
 
         // If request has queries
         if (args[0]) {
-          const criteria = this._place.query.get(args[0]);
-          const sort = this._place.query.getSortByQuality(args[0]);
+          const criteria = this._blog.query.get(args[0]);
 
           const matchStage = {
             $match:
@@ -135,14 +145,12 @@ export class PlaceModel
 
           pipeline.push(
             this._localUtils.pipeline.getProjectStage(
-              this._place.getReducedFields()
+              this._blog.getReducedFields()
             ),
             // Match
             // Depend on
             matchStage
           );
-
-          sort && pipeline.push(sort);
         }
 
         pipeline = pipeline.concat(
@@ -152,9 +160,10 @@ export class PlaceModel
           )
         );
 
-        const cursor = _collection.aggregate<Mongo_Place>(pipeline);
+        const cursor = _collection.aggregate<Mongo_Blog>(pipeline);
+
         o.data = await cursor.toArray();
-        o.message = "Query places successfully";
+        o.message = "Query blogs successfully";
 
         return o;
       }

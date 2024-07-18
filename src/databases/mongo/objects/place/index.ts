@@ -17,6 +17,11 @@ import type {
 } from "../../types/place";
 
 /**
+ * Private reference of class manager
+ */
+let _instance: Place | null = null;
+
+/**
  * Class of place's content manager
  * @NguyenAnhTuan1912
  */
@@ -44,7 +49,7 @@ class _PlacePhotos implements IObjectModel {
 }
 
 /**
- * Class of place manager
+ * A singleton class of place manager
  * @NguyenAnhTuan1912
  */
 export class Place implements IObjectModel {
@@ -123,9 +128,13 @@ export class Place implements IObjectModel {
   };
 
   constructor(localUtils: MongoUtils) {
+    if (_instance) return _instance;
+
     this.content = new _PlaceContent();
     this.photos = new _PlacePhotos();
     this.query = new PlaceQuery(localUtils);
+
+    _instance = this;
   }
 
   getReducedFields(): Array<string> {

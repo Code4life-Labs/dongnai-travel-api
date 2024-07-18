@@ -68,9 +68,9 @@ type $Extendable = {
 
 // The complete Place data structure (Place Document)
 export type Mongo_PlaceModel = {
-  placeId: string;
-  contentId: string;
-  photosId: string;
+  placeId: ObjectId | string;
+  contentId: ObjectId | string;
+  photosId: ObjectId | string;
 } & $Extendable;
 
 // The actual place data structure (A data that is joined from multiple documents)

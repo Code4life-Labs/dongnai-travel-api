@@ -19,6 +19,7 @@ import type {
   Mongo_PlacesQuery,
   Mongo_PlaceParams,
 } from "../types/place";
+import { Interchange } from "src/types/data.types";
 
 export class PlaceModel
   extends Model<MongoDB, Mongo_PlaceModel>
@@ -159,5 +160,23 @@ export class PlaceModel
         return o;
       }
     );
+  }
+
+  async create(...args: Array<any>): Promise<Interchange<any | null>> {
+    return await this.handleInterchangeError(this, async function (o) {
+      return o;
+    });
+  }
+
+  async update(...args: Array<any>): Promise<Interchange<any | null>> {
+    return await this.handleInterchangeError(this, async function (o) {
+      return o;
+    });
+  }
+
+  async delete(...args: Array<any>): Promise<Interchange<any | null>> {
+    return await this.handleInterchangeError(this, async function (o) {
+      return o;
+    });
   }
 }

@@ -1,28 +1,87 @@
+import { ObjectId } from "mongodb";
+
+// Import base
+import { Base } from "src/classes/Base";
+
 // Import orther local utils
 import { PipelineUtil } from "./pipeline";
 
 // Import types
 import type { Db, Document } from "mongodb";
 
-export class MongoUtils {
+/**
+ * Utils of mongo
+ * @NguyenAnhTuan1912
+ */
+export class MongoUtils extends Base {
   pipeline!: PipelineUtil;
 
   constructor() {
+    super();
     this.pipeline = new PipelineUtil();
   }
 
+  /**
+   * Get $sort expression
+   * @param o
+   * @returns
+   */
+  sort(o: { ascend?: Array<string>; descend?: Array<string> }) {
+    if (
+      this.utils.boolean.isEmpty(o.ascend) &&
+      this.utils.boolean.isEmpty(o.descend)
+    )
+      return {};
+
+    const sortExpression: { $sort: { [K: string]: number } } = { $sort: {} };
+
+    let N = 0,
+      M = 0;
+
+    if (
+      this.utils.boolean.isEmpty(o.ascend) &&
+      !this.utils.boolean.isEmpty(o.descend)
+    )
+      N = M = o.descend.length;
+
+    if (
+      !this.utils.boolean.isEmpty(o.ascend) &&
+      this.utils.boolean.isEmpty(o.descend)
+    )
+      N = M = o.ascend.length;
+
+    for (let i = 0; i < N || i < M; i++) {
+      if (o.ascend && o.ascend[i]) {
+        sortExpression["$sort"][o.ascend[i]] = 1;
+      }
+
+      if (o.descend && o.descend[i]) {
+        sortExpression["$sort"][o.descend[i]] = -1;
+      }
+    }
+
+    return sortExpression;
+  }
+
+  /**
+   * Create a connection string of mongodb
+   * @param domain
+   * @param username
+   * @param password
+   * @returns
+   */
   getConnectionString(domain: string, username: string, password: string) {
-    if(!domain) {
+    if (!domain) {
       console.error("Domain of database is required");
       return;
     }
 
-    if(!username) {
+    if (!username) {
       console.error("Username of database user is required");
       return;
     }
 
-    if(!password) {
+    if (!password) {
       console.error("Password of database user is required");
       return;
     }
@@ -31,10 +90,19 @@ export class MongoUtils {
   }
 
   /**
+   * Convert an `_id` string to `ObjectId`
+   * @param id
+   * @returns
+   */
+  toObjectId(id: string) {
+    return new ObjectId(id);
+  }
+
+  /**
    * Use this method to get instance of mongo collection
-   * @param db 
-   * @param collection 
-   * @returns 
+   * @param db
+   * @param collection
+   * @returns
    */
   getCollection<T extends Document>(db: Db, collection: string) {
     return db.collection<T>(collection);

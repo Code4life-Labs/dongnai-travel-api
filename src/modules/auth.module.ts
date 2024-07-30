@@ -1,6 +1,6 @@
 import { Module } from "src/classes/Module";
 
-import { TokenController } from "src/controllers/token.controller";
+// import { TokenController } from "src/controllers/token.controller";
 
 // Import types
 import type { Databases } from "src/databases";
@@ -11,7 +11,7 @@ export class AuthModule extends Module {
   constructor(dbs: Databases, serv: Services, midws: Middlewares) {
     super("/auth", midws);
     this.controllers = {
-      token: new TokenController(dbs, serv, midws)
+      // token: new TokenController(dbs, serv, midws)
     };
   }
 }

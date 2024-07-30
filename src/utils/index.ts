@@ -1,3 +1,4 @@
+import { BooleanUtil } from "./boolean";
 import { StringUtil } from "./string";
 import { ObjectUtil } from "./object";
 import { HTTPUtil } from "./http";
@@ -7,6 +8,7 @@ import { DatetimeUtil } from "./datetime";
 import { LoggerUtil } from "./logger";
 
 export class Utils {
+  boolean!: BooleanUtil;
   string!: StringUtil;
   object!: ObjectUtil;
   http!: HTTPUtil;
@@ -16,6 +18,7 @@ export class Utils {
   logger!: LoggerUtil;
 
   constructor() {
+    this.boolean = new BooleanUtil();
     this.string = new StringUtil();
     this.object = new ObjectUtil();
     this.http = new HTTPUtil();

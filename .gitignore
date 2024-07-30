@@ -9,3 +9,5 @@ node_modules
 .env.product
 
 package-lock.json
+
+secret

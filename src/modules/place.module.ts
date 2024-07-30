@@ -1,17 +1,17 @@
 import { Module } from "src/classes/Module";
 
-import { CourseController } from "src/controllers/course.controller";
+import { PlaceController } from "src/controllers/place.controller";
 
 // Import types
 import type { Databases } from "src/databases";
 import type { Services } from "src/services";
 import type { Middlewares } from "src/middlewares";
 
-export class CourseModule extends Module {
+export class PlaceModule extends Module {
   constructor(dbs: Databases, serv: Services, midws: Middlewares) {
-    super("/courses", midws);
+    super("/places", midws);
     this.controllers = {
-      course: new CourseController(dbs, serv, midws)
+      place: new PlaceController(dbs, serv, midws),
     };
   }
 }

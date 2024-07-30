@@ -64,6 +64,14 @@ export const AppSettings = {
             CONTENT: "content",
           },
         },
+
+        users: {
+          NAME: "users",
+          OBJECTS: {
+            USER_INFORMATIONS: "user_informations",
+            USER_ROLES: "user_roles",
+          },
+        },
       },
     },
   },

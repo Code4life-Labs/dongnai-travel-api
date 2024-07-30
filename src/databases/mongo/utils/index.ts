@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 // Import base
 import { Base } from "src/classes/Base";
 
@@ -61,6 +63,13 @@ export class MongoUtils extends Base {
     return sortExpression;
   }
 
+  /**
+   * Create a connection string of mongodb
+   * @param domain
+   * @param username
+   * @param password
+   * @returns
+   */
   getConnectionString(domain: string, username: string, password: string) {
     if (!domain) {
       console.error("Domain of database is required");
@@ -78,6 +87,15 @@ export class MongoUtils extends Base {
     }
 
     return `mongodb+srv://${username}:${password}@${domain}/?retryWrites=true&w=majority`;
+  }
+
+  /**
+   * Convert an `_id` string to `ObjectId`
+   * @param id
+   * @returns
+   */
+  toObjectId(id: string) {
+    return new ObjectId(id);
   }
 
   /**

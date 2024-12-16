@@ -2,7 +2,7 @@
 import { AppSettings } from "./settings";
 
 export const AuthSettings = {
-  PROVIDER: AppSettings.SERCURITY.AUTH_PROVIDER,
+  ISSUER: AppSettings.SERCURITY.AUTH_ISSUER,
   ROLES: {
     USER: "user",
     GUEST: "guest",

@@ -77,7 +77,7 @@ export class AuthService extends Service {
         let now = Date.now();
 
         // 1. Check provider
-        if (tokenPayload.provider !== AuthSettings.PROVIDER)
+        if (tokenPayload.issuer !== AuthSettings.ISSUER)
           throw new Error("The token provider isn't valid");
 
         // 2. Check expiration
@@ -118,7 +118,7 @@ export class AuthService extends Service {
     let tokenPayload: TokenPayload = {
       role: roleResult.data?.value!,
       expire: period,
-      provider: AuthSettings.PROVIDER!,
+      issuer: AuthSettings.ISSUER!,
     };
 
     let token = jwt.sign(tokenPayload, this._signature, {

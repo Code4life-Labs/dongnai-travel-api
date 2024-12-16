@@ -6,7 +6,7 @@ dotenv.config({ path: [".env", `.env.${process.env.NODE_ENV}`] });
 export const AppSettings = {
   PORT: process.env.EXPOSED_PORT,
   SERCURITY: {
-    AUTH_PROVIDER: process.env.AUTH_PROVIDER,
+    AUTH_ISSUER: process.env.AUTH_ISSUER,
     ALGORITHM: process.env.CRYPTOGRAPHY_ALGORITHM,
     KEY: process.env.CRYPTOGRAPHY_KEY,
     IV: process.env.CRYPTOGRAPHY_IV,

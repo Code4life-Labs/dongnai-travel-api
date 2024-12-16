@@ -9,26 +9,12 @@ import { BlogQuery } from "./query";
 
 // Import types
 import type { MongoUtils } from "../../utils";
-import type {
-  Mongo_Blog,
-  Mongo_BlogModel,
-  Mongo_Blog_ContentModel,
-} from "../../types/blog";
+import type { Mongo_BlogModel } from "../../types/blog";
 
 /**
  * Private reference of class manager
  */
 let _instance: Blog | null = null;
-
-/**
- * Class of blog's content manager
- * @NguyenAnhTuan1912
- */
-class _BlogContent implements IObjectModel {
-  getFields(): Array<keyof Mongo_Blog_ContentModel> {
-    return ["_id", "plainText", "formattedText", "speech"];
-  }
-}
 
 /**
  * Class of blog's author manager
@@ -55,57 +41,28 @@ class _BlogMentionedPlaces implements IObjectModel {
  * @NguyenAnhTuan1912
  */
 export class Blog implements IObjectModel {
-  content!: _BlogContent;
   author!: _BlogAuthor;
   mentionedPlaces!: _BlogMentionedPlaces;
   query!: BlogQuery;
 
-  static Schemas = {
-    Model: Joi.object<Mongo_BlogModel>({
-      authorId: Joi.string().required(),
-      contentId: Joi.string().default(""),
-      mentionedPlaceIds: Joi.array().items(Joi.object().default(null)),
-      name: Joi.string().required(),
-      avatar: Joi.string().default(""),
-      type: Joi.string().required(),
-      isApproved: Joi.boolean().default(false),
-      readTime: Joi.number().required(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    }),
-    Complete: Joi.object<Mongo_Blog>({
-      author: Joi.object().default(null),
-      content: Joi.object().default(null),
-      mentionedPlaces: Joi.array().items(Joi.object().default(null)),
-      name: Joi.string().required(),
-      avatar: Joi.string().default(""),
-      type: Joi.string().required(),
-      isApproved: Joi.boolean().default(false),
-      readTime: Joi.number().required(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    }),
-    Reduction: Joi.object<Mongo_Blog>({
-      name: Joi.string().required(),
-      avatar: Joi.string().default(""),
-      type: Joi.string().required(),
-      isApproved: Joi.boolean().default(false),
-      readTime: Joi.number().required(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    }),
-  };
+  static Schema = Joi.object<Mongo_BlogModel>({
+    typeId: Joi.object(),
+    authorId: Joi.string().required(),
+    mentionedPlaceIds: Joi.array().items(Joi.object()).default([]),
+    contentUrl: Joi.string().default(""),
+    name: Joi.string().required(),
+    coverImage: Joi.string().default(""),
+    isApproved: Joi.boolean().default(false),
+    readTime: Joi.number().required(),
+    createdAt: Joi.number().default(Date.now()),
+    updatedAt: Joi.number().default(Date.now()),
+  });
 
-  static SchemaKeys = {
-    Model: Object.keys(Blog.Schemas.Model.describe().keys),
-    Complete: Object.keys(Blog.Schemas.Complete.describe().keys),
-    Reduction: Object.keys(Blog.Schemas.Reduction.describe().keys),
-  };
+  static SchemaKeys = Object.keys(Blog.Schema.describe().keys);
 
   constructor(localUtils: MongoUtils) {
     if (_instance) return _instance;
 
-    this.content = new _BlogContent();
     this.author = new _BlogAuthor();
     this.mentionedPlaces = new _BlogMentionedPlaces();
     this.query = new BlogQuery(localUtils);
@@ -113,15 +70,7 @@ export class Blog implements IObjectModel {
     _instance = this;
   }
 
-  getReducedFields(): Array<string> {
-    return Blog.SchemaKeys.Reduction;
-  }
-
-  getCompleteFields(): Array<string> {
-    return Blog.SchemaKeys.Complete;
-  }
-
   getFields(): Array<string> {
-    return Blog.SchemaKeys.Model;
+    return Blog.SchemaKeys;
   }
 }

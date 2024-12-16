@@ -38,7 +38,6 @@ export class BlogModel
       dbInformations.dongnaitravelapp.OBJECTS.BLOGS
     );
     this._blog = new Blog(localUtils);
-    this.schema = Blog.Schemas.Model;
     this._localUtils = localUtils;
     this._dbInfo = dbInformations;
   }

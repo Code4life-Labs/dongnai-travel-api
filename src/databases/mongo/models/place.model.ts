@@ -39,7 +39,6 @@ export class PlaceModel
       dbInformations.dongnaitravelapp.OBJECTS.MAPS
     );
     this._place = new Place(localUtils);
-    this.schema = Place.Schemas.Model;
     this._localUtils = localUtils;
     this._dbInfo = dbInformations;
   }

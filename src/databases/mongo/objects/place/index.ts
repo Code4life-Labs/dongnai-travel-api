@@ -8,13 +8,9 @@ import { IObjectModel } from "src/databases/interfaces";
 import { PlaceQuery } from "./query";
 
 // Import types
+import type { ObjectId } from "mongodb";
 import type { MongoUtils } from "../../utils";
-import type {
-  Mongo_Place,
-  Mongo_PlaceModel,
-  Mongo_Place_ContentModel,
-  Mongo_Place_PhotoModel,
-} from "../../types/place";
+import type { Mongo_PlaceModel } from "../../types/place";
 
 /**
  * Private reference of class manager
@@ -22,130 +18,44 @@ import type {
 let _instance: Place | null = null;
 
 /**
- * Class of place's content manager
- * @NguyenAnhTuan1912
- */
-class _PlaceContent implements IObjectModel {
-  getFields(): Array<keyof Mongo_Place_ContentModel> {
-    return [
-      "_id",
-      "plainText",
-      "formattedText",
-      "speech",
-      "createdAt",
-      "updatedAt",
-    ];
-  }
-}
-
-/**
- * Class of place's photo manager
- * @NguyenAnhTuan1912
- */
-class _PlacePhotos implements IObjectModel {
-  getFields(): Array<keyof Mongo_Place_PhotoModel> {
-    return ["_id", "photos", "createdAt", "updatedAt"];
-  }
-}
-
-/**
  * A singleton class of place manager
  * @NguyenAnhTuan1912
  */
 export class Place implements IObjectModel {
-  content!: _PlaceContent;
-  photos!: _PlacePhotos;
   query!: PlaceQuery;
 
-  static Schemas = {
-    Model: Joi.object<Mongo_PlaceModel>({
-      addressComponents: Joi.array().items(Joi.object()),
-      businessStatus: Joi.string(),
-      geometry: Joi.object(),
-      phoneNumber: Joi.string(),
-      name: Joi.string(),
-      plusCode: Joi.string(),
-      rating: Joi.number(),
-      types: Joi.array().items(Joi.string()),
-      url: Joi.string(),
-      website: Joi.string(),
-      userRatingsTotal: Joi.number(),
-      userFavoritesTotal: Joi.number().default(0),
-      visitsTotal: Joi.number().default(0),
-      isRecommended: Joi.boolean(),
-      placeId: Joi.string(),
-      contentId: Joi.string().required(),
-      photosId: Joi.string().required(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    }),
-    Complete: Joi.object<Mongo_Place>({
-      _id: Joi.string().required(),
-      addressComponents: Joi.array().items(Joi.object()),
-      businessStatus: Joi.string(),
-      geometry: Joi.object(),
-      phoneNumber: Joi.string(),
-      name: Joi.string(),
-      plusCode: Joi.string(),
-      rating: Joi.number(),
-      types: Joi.array().items(Joi.string()),
-      url: Joi.string(),
-      website: Joi.string(),
-      userRatingsTotal: Joi.number(),
-      userFavoritesTotal: Joi.number().default(0),
-      visitsTotal: Joi.number().default(0),
-      isRecommended: Joi.boolean(),
-      photos: Joi.object(),
-      content: Joi.object(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    }),
-    Reduction: Joi.object<Mongo_Place>({
-      _id: Joi.string().required(),
-      addressComponents: Joi.array().items(Joi.object()),
-      businessStatus: Joi.string(),
-      geometry: Joi.object(),
-      phoneNumber: Joi.string(),
-      name: Joi.string(),
-      plusCode: Joi.string(),
-      rating: Joi.number(),
-      types: Joi.array().items(Joi.string()),
-      url: Joi.string(),
-      website: Joi.string(),
-      userRatingsTotal: Joi.number(),
-      userFavoritesTotal: Joi.number().default(0),
-      visitsTotal: Joi.number().default(0),
-      isRecommended: Joi.boolean(),
-      createdAt: Joi.number().default(Date.now()),
-      updatedAt: Joi.number().default(Date.now()),
-    }),
-  };
+  static Schema = Joi.object<Mongo_PlaceModel>({
+    placeId: Joi.string().required(),
+    typeIds: Joi.array().items(Joi.object()),
+    addressComponents: Joi.array().items(Joi.object()),
+    businessStatusId: Joi.object(),
+    geometry: Joi.object(),
+    description: Joi.string().required(),
+    phoneNumber: Joi.string(),
+    name: Joi.string(),
+    plusCode: Joi.string(),
+    url: Joi.string(),
+    website: Joi.string(),
+    isRecommended: Joi.boolean(),
+    photos: Joi.array().items(Joi.string()),
+    createdAt: Joi.number().default(Date.now()),
+    updatedAt: Joi.number().default(Date.now()),
+  });
 
-  static SchemaKeys = {
-    Model: Object.keys(Place.Schemas.Model.describe().keys),
-    Complete: Object.keys(Place.Schemas.Complete.describe().keys),
-    Reduction: Object.keys(Place.Schemas.Reduction.describe().keys),
-  };
+  /**
+   * Keys of schema
+   */
+  static SchemaKeys = Object.keys(Place.Schema.describe().keys);
 
   constructor(localUtils: MongoUtils) {
     if (_instance) return _instance;
 
-    this.content = new _PlaceContent();
-    this.photos = new _PlacePhotos();
     this.query = new PlaceQuery(localUtils);
 
     _instance = this;
   }
 
-  getReducedFields(): Array<string> {
-    return Place.SchemaKeys.Reduction;
-  }
-
-  getCompleteFields(): Array<string> {
-    return Place.SchemaKeys.Complete;
-  }
-
   getFields(): Array<string> {
-    return Place.SchemaKeys.Model;
+    return Place.SchemaKeys;
   }
 }

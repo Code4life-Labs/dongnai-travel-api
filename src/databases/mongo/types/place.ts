@@ -26,61 +26,41 @@ export type Mongo_Place_PlusCode = {
   globalCode: string;
 };
 
-export type Mongo_Place_ContentModel = {
-  _id: ObjectId | string;
-  plainText: {
-    vi: string;
-    en: string;
-  };
-  formattedText: {
-    vi: string;
-    en: string;
-  };
-  speech?: {
-    vi: { female: string; male: string };
-    en: { female: string; male: string };
-  };
-} & BaseModel;
-
-export type Mongo_Place_PhotoModel = {
-  _id: ObjectId | string;
-  photos: Array<string>;
-} & BaseModel;
-
 // Use for base type of place
 type $Extendable = {
   _id: ObjectId | string;
   addressComponents: Array<Mongo_Place_AddressComoponent>;
-  businessStatus: "OPERATIONAL" | "CLOSED";
   geometry: Mongo_Place_Geometry;
+  description: string;
   phoneNumber: string;
   name: string;
   plusCode: Mongo_Place_PlusCode;
-  rating: number;
-  types: Array<string>;
   url: string;
+  photos: Array<string>;
   website: string;
-  userRatingsTotal: number;
   isRecommended: boolean;
-  userFavoritesTotal: number;
-  visitsTotal: number;
 } & BaseModel;
 
 // The complete Place data structure (Place Document)
 export type Mongo_PlaceModel = {
   placeId: ObjectId | string;
-  contentId: ObjectId | string;
-  photosId: ObjectId | string;
+  businessStatusId: ObjectId | string;
+  typeIds: Array<ObjectId | string>;
 } & $Extendable;
 
-// The actual place data structure (A data that is joined from multiple documents)
+// User state in place / final query of place
 export type Mongo_Place = {
-  content: Mongo_Place_ContentModel;
-  photos: Array<string>;
+  businessStatus: any;
+  types: Array<any>;
+  totalFavorites: number;
+  totalVisits: number;
+  totalReviews: number;
+  rating: string;
   isLiked: boolean;
   isVisited: boolean;
 } & $Extendable;
 
+// Use in request
 export type Mongo_PlaceQuery = {};
 
 export type Mongo_PlacesQuery = {

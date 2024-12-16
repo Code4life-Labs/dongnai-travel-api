@@ -1,5 +1,7 @@
 export type Policy = {
   type: string;
-  resources: string | Array<string>;
-  actions: string | Array<string>;
+  resources: Array<string> | string;
+  actions: Array<string> | string;
 };
+
+export type Policies = { [R: string]: Array<Policy> };

@@ -7,22 +7,46 @@ import { Service } from "src/classes/Service";
 // Import settings
 import { AuthSettings } from "src/auth.settings";
 
+// Import from local
+import { AuthChecker } from "./checker";
+
 // Import types
-import type { Policy } from "src/types/auth.types";
+import type { Policy, Policies } from "src/types/auth.types";
 import type { Databases } from "src/databases";
 import type { TokenPayload } from "./type";
 
 export class AuthService extends Service {
   private _signature!: string;
-  private _policies!: { [K: string]: Array<Policy> };
+  private _policies!: Policies;
   private _canCreateToken!: boolean;
+
+  checker!: AuthChecker;
 
   constructor(dbs: Databases) {
     super(dbs);
     try {
+      console.log(process.cwd());
       this._signature = fs
-        .readFileSync("../../../secret/jwt_signature")
+        .readFileSync(this.utils.path.getRootDirTo("secret/jwt_signature"))
         .toString();
+
+      // Read roles to load policy
+      this._policies = {};
+      for (const role in AuthSettings.ROLES) {
+        if (role === "GUEST") continue;
+        this._policies[
+          AuthSettings.ROLES[role as keyof typeof AuthSettings.ROLES]
+        ] = JSON.parse(
+          fs
+            .readFileSync(
+              `secret/${
+                AuthSettings.ROLES[role as keyof typeof AuthSettings.ROLES]
+              }_policy_v1.json`
+            )
+            .toString()
+        );
+      }
+      console.log("Policy:", this._policies);
       this._canCreateToken = true;
     } catch (error: any) {
       // Just print error's message
@@ -53,7 +77,7 @@ export class AuthService extends Service {
         let now = Date.now();
 
         // 1. Check provider
-        if (tokenPayload.provider !== AuthSettings.PROVIDER)
+        if (tokenPayload.issuer !== AuthSettings.ISSUER)
           throw new Error("The token provider isn't valid");
 
         // 2. Check expiration
@@ -94,7 +118,7 @@ export class AuthService extends Service {
     let tokenPayload: TokenPayload = {
       role: roleResult.data?.value!,
       expire: period,
-      provider: AuthSettings.PROVIDER!,
+      issuer: AuthSettings.ISSUER!,
     };
 
     let token = jwt.sign(tokenPayload, this._signature, {
@@ -103,13 +127,5 @@ export class AuthService extends Service {
     });
 
     return token;
-  }
-
-  checkUser(role: string) {
-    return role === AuthSettings.ROLES.USER || this.checkAdmin(role);
-  }
-
-  checkAdmin(role: string) {
-    return role === AuthSettings.ROLES.ADMIN;
   }
 }

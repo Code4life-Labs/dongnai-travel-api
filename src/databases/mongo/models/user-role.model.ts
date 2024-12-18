@@ -6,7 +6,7 @@ import type { MongoDB } from "../index.types";
 import type { IModel } from "src/types/database.types";
 import type { MongoUtils } from "../utils";
 import type { Mongo_Instances, Mongo_DBInformations } from "..";
-import type { Mongo_UserRoleModel } from "../types/user_role";
+import type { Mongo_UserRoleModel } from "../types/user-role";
 import { Interchange } from "src/types/data.types";
 
 export class UserRoleModel
@@ -35,6 +35,11 @@ export class UserRoleModel
     );
   }
 
+  /**
+   * Query a user role.
+   * @param args
+   * @returns
+   */
   async query(...args: [string]) {
     const _collection = this._getCollection();
 
@@ -59,6 +64,11 @@ export class UserRoleModel
     );
   }
 
+  /**
+   * Query multiple user roles.
+   * @param args
+   * @returns
+   */
   async queryMultiply(...args: Array<any>) {
     const _collection = this._getCollection();
 

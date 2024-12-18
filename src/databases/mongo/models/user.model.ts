@@ -1,11 +1,10 @@
 import { ObjectId } from "mongodb";
-import Joi from "joi";
 
 // Import classes
 import { Model } from "src/classes/Database";
 
 // Import objects
-import { Place } from "../objects/place";
+import { User } from "../objects/user";
 
 // Import types
 import type { MongoDB } from "../index.types";
@@ -13,21 +12,21 @@ import type { IModel } from "src/types/database.types";
 import type { MongoUtils } from "../utils";
 import type { Mongo_Instances, Mongo_DBInformations } from "..";
 import type {
-  Mongo_Place,
-  Mongo_PlaceModel,
-  Mongo_PlaceQuery,
-  Mongo_PlacesQuery,
-  Mongo_PlaceParams,
-} from "../types/place";
+  Mongo_User,
+  Mongo_UserModel,
+  Mongo_UserParams,
+  Mongo_UserQuery,
+  Mongo_UsersQuery,
+} from "../types/user";
 import type { Interchange } from "src/types/data.types";
 
-export class PlaceModel
-  extends Model<MongoDB, Mongo_PlaceModel>
-  implements IModel<Mongo_PlaceModel>
+export class UserModel
+  extends Model<MongoDB, Mongo_UserModel>
+  implements IModel<Mongo_User>
 {
   private _localUtils!: MongoUtils;
   private _dbInfo!: Mongo_DBInformations;
-  private _place!: Place;
+  private _user!: User;
 
   constructor(
     mongos: Mongo_Instances,
@@ -36,28 +35,26 @@ export class PlaceModel
   ) {
     super(
       mongos.MAIN.db(dbInformations.dongnaitravelapp.NAME),
-      dbInformations.dongnaitravelapp.OBJECTS.PLACES
+      dbInformations.dongnaitravelapp.OBJECTS.BLOGS
     );
-    this._place = new Place(localUtils);
+    this._user = new User(localUtils);
     this._localUtils = localUtils;
     this._dbInfo = dbInformations;
   }
 
   private _getCollection() {
-    return super.getCollection(
-      this._localUtils.getCollection<Mongo_PlaceModel>
-    );
+    return super.getCollection(this._localUtils.getCollection<Mongo_UserModel>);
   }
 
   /**
-   * Query a place.
+   * Query a user.
    * @param args
    * @returns
    */
-  async query(...args: [Mongo_PlaceQuery, Mongo_PlaceParams]) {
+  async query(...args: [Mongo_UserQuery, Mongo_UserParams]) {
     const _collection = this._getCollection();
 
-    return await this.handleInterchangeError<Mongo_Place, this>(
+    return await this.handleInterchangeError<Mongo_User, this>(
       this,
       async function (o) {
         // If request has params
@@ -71,17 +68,26 @@ export class PlaceModel
           {
             $match: this._localUtils.pipeline.getMatchIdQuery(args[1].id),
           },
-          this._localUtils.pipeline.getProjectStage(this._place.getFields()),
+          // Look-up Stage
+          // Get all related documents in `photos` collection and merge
+          this._localUtils.pipeline.getLookupStage(
+            this._dbInfo.dongnaitravelapp.OBJECTS.USER_ROLES,
+            "roleId",
+            "_id",
+            "role"
+          ),
+          this._localUtils.pipeline.getUnwindStage("role"),
+          this._localUtils.pipeline.getProjectStage(this._user.getFields()),
           { $limit: 1 },
           { $skip: 0 },
         ];
 
-        const result = _collection.aggregate<Mongo_Place>(pipeline);
+        const result = _collection.aggregate<Mongo_User>(pipeline);
 
-        if (!result) throw new Error(`Place isn't found`);
+        if (!result) throw new Error(`User isn't found`);
 
         o.data = (await result.toArray())[0];
-        o.message = "Query place successfully";
+        o.message = "Query user successfully";
 
         return o;
       }
@@ -89,22 +95,21 @@ export class PlaceModel
   }
 
   /**
-   * Query multiple places.
+   * Query multiple users.
    * @param args
    * @returns
    */
-  async queryMultiply(...args: [Mongo_PlacesQuery]) {
+  async queryMultiply(...args: [Mongo_UsersQuery]) {
     const _collection = this._getCollection();
 
-    return await this.handleInterchangeError<Array<Mongo_Place>, this>(
+    return await this.handleInterchangeError<Array<Mongo_User>, this>(
       this,
       async function (o) {
         let pipeline: Array<any> = [];
 
         // If request has queries
         if (args[0]) {
-          const criteria = this._place.query.get(args[0]);
-          const sort = this._place.query.getSortByQuality(args[0]);
+          const criteria = this._user.query.get(args[0]);
 
           const matchStage = {
             $match:
@@ -114,13 +119,11 @@ export class PlaceModel
           };
 
           pipeline.push(
-            this._localUtils.pipeline.getProjectStage(this._place.getFields()),
+            this._localUtils.pipeline.getProjectStage(this._user.getFields()),
             // Match
             // Depend on
             matchStage
           );
-
-          sort && pipeline.push(sort);
         }
 
         pipeline = pipeline.concat(
@@ -130,9 +133,10 @@ export class PlaceModel
           )
         );
 
-        const cursor = _collection.aggregate<Mongo_Place>(pipeline);
+        const cursor = _collection.aggregate<Mongo_User>(pipeline);
+
         o.data = await cursor.toArray();
-        o.message = "Query places successfully";
+        o.message = "Query users successfully";
 
         return o;
       }
@@ -140,7 +144,7 @@ export class PlaceModel
   }
 
   /**
-   * Create a place.
+   * Create a user.
    * @param args
    * @returns
    */
@@ -148,38 +152,38 @@ export class PlaceModel
     const _collection = this._getCollection();
 
     return await this.handleInterchangeError(this, async function (o) {
-      const [placeData] = args;
+      const [userData] = args;
 
       // Validate data
-      const validationResult = Place.ModelSchema.validate(placeData);
+      const validationResult = User.ModelSchema.validate(userData);
 
       // If there is an error
       if (validationResult.error)
         throw new Error(validationResult.error.message);
 
-      // Add new place to database
+      // Add new user to database
       const createResult = _collection.insertOne(validationResult.value);
 
-      o.message = "Create place successfully";
+      o.message = "Create user successfully";
       o.data = createResult;
       return o;
     });
   }
 
   /**
-   * Create multiple places.
+   * Create multiple users.
    * @param args
    * @returns
    */
   async createMultiply(...args: Array<any>): Promise<Interchange<any | null>> {
     const _collection = this._getCollection();
     return await this.handleInterchangeError(this, async function (o) {
-      const [placesData] = args;
+      const [usersData] = args;
       const finalResult = [];
 
       // Validate data
-      for (const placeData of placesData) {
-        const validationResult = Place.ModelSchema.validate(placeData);
+      for (const userData of usersData) {
+        const validationResult = User.ModelSchema.validate(userData);
 
         // If there is an error
         if (validationResult.error)
@@ -188,17 +192,17 @@ export class PlaceModel
         finalResult.push(validationResult.value);
       }
 
-      // Add new place to database
+      // Add new user to database
       const createManyResult = _collection.insertMany(finalResult);
 
-      o.message = "Create multiple places successfully";
+      o.message = "Create multiple users successfully";
       o.data = createManyResult;
       return o;
     });
   }
 
   /**
-   * Update a place.
+   * Update a user.
    * @param args
    * @returns
    */
@@ -206,32 +210,32 @@ export class PlaceModel
     const _collection = this._getCollection();
 
     return await this.handleInterchangeError(this, async function (o) {
-      const [placeData] = args;
+      const [userData] = args;
 
       // Delete updatedAt
-      delete placeData.updatedAt;
+      delete userData.updatedAt;
 
       // Validate data
-      const validationResult = Place.UpdateModelSchema.validate(placeData);
+      const validationResult = User.UpdateModelSchema.validate(userData);
 
       // If there is an error
       if (validationResult.error)
         throw new Error(validationResult.error.message);
 
-      // Add new place to database
+      // Add new user to database
       const updateResult = _collection.updateOne(
         { _id: new ObjectId(validationResult.value._id) },
         validationResult.value
       );
 
-      o.message = `Update place ${placeData._id} successfully`;
+      o.message = `Update user ${userData._id} successfully`;
       o.data = updateResult;
       return o;
     });
   }
 
   /**
-   * Delete a place.
+   * Delete a user.
    * @param args
    * @returns
    */
@@ -239,14 +243,14 @@ export class PlaceModel
     const _collection = this._getCollection();
 
     return await this.handleInterchangeError(this, async function (o) {
-      const [placeId] = args;
+      const [userId] = args;
 
-      // Delete place by id
+      // Delete user by id
       const deleteResult = _collection.deleteOne({
-        _id: new ObjectId(placeId),
+        _id: new ObjectId(userId),
       });
 
-      o.message = `Delete place ${placeId} successfully`;
+      o.message = `Delete user ${userId} successfully`;
       o.data = deleteResult;
       return o;
     });

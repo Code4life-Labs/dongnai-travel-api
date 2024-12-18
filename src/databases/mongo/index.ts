@@ -7,7 +7,7 @@ import { Database } from "../../classes/Database";
 // Import models
 import { PlaceModel } from "./models/place.model";
 import { BlogModel } from "./models/blog.model";
-import { UserRoleModel } from "./models/user_role.model";
+import { UserRoleModel } from "./models/user-role.model";
 
 // Import settings
 import { AppSettings } from "src/settings";

@@ -24,6 +24,8 @@ export type Mongo_BlogModel = {
 export type Mongo_Blog = {
   author: Array<any>;
   mentionedPlaces: Array<any>;
+  // User state
+  isLiked: boolean;
 } & $Extendable;
 
 export type Mongo_BlogQuery = {};

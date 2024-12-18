@@ -37,13 +37,13 @@ export class PlaceQuery {
         }
 
         case PlaceQuery.QualityKeywords.MostFavorite: {
-          sort = this.localUtils.sort({ descend: ["userFavoritesTotal"] });
+          sort = this.localUtils.sort({ descend: ["totalFavorites"] });
           break;
         }
 
         case PlaceQuery.QualityKeywords.Popular: {
           sort = this.localUtils.sort({
-            descend: ["userFavoritesTotal", "userRatingsTotal"],
+            descend: ["totalFavorites", "totalReviews"],
           });
           break;
         }

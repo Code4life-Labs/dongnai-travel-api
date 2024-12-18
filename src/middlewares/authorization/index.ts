@@ -5,7 +5,7 @@ import { AuthSettings } from "src/auth.settings";
 
 // Import types
 import type { Request, Response, NextFunction } from "express";
-import type { Mongo_UserRoleModel } from "src/databases/mongo/types/user_role";
+import type { Mongo_UserRoleModel } from "src/databases/mongo/types/user-role";
 
 export class AuthorizationMiddleware extends Middleware {
   cachedRoles!: Map<string, Mongo_UserRoleModel>;

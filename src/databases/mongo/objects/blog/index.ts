@@ -9,7 +9,7 @@ import { BlogQuery } from "./query";
 
 // Import types
 import type { MongoUtils } from "../../utils";
-import type { Mongo_BlogModel } from "../../types/blog";
+import type { Mongo_BlogModel, Mongo_Blog } from "../../types/blog";
 
 /**
  * Private reference of class manager
@@ -45,19 +45,56 @@ export class Blog implements IObjectModel {
   mentionedPlaces!: _BlogMentionedPlaces;
   query!: BlogQuery;
 
-  static Schema = Joi.object<Mongo_BlogModel>({
-    typeId: Joi.object(),
+  /**
+   * Use to validate when create new.
+   */
+  static ModelSchema = Joi.object<Mongo_BlogModel>({
+    typeId: Joi.object().required(),
     authorId: Joi.string().required(),
     mentionedPlaceIds: Joi.array().items(Joi.object()).default([]),
-    contentUrl: Joi.string().default(""),
     name: Joi.string().required(),
-    coverImage: Joi.string().default(""),
-    isApproved: Joi.boolean().default(false),
+    contentUrl: Joi.string().required(),
+    coverImage: Joi.string().required(),
     readTime: Joi.number().required(),
+    isApproved: Joi.boolean().default(false),
     createdAt: Joi.number().default(Date.now()),
     updatedAt: Joi.number().default(Date.now()),
   });
 
+  /**
+   * Use to validate when update.
+   */
+  static UpdateModelSchema = Joi.object<Mongo_BlogModel>({
+    typeId: Joi.object(),
+    authorId: Joi.string(),
+    mentionedPlaceIds: Joi.array().items(Joi.object()),
+    name: Joi.string(),
+    contentUrl: Joi.string(),
+    coverImage: Joi.string(),
+    readTime: Joi.number(),
+    isApproved: Joi.boolean(),
+    createdAt: Joi.number(),
+    updatedAt: Joi.number().default(Date.now()),
+  });
+
+  /**
+   * Use to validate when returns
+   */
+  static Schema = Joi.object<Mongo_Blog>({
+    type: Joi.object(),
+    author: Joi.object(),
+    mentionedPlaces: Joi.array().items(Joi.object()),
+    contentUrl: Joi.string(),
+    name: Joi.string(),
+    coverImage: Joi.string(),
+    isApproved: Joi.boolean(),
+    isLiked: Joi.boolean(),
+    readTime: Joi.number(),
+    createdAt: Joi.number(),
+    updatedAt: Joi.number(),
+  });
+
+  static ModelSchemaKeys = Object.keys(Blog.ModelSchema.describe().keys);
   static SchemaKeys = Object.keys(Blog.Schema.describe().keys);
 
   constructor(localUtils: MongoUtils) {
@@ -70,7 +107,33 @@ export class Blog implements IObjectModel {
     _instance = this;
   }
 
-  getFields(): Array<string> {
+  /**
+   * Get expected fields of blog model.
+   * @returns
+   */
+  getModelFields(): Array<string> {
+    return Blog.ModelSchemaKeys;
+  }
+
+  /**
+   * Get expected fields of blog (final result).
+   * @returns
+   */
+  getFields(excludes?: Array<string>): Array<string> {
+    if (excludes) {
+      const result: { [key: string]: number } = {};
+
+      for (const key of Blog.SchemaKeys) {
+        result[key] = 1;
+      }
+
+      for (const key of excludes) {
+        if (result[key]) delete result[key];
+      }
+
+      return Object.keys(result);
+    }
+
     return Blog.SchemaKeys;
   }
 }

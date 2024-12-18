@@ -1,3 +1,4 @@
 export interface IObjectModel {
-  getFields(): Array<string>;
+  getModelFields?(): Array<string>;
+  getFields(excludes?: Array<string>): Array<string>;
 }

@@ -21,6 +21,12 @@ export type Mongo_Place_Geometry = {
   };
 };
 
+export type Mongo_Place_OpenHour = {
+  weekDay: number;
+  from: string;
+  to: string;
+};
+
 export type Mongo_Place_PlusCode = {
   compoundCode: string;
   globalCode: string;
@@ -29,12 +35,14 @@ export type Mongo_Place_PlusCode = {
 // Use for base type of place
 type $Extendable = {
   _id: ObjectId | string;
+  placeId: ObjectId | string;
   addressComponents: Array<Mongo_Place_AddressComoponent>;
   geometry: Mongo_Place_Geometry;
   description: string;
   phoneNumber: string;
   name: string;
   plusCode: Mongo_Place_PlusCode;
+  openHours: Array<Mongo_Place_OpenHour>;
   url: string;
   photos: Array<string>;
   website: string;
@@ -43,8 +51,6 @@ type $Extendable = {
 
 // The complete Place data structure (Place Document)
 export type Mongo_PlaceModel = {
-  placeId: ObjectId | string;
-  businessStatusId: ObjectId | string;
   typeIds: Array<ObjectId | string>;
 } & $Extendable;
 
@@ -55,7 +61,7 @@ export type Mongo_Place = {
   totalFavorites: number;
   totalVisits: number;
   totalReviews: number;
-  rating: string;
+  rating: number;
   isLiked: boolean;
   isVisited: boolean;
 } & $Extendable;

@@ -5,7 +5,7 @@ import type { MongoUtils } from "../../utils";
 import type { Mongo_BlogsQuery } from "../../types/blog";
 
 /**
- * Class of place query manager
+ * Class of blog query manager
  * @NguyenAnhTuan1912
  */
 export class BlogQuery {
@@ -16,8 +16,8 @@ export class BlogQuery {
   }
 
   /**
-   * Return criteria of place that is used in $match.
-   * This method is a central to process query of `place`.
+   * Return criteria of blog that is used in $match.
+   * This method is a central to process query of `blog`.
    * @param query
    */
   get(query: Mongo_BlogsQuery) {

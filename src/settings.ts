@@ -52,16 +52,21 @@ export const AppSettings = {
        */
       DBS: {
         dongnaitravelapp: {
-          NAME: "dongnaitravelapp",
+          NAME: "dongnaitravel",
           OBJECTS: {
-            MAPS: "maps",
-            PHOTOS: "photos",
-            REVIEWS: "reviews",
             USERS: "users",
+            USER_ROLES: "user_roles",
+            USER_FAVORITE_PLACES: "user_favorite_places",
+            USER_VISITED_PLACES: "user_visited_places",
+            USER_FAVORITE_BLOGS: "user_favorite_blogs",
+            FOLLOWS: "follows",
+            PLACES: "places",
+            PLACE_REVIEWS: "place_reviews",
+            PLACE_TYPES: "place_types",
             BLOGS: "blogs",
             BLOG_COMMENTS: "blog_comments",
-            BLOG_CONTENT: "blog_content",
-            CONTENT: "content",
+            BLOG_TYPES: "blog_types",
+            BUSINESS_STATUSES: "business_statuses",
           },
         },
 

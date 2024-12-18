@@ -1,4 +1,4 @@
-import Joi from "joi";
+import { ObjectId } from "mongodb";
 
 // Import classes
 import { Model } from "src/classes/Database";
@@ -13,12 +13,12 @@ import type { MongoUtils } from "../utils";
 import type { Mongo_Instances, Mongo_DBInformations } from "..";
 import type {
   Mongo_Blog,
-  Mongo_Blog_ContentModel,
   Mongo_BlogModel,
   Mongo_BlogParams,
   Mongo_BlogQuery,
   Mongo_BlogsQuery,
 } from "../types/blog";
+import type { Interchange } from "src/types/data.types";
 
 export class BlogModel
   extends Model<MongoDB, Mongo_BlogModel>
@@ -77,22 +77,9 @@ export class BlogModel
             ]
           ),
           // Look-up Stage
-          // Get all related documents in `content` collection and merge
+          // Get all related documents in `blog` collection and merge
           this._localUtils.pipeline.getLookupStage(
-            this._dbInfo.dongnaitravelapp.OBJECTS.BLOG_CONTENT,
-            "contentId",
-            "_id",
-            "content",
-            [
-              this._localUtils.pipeline.getProjectStage(
-                this._blog.content.getFields()
-              ),
-            ]
-          ),
-          // Look-up Stage
-          // Get all related documents in `place` collection and merge
-          this._localUtils.pipeline.getLookupStage(
-            this._dbInfo.dongnaitravelapp.OBJECTS.MAPS,
+            this._dbInfo.dongnaitravelapp.OBJECTS.PLACES,
             "mentionedPlaceIds",
             "_id",
             "mentionedPlaces",
@@ -104,9 +91,7 @@ export class BlogModel
           ),
           this._localUtils.pipeline.getUnwindStage("author"),
           this._localUtils.pipeline.getUnwindStage("content"),
-          this._localUtils.pipeline.getProjectStage(
-            this._blog.getCompleteFields()
-          ),
+          this._localUtils.pipeline.getProjectStage(this._blog.getFields()),
           { $limit: 1 },
           { $skip: 0 },
         ];
@@ -143,9 +128,7 @@ export class BlogModel
           };
 
           pipeline.push(
-            this._localUtils.pipeline.getProjectStage(
-              this._blog.getReducedFields()
-            ),
+            this._localUtils.pipeline.getProjectStage(this._blog.getFields()),
             // Match
             // Depend on
             matchStage
@@ -167,5 +150,87 @@ export class BlogModel
         return o;
       }
     );
+  }
+
+  /**
+   * Create a blog.
+   * @param args
+   * @returns
+   */
+  async create(...args: Array<any>): Promise<Interchange<any | null>> {
+    const _collection = this._getCollection();
+
+    return await this.handleInterchangeError(this, async function (o) {
+      const [blogData] = args;
+
+      // Validate data
+      const validationResult = Blog.ModelSchema.validate(blogData);
+
+      // If there is an error
+      if (validationResult.error)
+        throw new Error(validationResult.error.message);
+
+      // Add new blog to database
+      const createResult = _collection.insertOne(validationResult.value);
+
+      o.message = "Create blog successfully";
+      o.data = createResult;
+      return o;
+    });
+  }
+
+  /**
+   * Update a blog.
+   * @param args
+   * @returns
+   */
+  async update(...args: Array<any>): Promise<Interchange<any | null>> {
+    const _collection = this._getCollection();
+
+    return await this.handleInterchangeError(this, async function (o) {
+      const [blogData] = args;
+
+      // Delete updatedAt
+      delete blogData.updatedAt;
+
+      // Validate data
+      const validationResult = Blog.UpdateModelSchema.validate(blogData);
+
+      // If there is an error
+      if (validationResult.error)
+        throw new Error(validationResult.error.message);
+
+      // Add new blog to database
+      const updateResult = _collection.updateOne(
+        { _id: new ObjectId(validationResult.value._id) },
+        validationResult.value
+      );
+
+      o.message = `Update blog ${blogData._id} successfully`;
+      o.data = updateResult;
+      return o;
+    });
+  }
+
+  /**
+   * Delete a blog.
+   * @param args
+   * @returns
+   */
+  async delete(...args: Array<any>): Promise<Interchange<any | null>> {
+    const _collection = this._getCollection();
+
+    return await this.handleInterchangeError(this, async function (o) {
+      const [blogId] = args;
+
+      // Delete blog by id
+      const deleteResult = _collection.deleteOne({
+        _id: new ObjectId(blogId),
+      });
+
+      o.message = `Delete blog ${blogId} successfully`;
+      o.data = deleteResult;
+      return o;
+    });
   }
 }

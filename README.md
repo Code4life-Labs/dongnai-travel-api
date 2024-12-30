@@ -1,50 +1,95 @@
-<div>
-    <h1>
-        <a align="left"><img src="https://i.ibb.co/SQWy8xC/logo-big.png" alt="DONGNAITRRAVEL-Logo" style="width: 80px; float: left; margin-right: 1rem" border="0"></a>
-        DONG NAI TRAVEL
-        <br>
-        Cẩm nang du lịch cho mọi người
-    </h1>
-</div>
+# Task Manager Application
 
-Ứng dụng được xây dựng cho mục đích tham gia __cuộc thi Sáng tạo Khoa học Kĩ thuật__ tỉnh Đồng Nai - 2023 và là đồ án tốt nghiệp 2024.
+A simple task manager application.
 
-Giải pháp đạt được giải __Khuyến khích__ chung cuộc. Xem thêm thông tin [tại đây](https://drive.google.com/file/d/1rtrAE14D4_O47xg_cKyicr1dSMoTsqJe/view?usp=sharing).
+<p align="center"><img src="https://github.com/user-attachments/assets/f0f173d0-94c3-44a2-832b-75288e92e408" /></p>
 
-## Demo
-Xem [tại đây](https://www.youtube.com/watch?v=6lMZkIQiZ68)
+<p align="center"><img src="https://github.com/user-attachments/assets/0f926a15-1a7c-4842-8eee-873d64ad486a" /></p>
 
-## Thông tin
-Hỗ trợ khám phá các địa điểm du lịch ở Đồng Nai, đồng thời người dùng có thể chia sẻ được các trải nghiệm của người dùng thông qua các bài viết và quản lý hồ sơ cá nhân... Hơn thế nữa, người dùng còn có thể dùng Travel Bot để tham khảo lộ trình, kế hoạch đi du lịch; xem thông tin về thời tiết; xem lộ trình đường đi với Map tích hợp.
+## Why do I build it?
 
-__Công nghệ__: `React-Native`, `NodeJS`, `Express`, `MongoDB`, `GoogleAPI`, `Cloudinary`, `GPT` , các thư viện khác của React Native, NodeJS.
+I build this project is suitable for:
 
-__Thời gian__: từ tháng 02 - tới tháng 07 năm 2023.
+- An example of application with Microservice Architecture.
+- Deploy with Container, Docker Compose, K8S.
 
-__Người tham gia__:
-- Thái Anh Đức, [xem thêm](https://github.com/ThaiAnhDuc02).
-- Lương Văn Pháp, [xem thêm](https://github.com/phapdev).
-- Từ Nhật Phương, [xem thêm](https://github.com/FromSunNews).
-- Nguyễn Anh Tuấn, [xem thêm](https://github.com/NguyenAnhTuan1912).
-- Nguyễn Thị Liệu (giảng viên hướng dẫn).
-- Lê Nhật Tùng (giảng viên hướng dẫn).
+## Tech stack
 
-## Các chức năng chính
-Giới thiệu sơ qua các chức năng chính của ứng dụng. Ứng dụng được chia ra làm 4 chức năng chính, trong đó:
-- Xem các thông tin mới nhất về địa điểm, bài viết, sự kiện. Ngoài ra thì người dùng có thể lưu thông tin địa điểm, bài viết.
-- Tìm lộ trình đi tới điểm điểm, xem các thông tin chi tiết về địa điểm.
-- Đọc, nghe thông tin về địa điểm, bài viết.
-- Sử dụng Travel Bot để tham khảo, tạo lộ trình, kế hoạch đi du lịch.
+<p align="center"><img src="https://github.com/user-attachments/assets/b5b67573-f9da-4e42-9c2e-e935d540dc62" /></p>
 
-## Tài liệu liệu quan
-- Tài liệu chính, [tại đây](https://docs.google.com/document/d/1KdUV5ahihEOVYrn73MnY4GPgdbXIl4ou/edit?usp=sharing&ouid=102396661633118680496&rtpof=true&sd=true).
-- Các issues của dự án, [tại đây](https://github.com/FromSunNews/DongNaiTravelApp/issues).
-- Inforgraphic, [tại đây](https://www.behance.net/gallery/177198847/DongNaiTravel-App).
+## How to deploy?
 
-## Tài liệu kỹ thuật
-- Cloudinary Document for NodeJS (2023). Nguồn: [https://cloudinary.com/documentation/node_integration](https://cloudinary.com/documentation/node_integration)
-- Expo Document (2023). Nguồn: [https://docs.expo.dev](https://docs.expo.dev)
-- Google API Document (2023). Nguồn: [https://developers.google.com/workspace/products](https://developers.google.com/workspace/products)
-- React Document (2023). Nguồn: [https://react.dev](https://react.dev/)
-- React-Native Document (2023). Nguồn: [https://reactnative.dev](https://reactnative.dev)
-- React-Navigation Document (2023). Nguồn: [https://reactnavigation.org](https://reactnavigation.org)
+There are some way to deploy this application, you can do it on your machine (PC, Laptop) or a provisioned virtual machine on Cloud (AWS, GCP, Azure, ...). And before we start, need to change some setup.
+
+- Go to `src/user-web/.env`, change `VITE_MODE="dev"` to `"prod"`.
+
+```
+VITE_MODE="prod"
+```
+
+- If you are going to deploy to your own PC, you must have Docker inside your machine.
+- You can test this application without create any account by using test account
+  - Username: `user01`.
+  - Password: `user01`.
+
+Ok, let's start.
+
+### Deploy with Docker
+
+In this approach, we will deploy application with separated docker container. First of all, we have to create a network (bridge mode) that allows Docker container comunicating with each other.
+
+```bash
+docker network create my-network
+```
+
+Then we have to build all Docker Images, 5 images in total (Nginx + React, Task Service, Identity Service, Task Database, Identity Database).
+
+```bash
+# Build task-database image
+docker build task-database/ -t task-database-image
+
+# Build identity-database image
+docker build identity-database/ -t identity-database-image
+
+# Build task-service image
+docker build task-service/ -t task-service-image
+
+# Build identity-service image
+docker build identity-service/ -t identity-service-image
+
+# Build user-web image
+docker build user-web/ -t user-web-image
+```
+
+Finally, run Docker Containers from these images.
+
+```bash
+# Run task.database
+docker run -d --name task.database -p 27017:27017 --network my-network -e MONGODB_INITDB_ROOT_USERNAME=root -e MONGODB_INITDB_ROOT_PASSWORD=letmein12345 -e MONGODB_DATABASE=TaskManager task-database-image
+
+# Run identity.database
+docker run -d --name identity.database -p 3306:3306 --network my-network -e MYSQL_ROOT_USER=root -e MYSQL_ROOT_PASSWORD=letmein12345 -e MYSQL_DATABASE=TaskManagerIdentity identity-database-image
+
+# Run task.service
+docker run -d --name task.service -p 3000:3000 --network my-network -e MONGODB_INITDB_ROOT_USERNAME=root -e MONGODB_INITDB_ROOT_PASSWORD=letmein12345 -e MONGODB_DATABASE=TaskManager task-service-image
+
+# Run identity.service
+docker run -d --name identity.service -p 5000:5000 --network my-network -e MYSQL_ROOT_USER=root -e MYSQL_ROOT_PASSWORD=letmein12345 -e MYSQL_DATABASE=TaskManagerIdentity identity-service-image
+
+# Run user web
+docker run -d --name user-web -p 8888:80 --network my-network -e VITE_TASK_SERVICE_ENDPOINT="/task-service" -e VITE_IDENTITY_SERVICE_ENDPOINT="/identity-service" -e VITE_MODE="prod" user-web-image
+```
+
+### Deploy with Docker Compose
+
+You simply run
+
+```bash
+docker compose -f _deployments/docker-compose.yml up
+```
+
+See the result!! But sometime MySQL will be unhealthy and I don't know what happend (it may be caused by Health check or MySQL Image).
+
+### Deploy with K8S / Amazon EKS
+
+Update later...

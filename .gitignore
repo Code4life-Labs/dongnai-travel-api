@@ -1,13 +1,12 @@
 node_modules
 
-.env
-.env.dev
-.env.development
-.env.develop
-.env.prod
-.env.production
-.env.product
-
 package-lock.json
 
-secret
+# Ignore file README.md in Git Ignore :D
+!*/**/README.md
+
+# Ignore env
+.env.*
+
+# Ignore some keys
+secrets/*.key.*

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  database:
+    env_file: "../_docker-compose-env/database.env"
+    ports:
+      - "27017:27017"
+    build:
+      dockerfile: dockerfile
+      context: ../database
+  task.service:
+    env_file: "../_docker-compose-env/server.env"
+    depends_on:
+      - database
+    build:
+      dockerfile: dockerfile
+      context: ../server
+    ports:
+      - "3000:3000"

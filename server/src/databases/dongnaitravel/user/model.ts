@@ -30,11 +30,20 @@ export default function () {
         toJSON: {
           virtuals: true,
           transform: function (doc, ret) {
+            delete ret.roleId;
+
             return ret;
           },
         },
       }
     );
+
+    _schema.virtual("role", {
+      ref: "UserRoles",
+      localField: "roleId",
+      foreignField: "_id",
+      justOne: true,
+    });
   }
   const model = mongoose.model("Users", _schema);
   return { model, name: "Users" };

@@ -1,6 +1,9 @@
 import fs from "fs";
 import jwt from "jsonwebtoken";
 
+// Import models
+import db from "src/databases/dongnaitravel";
+
 // Import utils
 import { StringUtils } from "src/utils/string";
 import { ErrorUtils } from "src/utils/error";
@@ -8,6 +11,15 @@ import { DatetimeUtils } from "src/utils/datetime";
 
 import { PolicyCheker } from "./policyChecker";
 import { AuthSettings } from "./settings";
+
+// Import types
+import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
+
+let DNTModels: DongNaiTravelModelsType;
+
+db().then((models) => {
+  DNTModels = models;
+});
 
 type AccessTokenPayloadType = {
   role: string;
@@ -17,8 +29,10 @@ type AccessTokenPayloadType = {
 
 class AuthService {
   policyCheker!: PolicyCheker;
+  static roles: any = {};
 
   private _signature!: string;
+  private _canCreateToken!: boolean;
 
   constructor() {
     try {
@@ -29,6 +43,15 @@ class AuthService {
           "utf-8"
         )
         .toString();
+
+      // Get role
+      AuthService.roles = {};
+      DNTModels.UserRoles.find().then((roles) => {
+        for (const role of roles) {
+          const r = role.toJSON();
+          AuthService.roles[r.name] = r.value;
+        }
+      });
     } catch (error: any) {
       // Just print error's message
       console.error(error.message);
@@ -74,6 +97,41 @@ class AuthService {
 
       return tokenPayload;
     });
+  }
+
+  /**
+   * Use this method to create a token from `role` and `credential` of user.
+   * @param role
+   * @param credential
+   * @returns
+   */
+  createToken(role: string) {
+    if (!this._canCreateToken) {
+      console.warn(
+        "The signature must be assigned before the service creates token"
+      );
+      return null;
+    }
+
+    let periodAsJWTFormat =
+      AuthSettings.EXPIRATION.ACCESS_TOKEN.value +
+      AuthSettings.EXPIRATION.ACCESS_TOKEN.postfix;
+    let period = DatetimeUtils.getTime(periodAsJWTFormat);
+
+    if (!AuthService.roles[role]) throw new Error("Invalid role");
+
+    let tokenPayload: AccessTokenPayloadType = {
+      role: AuthService.roles[role],
+      expire: period,
+      issuer: AuthSettings.ISSUER,
+    };
+
+    let token = jwt.sign(tokenPayload, this._signature, {
+      algorithm: "HS256",
+      expiresIn: periodAsJWTFormat,
+    });
+
+    return token;
   }
 }
 

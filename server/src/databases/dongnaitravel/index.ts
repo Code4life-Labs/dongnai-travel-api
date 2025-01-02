@@ -33,12 +33,19 @@ const databaseEngine = database.engine
   ? database.engine
   : process.env[`${uppercasedDatabaseName}_ENGINE`];
 
-export type TaskManagerModelsType = {
-  Task: Model<any>;
-  Assignment: Model<any>;
-  TaskStatus: Model<any>;
-  TaskPriority: Model<any>;
-  TaskSize: Model<any>;
+export type DongNaiTravelModelsType = {
+  Blogs: Model<any>;
+  BlogComments: Model<any>;
+  BlogTypes: Model<any>;
+  BusinessStatuses: Model<any>;
+  Places: Model<any>;
+  PlaceReviews: Model<any>;
+  PlaceType: Model<any>;
+  Users: Model<any>;
+  UserFavoritedBlogs: Model<any>;
+  UserFavoritedPlaces: Model<any>;
+  UserRoles: Model<any>;
+  UserVisitedPlaces: Model<any>;
 };
 
 export default async function () {
@@ -64,5 +71,5 @@ export default async function () {
     (models as any)[result.name] = result.model;
   }
 
-  return models as TaskManagerModelsType;
+  return models as DongNaiTravelModelsType;
 }

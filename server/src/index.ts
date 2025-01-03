@@ -8,9 +8,6 @@ import "module-alias/register";
 // Import config
 import AppConfig from "src/app.config.json";
 
-// Import models
-import identity from "./databases/identity";
-
 // Import endpoints
 import buildEndpoints from "src/endpoints";
 

@@ -51,7 +51,7 @@ const userRoles = [
 const users = [
   {
     _id: ObjectId(),
-    roleId: userRoles[0]._id,
+    roleId: userRoles[1]._id,
     firstName: "Tuan",
     lastName: "Nguyen Anh",
     email: "nguyenanhtuan19122002@gmail.com",
@@ -78,85 +78,92 @@ const placeTypes = [
   },
   {
     _id: ObjectId(),
-    name: "restaurant",
-    value: "Restaurant",
+    name: "Restaurant",
+    value: "restaurant",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "resort",
-    value: "Resort",
+    name: "Resort",
+    value: "resort",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "homestay",
-    value: "Homestay",
+    name: "Homestay",
+    value: "homestay",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "lodging",
-    value: "Lodging",
+    name: "Lodging",
+    value: "lodging",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "guest_house",
-    value: "Guest house",
+    name: "Guest house",
+    value: "guest_house",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "campground",
-    value: "Campground",
+    name: "Hotel",
+    value: "hotel",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "scenic_spots",
-    value: "Scenic spots",
+    name: "Campground",
+    value: "campground",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "tourist_area",
-    value: "Tourist area",
+    name: "Scenic spots",
+    value: "scenic_spots",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "ecotourism",
-    value: "Ecotourism",
+    name: "Tourist area",
+    value: "tourist_area",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "park",
-    value: "Park",
+    name: "Ecotourism",
+    value: "ecotourism",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "place_of_worship",
-    value: "Place of worship",
+    name: "Park",
+    value: "park",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
     _id: ObjectId(),
-    name: "coffee_shop",
-    value: "Coffee shop",
+    name: "Place of worship",
+    value: "place_of_worship",
+    updatedAt: new Date("01-01-2025").getTime(),
+    createdAt: new Date("01-01-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Coffee shop",
+    value: "coffee_shop",
     updatedAt: new Date("01-01-2025").getTime(),
     createdAt: new Date("01-01-2025").getTime(),
   },
@@ -208,9 +215,7 @@ const businessStatuses = [
 // Places
 const places = [
   {
-    _id: {
-      $oid: "642bd476b64f3e8ad215c315",
-    },
+    _id: ObjectId("642bd476b64f3e8ad215c315"),
     geometry: {
       location: {
         lat: 11.2309993,
@@ -287,9 +292,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642bd709b64f3e8ad215c31b",
-    },
+    _id: ObjectId("642bd709b64f3e8ad215c31b"),
     geometry: {
       location: {
         lat: 10.8319202,
@@ -366,9 +369,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642bd8ceb64f3e8ad215c31e",
-    },
+    _id: ObjectId("642bd8ceb64f3e8ad215c31e"),
     geometry: {
       location: {
         lat: 11.4195459,
@@ -435,9 +436,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c2ddb61d4c74954bb9c2c",
-    },
+    _id: ObjectId("642c2ddb61d4c74954bb9c2c"),
     geometry: {
       location: {
         lat: 10.9727103,
@@ -517,9 +516,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c304461d4c74954bb9c30",
-    },
+    _id: ObjectId("642c304461d4c74954bb9c30"),
     geometry: {
       location: {
         lat: 11.3871129,
@@ -591,9 +588,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c35ebe7994d2834125599",
-    },
+    _id: ObjectId("642c35ebe7994d2834125599"),
     geometry: {
       location: {
         lat: 11.1115043,
@@ -665,9 +660,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c3832e1cedab9167c6477",
-    },
+    _id: ObjectId("642c3832e1cedab9167c6477"),
     geometry: {
       location: {
         lat: 11.4251517,
@@ -759,9 +752,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c3a6b051d4e45f90563be",
-    },
+    _id: ObjectId("642c3a6b051d4e45f90563be"),
     geometry: {
       location: {
         lat: 11.0180268,
@@ -835,9 +826,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c3d06051d4e45f90563c2",
-    },
+    _id: ObjectId("642c3d06051d4e45f90563c2"),
     geometry: {
       location: {
         lat: 11.421115,
@@ -909,9 +898,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c411c0abaa8bb3ea498fd",
-    },
+    _id: ObjectId("642c411c0abaa8bb3ea498fd"),
     geometry: {
       location: {
         lat: 11.4265267,
@@ -978,9 +965,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c44bd0abaa8bb3ea49901",
-    },
+    _id: ObjectId("642c44bd0abaa8bb3ea49901"),
     geometry: {
       location: {
         lat: 11.4213967,
@@ -1057,9 +1042,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c4bdb0abaa8bb3ea49905",
-    },
+    _id: ObjectId("642c4bdb0abaa8bb3ea49905"),
     geometry: {
       location: {
         lat: 11.4239555,
@@ -1136,9 +1119,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c4fde0abaa8bb3ea49909",
-    },
+    _id: ObjectId("642c4fde0abaa8bb3ea49909"),
     geometry: {
       location: {
         lat: 11.4225772,
@@ -1210,9 +1191,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c531012dac0840c838daf",
-    },
+    _id: ObjectId("642c531012dac0840c838daf"),
     geometry: {
       location: {
         lat: 11.423855,
@@ -1295,9 +1274,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c578e16bddcaa200eaebb",
-    },
+    _id: ObjectId("642c578e16bddcaa200eaebb"),
     geometry: {
       location: {
         lat: 11.421394,
@@ -1364,9 +1341,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c59e421c5b241b4155aac",
-    },
+    _id: ObjectId("642c59e421c5b241b4155aac"),
     geometry: {
       location: {
         lat: 11.421423,
@@ -1433,9 +1408,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c5d1f21c5b241b4155ab0",
-    },
+    _id: ObjectId("642c5d1f21c5b241b4155ab0"),
     geometry: {
       location: {
         lat: 11.4244119,
@@ -1512,9 +1485,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642c5df121c5b241b4155ab4",
-    },
+    _id: ObjectId("642c5df121c5b241b4155ab4"),
     geometry: {
       location: {
         lat: 11.4209466,
@@ -1581,9 +1552,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d2bfc21c5b241b4155ab8",
-    },
+    _id: ObjectId("642d2bfc21c5b241b4155ab8"),
     geometry: {
       location: {
         lat: 11.4301501,
@@ -1655,9 +1624,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d2f5758d06859327a5d0f",
-    },
+    _id: ObjectId("642d2f5758d06859327a5d0f"),
     geometry: {
       location: {
         lat: 11.4250181,
@@ -1724,9 +1691,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d313258d06859327a5d13",
-    },
+    _id: ObjectId("642d313258d06859327a5d13"),
     geometry: {
       location: {
         lat: 11.4229324,
@@ -1798,9 +1763,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d370c58d06859327a5d1a",
-    },
+    _id: ObjectId("642d370c58d06859327a5d1a"),
     geometry: {
       location: {
         lat: 11.4214362,
@@ -1872,9 +1835,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d3be858d06859327a5d1f",
-    },
+    _id: ObjectId("642d3be858d06859327a5d1f"),
     geometry: {
       location: {
         lat: 11.4205934,
@@ -1937,9 +1898,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d3ce958d06859327a5d23",
-    },
+    _id: ObjectId("642d3ce958d06859327a5d23"),
     geometry: {
       location: {
         lat: 11.4192159,
@@ -2006,9 +1965,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d3eeb1b6beaabd77806a0",
-    },
+    _id: ObjectId("642d3eeb1b6beaabd77806a0"),
     geometry: {
       location: {
         lat: 10.9556834,
@@ -2089,9 +2046,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d54fa1b6beaabd77806a4",
-    },
+    _id: ObjectId("642d54fa1b6beaabd77806a4"),
     geometry: {
       location: {
         lat: 10.6586852,
@@ -2173,9 +2128,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d5a5f1b6beaabd77806ac",
-    },
+    _id: ObjectId("642d5a5f1b6beaabd77806ac"),
     geometry: {
       location: {
         lat: 11.0983751,
@@ -2257,9 +2210,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d5e2a1b6beaabd77806b0",
-    },
+    _id: ObjectId("642d5e2a1b6beaabd77806b0"),
     geometry: {
       location: {
         lat: 10.740421,
@@ -2346,9 +2297,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d8c771b6beaabd77806b4",
-    },
+    _id: ObjectId("642d8c771b6beaabd77806b4"),
     geometry: {
       location: {
         lat: 10.989564,
@@ -2415,9 +2364,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d90551b6beaabd77806b8",
-    },
+    _id: ObjectId("642d90551b6beaabd77806b8"),
     geometry: {
       location: {
         lat: 10.9147502,
@@ -2494,9 +2441,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d95b41b6beaabd77806bc",
-    },
+    _id: ObjectId("642d95b41b6beaabd77806bc"),
     geometry: {
       location: {
         lat: 11.2531849,
@@ -2568,9 +2513,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d9c141b6beaabd77806c3",
-    },
+    _id: ObjectId("642d9c141b6beaabd77806c3"),
     geometry: {
       location: {
         lat: 11.1107256,
@@ -2642,9 +2585,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642d9ec71b6beaabd77806c7",
-    },
+    _id: ObjectId("642d9ec71b6beaabd77806c7"),
     geometry: {
       location: {
         lat: 11.1042335,
@@ -2713,9 +2654,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642da6581b6beaabd77806cb",
-    },
+    _id: ObjectId("642da6581b6beaabd77806cb"),
     geometry: {
       location: {
         lat: 11.2202888,
@@ -2779,9 +2718,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "642daade1b6beaabd77806cf",
-    },
+    _id: ObjectId("642daade1b6beaabd77806cf"),
     geometry: {
       location: {
         lat: 11.4234043,
@@ -2853,9 +2790,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6435769eef61972f06599145",
-    },
+    _id: ObjectId("6435769eef61972f06599145"),
     geometry: {
       location: {
         lat: 11.2027893,
@@ -2927,9 +2862,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "643c2f31a1a05745b384db65",
-    },
+    _id: ObjectId("643c2f31a1a05745b384db65"),
     geometry: {
       location: {
         lat: 10.9611495,
@@ -2995,69 +2928,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "643caea7a1a05745b384db69",
-    },
-    geometry: {
-      location: {
-        lat: 10.898964,
-        lng: 106.8910929,
-      },
-      viewport: {
-        northeast: {
-          lat: 10.9003137302915,
-          lng: 106.8924147302915,
-        },
-        southwest: {
-          lat: 10.8976157697085,
-          lng: 106.8897167697085,
-        },
-      },
-    },
-    name: "Chợ Cổng 11",
-    url: "https://maps.google.com/?cid=8638374631676365619",
-    website: "http://vongxoaycong11.business.site/",
-    isRecommended: false,
-    phoneNumber: null,
-    photos: [],
-    placeId: "ChIJjafpyd_fdDERM8vQnfWr4Xc",
-    plusCode: {},
-    addressComponents: [
-      {
-        longName: "VVXR+HCP",
-        shortName: "VVXR+HCP",
-        types: ["plus_code"],
-      },
-      {
-        longName: "thành phố Biên Hòa",
-        shortName: "Tp. Biên Hòa",
-        types: ["locality", "political"],
-      },
-      {
-        longName: "Đồng Nai",
-        shortName: "Đồng Nai",
-        types: ["administrative_area_level_1", "political"],
-      },
-      {
-        longName: "Việt Nam",
-        shortName: "VN",
-        types: ["country", "political"],
-      },
-    ],
-    content: {
-      vi: "",
-      en: "",
-    },
-    typeIds: ["point_of_interest"].map((type) => {
-      return placeTypes.find((placeType) => placeType.value === type)._id;
-    }),
-    updatedAt: new Date("01-01-2025").getTime(),
-    createdAt: new Date("01-01-2025").getTime(),
-  },
-  {
-    _id: {
-      $oid: "6481ad4dbb0bf14fb1da3a7e",
-    },
+    _id: ObjectId("6481ad4dbb0bf14fb1da3a7e"),
     geometry: {
       location: {
         lat: 11.1908265,
@@ -3134,9 +3005,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6481af8d735b7764cc53856c",
-    },
+    _id: ObjectId("6481af8d735b7764cc53856c"),
     geometry: {
       location: {
         lat: 10.9645454,
@@ -3205,9 +3074,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6481afc9735b7764cc53856f",
-    },
+    _id: ObjectId("6481afc9735b7764cc53856f"),
     geometry: {
       location: {
         lat: 10.9373345,
@@ -3279,9 +3146,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6481b02b735b7764cc538572",
-    },
+    _id: ObjectId("6481b02b735b7764cc538572"),
     geometry: {
       location: {
         lat: 10.9185234,
@@ -3358,9 +3223,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6481b072735b7764cc538575",
-    },
+    _id: ObjectId("6481b072735b7764cc538575"),
     geometry: {
       location: {
         lat: 10.9964084,
@@ -3437,9 +3300,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6481ea068410772dc1a9595a",
-    },
+    _id: ObjectId("6481ea068410772dc1a9595a"),
     geometry: {
       location: {
         lat: 10.9881394,
@@ -3516,9 +3377,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6481ec4b8410772dc1a9595e",
-    },
+    _id: ObjectId("6481ec4b8410772dc1a9595e"),
     geometry: {
       location: {
         lat: 10.9570559,
@@ -3605,9 +3464,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "648268314997ef945afa43ab",
-    },
+    _id: ObjectId("648268314997ef945afa43ab"),
     geometry: {
       location: {
         lat: 10.951501,
@@ -3668,9 +3525,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "648284c80d674425eee7fbb4",
-    },
+    _id: ObjectId("648284c80d674425eee7fbb4"),
     geometry: {
       location: {
         lat: 10.9941722,
@@ -3747,9 +3602,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "648fbb0483fc695849194553",
-    },
+    _id: ObjectId("648fbb0483fc695849194553"),
     geometry: {
       location: {
         lat: 10.8773033,
@@ -3826,9 +3679,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "648fbb4783fc695849194556",
-    },
+    _id: ObjectId("648fbb4783fc695849194556"),
     geometry: {
       location: {
         lat: 10.8967246,
@@ -3900,9 +3751,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6496d3e2ca50497414065029",
-    },
+    _id: ObjectId("6496d3e2ca50497414065029"),
     geometry: {
       location: {
         lat: 10.9563808,
@@ -3984,9 +3833,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6496d404ca5049741406502c",
-    },
+    _id: ObjectId("6496d404ca5049741406502c"),
     geometry: {
       location: {
         lat: 10.9545259,
@@ -4063,9 +3910,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6496eee0ca5049741406502f",
-    },
+    _id: ObjectId("6496eee0ca5049741406502f"),
     geometry: {
       location: {
         lat: 10.9428135,
@@ -4147,9 +3992,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "64971e75ca50497414065032",
-    },
+    _id: ObjectId("64971e75ca50497414065032"),
     geometry: {
       location: {
         lat: 10.9785343,
@@ -4231,9 +4074,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6497ad7e8fe5181d61d3c3eb",
-    },
+    _id: ObjectId("6497ad7e8fe5181d61d3c3eb"),
     geometry: {
       location: {
         lat: 10.9472997,
@@ -4315,9 +4156,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6497bfb08fe5181d61d3c3ee",
-    },
+    _id: ObjectId("6497bfb08fe5181d61d3c3ee"),
     geometry: {
       location: {
         lat: 10.9644764,
@@ -4384,9 +4223,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "6497c03f8fe5181d61d3c3f1",
-    },
+    _id: ObjectId("6497c03f8fe5181d61d3c3f1"),
     geometry: {
       location: {
         lat: 10.9543153,
@@ -4453,9 +4290,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "649a96e2ad057e04eb71e74f",
-    },
+    _id: ObjectId("649a96e2ad057e04eb71e74f"),
     geometry: {
       location: {
         lat: 11.0183166,
@@ -4537,9 +4372,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "649eccea2b4554b1e65ae8f5",
-    },
+    _id: ObjectId("649eccea2b4554b1e65ae8f5"),
     geometry: {
       location: {
         lat: 10.9681885,
@@ -4600,9 +4433,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "64bcf7f71f79226ff002ab7a",
-    },
+    _id: ObjectId("64bcf7f71f79226ff002ab7a"),
     geometry: {
       location: {
         lat: 10.962795,
@@ -4669,9 +4500,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "64bd376c1f79226ff002ab7f",
-    },
+    _id: ObjectId("64bd376c1f79226ff002ab7f"),
     geometry: {
       location: {
         lat: 11.2307332,
@@ -4743,9 +4572,7 @@ const places = [
     createdAt: new Date("01-01-2025").getTime(),
   },
   {
-    _id: {
-      $oid: "64bd39751f79226ff002ab8b",
-    },
+    _id: ObjectId("64bd39751f79226ff002ab8b"),
     geometry: {
       location: {
         lat: 10.9607851,
@@ -4823,9 +4650,64 @@ const places = [
   },
 ];
 
+const blogs = [
+  {
+    _id: ObjectId(),
+    authorId: users[0]._id,
+    typeId: blogTypes.find((type) => type.value === "review")._id,
+    mentionedPlaceIds: [
+      places.find((place) => place.name === "Ta Lai Longhouse")._id,
+    ],
+    name: "Ta Lai Longhouse, trải nghiệm đáng nhớ với thiên nhiên, văn hoá, con người",
+    contentUrl: "",
+    coverImage:
+      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1687161128/blog_photos/ee94b1vx4vr4vwddu2rt.jpg",
+    readTime: 108,
+    isApproved: true,
+    updatedAt: new Date("01-03-2025").getTime(),
+    createdAt: new Date("01-03-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    authorId: users[0]._id,
+    typeId: blogTypes.find((type) => type.value === "review")._id,
+    mentionedPlaceIds: [
+      places.find((place) => place.name === "Paradise on the Tree")._id,
+    ],
+    name: "Sống với thiên nhiên tại Paradise on the tree",
+    contentUrl: "",
+    coverImage:
+      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1687164524/blog_photos/lyjvwqu1wpku3cfjazca.jpg",
+    readTime: 101,
+    isApproved: true,
+    updatedAt: new Date("01-03-2025").getTime(),
+    createdAt: new Date("01-03-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    authorId: users[0]._id,
+    typeId: blogTypes.find((type) => type.value === "review")._id,
+    mentionedPlaceIds: [
+      places.find((place) => place.name === "Thác Đá Hàn")._id,
+    ],
+    name: "Review Tham Quan khu thác Đá Hàn Đồng Nai ở đâu, giá vé, check in, vui chơi 2022",
+    contentUrl: "",
+    coverImage:
+      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1687842789/blog_photos/lpf4kto8lsbffthrgajy.png",
+    readTime: 650,
+    isApproved: true,
+    updatedAt: new Date("01-03-2025").getTime(),
+    createdAt: new Date("01-03-2025").getTime(),
+  },
+];
+
 // Insert data
-db.UserRoles.insertMany(userRoles);
-db.Users.insertMany(users);
-db.PlaceTypes.insertMany(placeTypes);
-db.BlogTypes.insertMany(blogTypes);
-db.BusinessStatuses.insertMany(businessStatuses);
+instance.UserRoles.insertMany(userRoles);
+instance.Users.insertMany(users);
+instance.PlaceTypes.insertMany(placeTypes);
+instance.BlogTypes.insertMany(blogTypes);
+instance.BusinessStatuses.insertMany(businessStatuses);
+instance.Places.insertMany(places);
+instance.Blogs.insertMany(blogs);
+
+console.log("Data inserted successfully");

@@ -8,7 +8,7 @@ import { DirReader } from "src/classes/DirReader";
 import AppConfig from "src/app.config.json";
 import DatabaseConfig from "src/db.config.json";
 
-const database = DatabaseConfig.databases[1];
+const database = DatabaseConfig.databases[0];
 
 // Get path of endpoints folder
 const rootFolder = AppConfig.folders.databases;

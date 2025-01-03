@@ -17,10 +17,6 @@ import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 
 let DNTModels: DongNaiTravelModelsType;
 
-db().then((models) => {
-  DNTModels = models;
-});
-
 type AccessTokenPayloadType = {
   role: string;
   expire: number;
@@ -46,11 +42,15 @@ class AuthService {
 
       // Get role
       AuthService.roles = {};
-      DNTModels.UserRoles.find().then((roles) => {
-        for (const role of roles) {
-          const r = role.toJSON();
-          AuthService.roles[r.name] = r.value;
-        }
+      db().then((models) => {
+        DNTModels = models;
+
+        DNTModels.UserRoles.find().then((roles) => {
+          for (const role of roles) {
+            const r = role.toJSON();
+            AuthService.roles[r.name] = r.value;
+          }
+        });
       });
     } catch (error: any) {
       // Just print error's message

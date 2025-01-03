@@ -7,7 +7,7 @@ services:
     build:
       dockerfile: dockerfile
       context: ../database
-  task.service:
+  server:
     env_file: "../_docker-compose-env/server.env"
     depends_on:
       - database

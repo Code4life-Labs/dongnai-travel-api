@@ -235,7 +235,7 @@ const places = [
     name: "Công viên Suối Mơ",
     url: "https://maps.google.com/?cid=2437631735449436984",
     website: "http://suoimopark.com/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "0251 6270 777",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680594035/place_photos/s5bvmqf9pzwrjcghdxmb.png",
@@ -312,7 +312,7 @@ const places = [
     name: "Mekong Long Thành Resort & Reststop",
     url: "https://maps.google.com/?cid=10555773058441866879",
     website: "https://mekongrestaurant.vn/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "090 239 39 35",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680594693/place_photos/irzqeq7xrpzt49nhahr4.jpg",
@@ -388,7 +388,7 @@ const places = [
     },
     name: "Cat Tien Bridge Homestay",
     url: "https://maps.google.com/?cid=15007669317473423474",
-    isRecommended: false,
+    isRecommended: true,
     website: null,
     phoneNumber: "0387 629 573",
     photos: [
@@ -536,7 +536,7 @@ const places = [
     name: "Ta Lai Longhouse",
     url: "https://maps.google.com/?cid=11475809317726112114",
     website: "https://www.ta-lai-longhouse.com/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "097 416 08 27",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680617539/place_photos/fhatntgclzthb6sq6nld.jpg",
@@ -680,7 +680,7 @@ const places = [
     name: "GIBBON SINGING HOME STAY",
     url: "https://maps.google.com/?cid=1221832582449861884",
     website: "http://gibbon-singing-home-stay.business.site/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "094 634 20 36",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680619568/place_photos/efgqokuccqepjaahwm3b.jpg",
@@ -1139,7 +1139,7 @@ const places = [
     name: "Forest Side Eco Lodge",
     url: "https://maps.google.com/?cid=1200147891619756916",
     website: "http://forest-side-homestay.business.site/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "091 830 05 02",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680625628/place_photos/xjvbe8eabnqrq9wiqtie.jpg",
@@ -1644,7 +1644,7 @@ const places = [
     name: "Nam Cát Tiên Homestay",
     url: "https://maps.google.com/?cid=12493758361707621199",
     website: "https://nam-cat-tien-homestay.business.site/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "097 746 84 92",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680682836/place_photos/wdebgbqid9yed65obr65.jpg",
@@ -1984,7 +1984,7 @@ const places = [
     },
     name: "Hostel NGOC LAN",
     url: "https://maps.google.com/?cid=18319193735934585035",
-    isRecommended: false,
+    isRecommended: true,
     website: null,
     phoneNumber: "093 273 38 25",
     photos: [
@@ -2066,7 +2066,7 @@ const places = [
     name: "Khu du lịch Sinh Thái Bò Cạp Vàng",
     url: "https://maps.google.com/?cid=2028214923134420180",
     website: "https://bocapvang.net/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "0868 848 189",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680692470/place_photos/twytib5fp42ubsscfwmy.jpg",
@@ -2317,7 +2317,7 @@ const places = [
     name: "Thác Đá Hàn",
     url: "https://maps.google.com/?cid=10169167029756090076",
     website: "http://thacdahan.vn/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "090 295 00 55",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680706675/place_photos/uqxnqj5p8bxrqwqfwqie.jpg",
@@ -2384,7 +2384,7 @@ const places = [
     name: "Khu du lịch sinh thái Vườn Xoài",
     url: "https://maps.google.com/?cid=8867000078479327278",
     website: "http://www.vuonxoai.vn/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "094 396 81 63",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680707667/place_photos/qxkiznjqr2rp1vdzefkp.jpg",
@@ -2882,7 +2882,7 @@ const places = [
     name: "Khu du lịch Bửu Long",
     url: "https://maps.google.com/?cid=12263572617039158825",
     website: "https://buulong.com.vn/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "0251 8850 023",
     photos: [],
     placeId: "ChIJuRwVIN_bdDERKZ7T61H2MKo",
@@ -3622,7 +3622,7 @@ const places = [
     name: "Siêu Công Viên Nước The Amazing Bay - Vịnh Kỳ Diệu",
     url: "https://maps.google.com/?cid=15834631623608105193",
     website: "https://www.theamazingbay.com/",
-    isRecommended: false,
+    isRecommended: true,
     phoneNumber: "1900 633087",
     photos: [
       "http://res.cloudinary.com/dbtb0sjby/image/upload/v1687141119/place_photos/pvh5rl93qg0teoeuw09p.jpg",

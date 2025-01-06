@@ -13,8 +13,9 @@ export class StringUtils {
     let result = "";
 
     for (const part of parts) {
+      if (part == "") continue;
       if (part[0] !== "/") result += "/" + part;
-      else result += part.replace(/\/{2,}/, "/");
+      else result += part.replace(/\/+/, "/");
     }
 
     if (result[0] !== "/") return "/" + result;

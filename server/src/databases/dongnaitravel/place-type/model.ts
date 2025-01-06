@@ -18,16 +18,18 @@ export default function () {
         },
       },
       {
-        collection: "PlaceType",
+        collection: "PlaceTypes",
         toJSON: {
           virtuals: true,
           transform: function (doc, ret) {
+            delete ret.id;
+
             return ret;
           },
         },
       }
     );
   }
-  const model = mongoose.model("PlaceType", _schema);
-  return { model, name: "PlaceType" };
+  const model = mongoose.model("PlaceTypes", _schema);
+  return { model, name: "PlaceTypes" };
 }

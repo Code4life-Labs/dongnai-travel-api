@@ -40,7 +40,7 @@ export type DongNaiTravelModelsType = {
   BusinessStatuses: Model<any>;
   Places: Model<any>;
   PlaceReviews: Model<any>;
-  PlaceType: Model<any>;
+  PlaceTypes: Model<any>;
   Users: Model<any>;
   UserFavoritedBlogs: Model<any>;
   UserFavoritedPlaces: Model<any>;

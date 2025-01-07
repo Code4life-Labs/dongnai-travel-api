@@ -22,6 +22,8 @@ export default function () {
         toJSON: {
           virtuals: true,
           transform: function (doc, ret) {
+            delete ret.id;
+
             return ret;
           },
         },

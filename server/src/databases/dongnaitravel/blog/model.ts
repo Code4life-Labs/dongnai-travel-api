@@ -12,7 +12,6 @@ export default function () {
         name: Schema.Types.String,
         contentUrl: Schema.Types.String,
         coverImage: Schema.Types.String,
-        type: Schema.Types.String,
         readTime: Schema.Types.Number,
         isApproved: Schema.Types.Boolean,
         createdAt: {
@@ -29,12 +28,28 @@ export default function () {
         toJSON: {
           virtuals: true,
           transform: function (doc, ret) {
+            delete ret.id;
+
             return ret;
           },
         },
       }
     );
+
+    // Set Virtuals
+    _schema.virtual("mentionedPlaces", {
+      ref: "Places",
+      localField: "mentionedPlaceIds",
+      foreignField: "_id",
+    });
+
+    _schema.virtual("type", {
+      ref: "BlogTypes",
+      localField: "typeId",
+      foreignField: "_id",
+      justOne: true,
+    });
   }
-  const UserModel = mongoose.model("Blogs", _schema);
-  return { model: UserModel, name: "Blogs" };
+  const model = mongoose.model("Blogs", _schema);
+  return { model, name: "Blogs" };
 }

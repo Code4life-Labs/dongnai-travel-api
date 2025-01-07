@@ -48,14 +48,19 @@ export type DongNaiTravelModelsType = {
   UserVisitedPlaces: Model<any>;
 };
 
+const models = {};
+
 export default async function () {
-  const models = {};
   const connectionString = `mongodb://${databaseUsername}:${databasePassword}@${databaseHost}:27017/${databaseName}`;
 
   await mongoose.connect(connectionString, {
     authSource: "admin",
   });
 
+  // Everythings is cached, return the final result
+  if (Object.keys(models).length > 0) return models as DongNaiTravelModelsType;
+
+  // Build model
   const modelFilePaths = reader.getAllPathsToFilesSync(rootPath);
 
   for (const modelFilePath of modelFilePaths) {

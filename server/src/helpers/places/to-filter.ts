@@ -20,6 +20,24 @@ export function buildPlaceTypeFilter(
 }
 
 /**
+ * Use this function to build a name query of place
+ * @param query
+ * @param requestQuery
+ * @returns
+ */
+export function buildPlaceNameFilter(
+  query: Query<any, any>,
+  requestQuery: any
+) {
+  if (!requestQuery.query.name) return;
+
+  // Build query
+  query.where("name").regex(new RegExp(requestQuery.query.name, "i"));
+
+  return query;
+}
+
+/**
  * Use this function to build a recommendation query of place
  * @param query
  * @param requestQuery

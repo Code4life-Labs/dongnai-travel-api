@@ -30,6 +30,7 @@ export default function () {
         toJSON: {
           virtuals: true,
           transform: function (doc, ret) {
+            delete ret.id;
             delete ret.roleId;
 
             return ret;

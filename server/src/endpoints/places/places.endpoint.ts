@@ -12,6 +12,7 @@ import { buildPlacePopulation } from "src/helpers/places/populations";
 import {
   buildPlaceTypeFilter,
   buildPlaceRecommendationFilter,
+  buildPlaceNameFilter,
 } from "src/helpers/places/to-filter";
 
 // Import types
@@ -36,9 +37,11 @@ placesEndpoints.createHandler("").get(async (req, res) => {
   let query = DNTModes.Places.find({}).skip(skip).limit(limit);
 
   // Build filters
-  [buildPlaceTypeFilter, buildPlaceRecommendationFilter].forEach((fn) =>
-    fn(query, req)
-  );
+  [
+    buildPlaceTypeFilter,
+    buildPlaceRecommendationFilter,
+    buildPlaceNameFilter,
+  ].forEach((fn) => fn(query, req));
 
   const places = await query.exec();
 
@@ -46,6 +49,19 @@ placesEndpoints.createHandler("").get(async (req, res) => {
 
   // Return places
   return places;
+});
+
+/**
+ * Get all types of places
+ */
+placesEndpoints.createHandler("/types").get(async (req, res, o) => {
+  // Get place from database
+  let query = DNTModes.PlaceTypes.find();
+
+  const place = await query.exec();
+
+  // Return places
+  return place;
 });
 
 /**

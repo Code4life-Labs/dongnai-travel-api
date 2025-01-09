@@ -1,4 +1,6 @@
 {
+  "app": "DongNaiTravel",
+  "email": "",
   "port": 3000,
   "hostname": "0.0.0.0",
   "unListedEndpointsDir": ["index.ts"],
@@ -14,5 +16,11 @@
       "value": "15",
       "postfix": "m"
     }
+  },
+  "emailServer": {
+    "host": "",
+    "port": "",
+    "username": "",
+    "password": ""
   }
 }

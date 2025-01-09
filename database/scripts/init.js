@@ -27,6 +27,7 @@ instance.createCollection("PlaceReviews");
 instance.createCollection("UserFavoritedPlaces");
 instance.createCollection("UserFavoritedBlogs");
 instance.createCollection("UserVisitedPlaces");
+instance.createCollection("Otps");
 
 // Init data
 // UserRoles

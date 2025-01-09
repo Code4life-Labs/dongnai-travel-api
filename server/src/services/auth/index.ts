@@ -23,7 +23,7 @@ type AccessTokenPayloadType = {
   issuer: string;
 };
 
-class AuthService {
+export class AuthService {
   policyCheker!: PolicyCheker;
   static roles: any = {};
 

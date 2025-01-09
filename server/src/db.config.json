@@ -20,7 +20,8 @@
         "PlaceReviews": { "collectionName": "PlaceReviews" },
         "UserFavoritedPlaces": { "collectionName": "UserFavoritedPlaces" },
         "UserFavoritedBlogs": { "collectionName": "UserFavoritedBlogs" },
-        "UserVisitedPlaces": { "collectionName": "UserVisitedPlaces" }
+        "UserVisitedPlaces": { "collectionName": "UserVisitedPlaces" },
+        "Otp": { "collectionName": "Otps" }
       }
     }
   ]

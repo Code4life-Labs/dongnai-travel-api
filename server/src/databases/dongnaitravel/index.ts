@@ -46,6 +46,7 @@ export type DongNaiTravelModelsType = {
   UserFavoritedPlaces: Model<any>;
   UserRoles: Model<any>;
   UserVisitedPlaces: Model<any>;
+  Otps: Model<any>;
 };
 
 const models = {};

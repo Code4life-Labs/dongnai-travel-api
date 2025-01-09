@@ -83,7 +83,6 @@ placesEndpoints.createHandler("/:id").get(async (req, res, o) => {
 
   // Compute user's state
 
-  // Return places
   return place;
 });
 

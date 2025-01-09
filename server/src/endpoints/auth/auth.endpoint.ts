@@ -6,14 +6,22 @@ import { Endpoints } from "src/classes/Endpoints";
 // Import models
 import db from "src/databases/dongnaitravel";
 
+// Import helpers
+import { buildUserPopulation } from "src/helpers/users/populations";
+import { checkUser } from "src/helpers/users/check-user";
+
 // Import services
 import { authService } from "src/services/auth";
+import { emailService } from "src/services/email";
 
 // Import validators
 import {
   UserDataSignInValidator,
   UserDataSignUpValidator,
 } from "src/services/validators/user";
+
+// Import utils
+import { DatetimeUtils } from "src/utils/datetime";
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -28,6 +36,9 @@ db().then((models) => {
 const salt = 5;
 
 // Add your handlers here
+/**
+ * Apllow guest creates his/her account
+ */
 authEndpoints.createHandler("sign-up").post(async (req, res, o) => {
   const data = req.body;
 
@@ -39,14 +50,8 @@ authEndpoints.createHandler("sign-up").post(async (req, res, o) => {
     throw new Error(validationResult.error.message);
   }
 
-  // Find user by username and email
-
-  const userCount = await DNTModels.Users.countDocuments({
-    $or: [{ username: data.username }, { email: data.email }],
-  });
-
   // Check if user with that email or username exists
-  if (userCount > 0) {
+  if (await checkUser(DNTModels.Users, validationResult.value)) {
     o.code = 400;
     throw new Error("The account with this username or email is registered");
   }
@@ -72,12 +77,29 @@ authEndpoints.createHandler("sign-up").post(async (req, res, o) => {
     })
   ).toJSON();
 
+  // Send greeting email to user
+  emailService.sendEmail(
+    validationResult.value.email,
+    "DongNaiTravel: say hello to new Traveller",
+    {
+      isHTML: true,
+      content: `
+      <h4>Welcome to DongNaiTravelApp</h4>
+      <p>Wish you have a lot of fun while exploring our application!</p>
+      <p>Sincerely,<br/> - DongNaiTravelApp Team - </p>
+    `,
+    }
+  );
+
   return {
     user: { ...validationResult.value, id: insertResult.id, role },
     token: authService.createToken(role.name),
   };
 });
 
+/**
+ * Allow user verifies his/her account.
+ */
 authEndpoints.createHandler("sign-in").post(async (req, res, o) => {
   const data = req.body;
 
@@ -90,9 +112,14 @@ authEndpoints.createHandler("sign-in").post(async (req, res, o) => {
   }
 
   // Find user with username
-  const findUserResult = await DNTModels.Users.findOne({
+  const query = DNTModels.Users.findOne({
     username: data.username,
-  }).populate("role", "_id name value");
+  });
+
+  // Build populations
+  buildUserPopulation(query);
+
+  const findUserResult = await query.exec();
 
   if (!findUserResult) {
     o.code = 400;
@@ -132,6 +159,82 @@ authEndpoints.createHandler("sign-in").post(async (req, res, o) => {
     user: user,
     token: authService.createToken(user.role.name),
   };
+});
+
+/**
+ * Allow user gets otp to verify his/her account
+ */
+authEndpoints.createHandler("otp/:email").get(async (req, res, o) => {
+  const userData = req.params;
+
+  // Check if user with that email exists
+  if (!(await checkUser(DNTModels.Users, userData))) {
+    o.code = 400;
+    throw new Error("The account with this email isn't registered");
+  }
+
+  // Create OTP code
+  const otpCode = "";
+  const expireAt = DatetimeUtils.getTime("2m");
+
+  // Save OTP code
+  await DNTModels.Otps.create({
+    userEmail: userData.email,
+    value: otpCode,
+    expireAt,
+  });
+
+  // Send OTP code to email
+  emailService.sendEmail(
+    userData.email,
+    "DongNaiTravel: confirm your registration",
+    {
+      isHTML: true,
+      content: `
+      <h3>Start your journey with DongNaiTravel</h3>
+      <p>Confirm your registration by using the activation code below.</p>
+      <strong>Activation code:</strong>
+      <h3>${otpCode}</h3>
+      <p>Don't share it with anyone. This OTP will be valid for <strong>2 minutes</strong></p>
+      <p>Sincerely, DongNaiTravelApp Team</p>
+    `,
+    }
+  );
+
+  return "OTP is sent to your email!";
+});
+
+/**
+ * Allow user verifies his/her otp
+ */
+authEndpoints.createHandler("otp/:email").post(async (req, res, o) => {
+  const userData = req.params;
+  const optCode = req.body.otpCode;
+
+  // Check if user with that email exists
+  if (!(await checkUser(DNTModels.Users, userData))) {
+    o.code = 400;
+    throw new Error("The account with this email isn't registered");
+  }
+
+  // Get OTP code from database
+  const findOtpResult = await DNTModels.Otps.findOne({
+    $or: [{ value: optCode }, { userEmail: userData.email }],
+  });
+
+  // Check if otp is found or not
+  if (!findOtpResult) {
+    o.code = 404;
+    throw new Error("Otp not found");
+  }
+
+  // Compare
+  if (findOtpResult.expireAt <= Date.now()) {
+    o.code = 400;
+    throw new Error("This OTP code is expired");
+  }
+
+  return "Your OTP is valid!";
 });
 
 export default authEndpoints;

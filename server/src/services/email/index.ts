@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer";
 
+// Import utils
+import { ErrorUtils } from "src/utils/error";
+
 // Import AppConfig
 import AppConfig from "src/app.config.json";
 
@@ -38,9 +41,11 @@ export class EmailService {
     subject: string,
     content: EmailContent
   ) {
-    try {
+    return ErrorUtils.handleInterchangeError(this, async function (o) {
       if (typeof to !== "string" && Array.isArray(to))
-        throw new Error("`to` must be a string or array of string");
+        throw new Error(
+          "Error: Email service - `to` must be a string or array of string"
+        );
 
       const emailOptions = {
         from: this._from,
@@ -53,9 +58,7 @@ export class EmailService {
       else emailOptions.text = content.content;
 
       return this._transporter.sendMail(emailOptions);
-    } catch (error: any) {
-      console.error(`Error: Email service - ${error.message}`);
-    }
+    });
   }
 }
 

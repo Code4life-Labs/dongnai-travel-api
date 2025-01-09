@@ -9,6 +9,7 @@ import db from "src/databases/dongnaitravel";
 // Import helpers
 import { buildUserPopulation } from "src/helpers/users/populations";
 import { checkUser } from "src/helpers/users/check-user";
+import { generateOtp } from "src/helpers/other/otp-generator";
 
 // Import services
 import { authService } from "src/services/auth";
@@ -162,6 +163,46 @@ authEndpoints.createHandler("sign-in").post(async (req, res, o) => {
 });
 
 /**
+ * Allow user reset his/her password
+ */
+authEndpoints.createHandler("reset-password").patch(async (req, res, o) => {
+  const userData = req.body;
+
+  // Find user with username
+  const query = DNTModels.Users.findOne({
+    email: userData.email,
+  });
+
+  const findUserResult = await query.exec();
+
+  if (!findUserResult) {
+    o.code = 400;
+    throw new Error(`The user \`${userData.email}\` is not registered`);
+  }
+
+  const user = findUserResult.toJSON();
+  const hashedPassword = bcrypt.hashSync(userData.password, salt);
+
+  if (hashedPassword === user.hashedPassword) {
+    o.code = 400;
+    throw new Error(`This is your password!!`);
+  }
+
+  // Set new hashed password
+  user.hashedPassword = hashedPassword;
+
+  // Update user
+  DNTModels.Users.updateOne(
+    {
+      _id: user._id,
+    },
+    user
+  );
+
+  return "Your passwor is reset!";
+});
+
+/**
  * Allow user gets otp to verify his/her account
  */
 authEndpoints.createHandler("otp/:email").get(async (req, res, o) => {
@@ -174,7 +215,7 @@ authEndpoints.createHandler("otp/:email").get(async (req, res, o) => {
   }
 
   // Create OTP code
-  const otpCode = "";
+  const otpCode = generateOtp();
   const expireAt = DatetimeUtils.getTime("2m");
 
   // Save OTP code

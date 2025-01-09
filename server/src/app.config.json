@@ -22,5 +22,25 @@
     "port": "",
     "username": "",
     "password": ""
+  },
+  "apis": {
+    "openWeather": {
+      "apiKey": "",
+      "baseURL": "https://api.openweathermap.org",
+      "settings": {
+        "language": "",
+        "units": "metric",
+        "cnt": 40
+      }
+    },
+    "googleMap": {
+      "apiKey": "",
+      "baseURL": "https://maps.googleapis.com/maps/api",
+      "settings": {
+        "language": "",
+        "nearByRadius": "5000",
+        "maxPhotoWidth": "400"
+      }
+    }
   }
 }

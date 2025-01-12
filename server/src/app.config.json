@@ -41,6 +41,37 @@
         "nearByRadius": "5000",
         "maxPhotoWidth": "400"
       }
+    },
+    "googleRoute": {
+      "apiKey": "",
+      "baseURL": "https://routes.googleapis.com",
+      "settings": {
+        "language": "",
+        "nearByRadius": "5000",
+        "maxPhotoWidth": "400"
+      }
+    },
+    "googleTextToSpeech": {
+      "apiKey": "",
+      "baseURL": "https://texttospeech.googleapis.com/v1",
+      "settings": {
+        "language": ""
+      }
+    },
+    "openAI": {
+      "apiKey": "",
+      "baseURL": "https://maps.googleapis.com/maps/api",
+      "settings": {}
+    },
+    "redis": {
+      "apiKey": "",
+      "baseURL": "https://maps.googleapis.com/maps/api",
+      "settings": {
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": ""
+      }
     }
   }
 }

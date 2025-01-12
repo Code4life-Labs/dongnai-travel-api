@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "bull": "^4.16.5",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "joi": "^17.13.3",
@@ -24,6 +25,7 @@
     "mongoose": "^8.8.4",
     "mysql2": "^3.11.5",
     "nodemailer": "^6.9.16",
+    "openai": "^4.78.0",
     "path-to-regexp": "^8.2.0",
     "sequelize": "^6.37.5",
     "ts-node": "^10.9.2"

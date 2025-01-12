@@ -12,7 +12,7 @@ type EmailContent = {
 };
 
 /**
- * A class user to standardize email sender
+ * A class is used to standardize email sender
  */
 export class EmailService {
   private _from!: string;

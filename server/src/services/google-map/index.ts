@@ -68,7 +68,7 @@ export class GoogleMapService {
    * @param coor
    * @returns
    */
-  async getPlaceIdFromCoor(coor: any) {
+  async requestPlaceIdFromCoor(coor: any) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       if (!coor)
         throw new Error(
@@ -98,7 +98,7 @@ export class GoogleMapService {
    * @param coor
    * @returns
    */
-  async getPlaceIdFromAddress(address: string) {
+  async requestPlaceIdFromAddress(address: string) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       if (!address)
         throw new Error(
@@ -123,7 +123,7 @@ export class GoogleMapService {
    * @param params
    * @returns
    */
-  async getRouteDirection(params: any) {
+  async requestRouteDirection(params: any) {
     const url = `${this._baseUrl}/directions/json`;
 
     return ErrorUtils.handleInterchangeError(this, async function () {
@@ -170,7 +170,7 @@ export class GoogleMapService {
    * @param params
    * @returns
    */
-  async getPlaces(params: any) {
+  async requestPlaces(params: any) {
     const url = `${this._baseUrl}/place/textsearch/json`;
 
     return ErrorUtils.handleInterchangeError(this, async function () {
@@ -225,7 +225,7 @@ export class GoogleMapService {
    * @param params
    * @returns
    */
-  async getPlacePhotos(params: any) {
+  async requestPlacePhotos(params: any) {
     const url = `${this._baseUrl}/place/photo`;
 
     return ErrorUtils.handleInterchangeError(this, async function () {
@@ -255,3 +255,5 @@ export class GoogleMapService {
     });
   }
 }
+
+export const googleMapService = new GoogleMapService();

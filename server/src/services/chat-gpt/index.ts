@@ -137,7 +137,7 @@ export class ChatGPTService {
    * @param query
    * @returns
    */
-  async generateText(query: string) {
+  async requestAnswer(query: string) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const response = await this._client.completions.create({
         model: "text-davinci-003",
@@ -150,9 +150,9 @@ export class ChatGPTService {
         stop: ["Human:", "AI:"],
       });
 
-      return {
-        response: `${response.choices[0].text}`.trimStart(),
-      };
+      return `${response.choices[0].text}`.trimStart();
     });
   }
 }
+
+export const chatGPTService = new ChatGPTService();

@@ -27,7 +27,7 @@ export class WeatherService {
    * Use to get current weather
    * @param coor
    */
-  async getCurrentWeather(coor: any) {
+  async requestCurrentWeather(coor: any) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         lat: coor.latitude,
@@ -92,7 +92,7 @@ export class WeatherService {
     });
   }
 
-  async getGeoCodingDirect(address: string) {
+  async requestGeoCodingDirect(address: string) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         q: address,
@@ -114,7 +114,7 @@ export class WeatherService {
     });
   }
 
-  async getGeoCodingReverse(coor: any) {
+  async requestGeoCodingReverse(coor: any) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         lat: coor.latitude,
@@ -133,3 +133,5 @@ export class WeatherService {
     });
   }
 }
+
+export const weatherService = new WeatherService();

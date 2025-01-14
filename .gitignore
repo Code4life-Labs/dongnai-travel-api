@@ -9,4 +9,4 @@ package-lock.json
 .env.*
 
 # Ignore some keys
-secrets/*.key.*
+secrets

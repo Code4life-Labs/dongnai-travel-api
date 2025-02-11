@@ -22,7 +22,8 @@ export class DirectionService {
   }
 
   /**
-   * Use to request a speech from
+   * Use to get rouet direction
+   * Old name: `getRouteDirection`
    * @param data
    * @returns
    */
@@ -63,9 +64,16 @@ export class DirectionService {
         oriToCheck = data.oriPlaceId
       } else if (data.typeOri === 'address') {
         // geocoding 2 thằng origin và destination để lấy chính xác place_id để đi kiểm tra trong db
-        const geocodingOri = await googleMapService.requestPlaceIdFromAddress(data.oriAddress)
+        const requestPlaceByAddressResult = await googleMapService.requestPlaceIdFromAddress(data.oriAddress)
         
-        console.log('🚀 ~ file: direction.service.js:60 ~ getRouteDirection ~ geocodingOri:', geocodingOri)
+        if (requestPlaceByAddressResult.code) {
+          console.error(requestPlaceByAddressResult.message);
+          return;
+        }
+
+        const geocodingOri = requestPlaceByAddressResult.data;
+
+        console.log('🚀 ~ file: direction.service.js:60 ~ generateRouteDirection ~ geocodingOri:', geocodingOri)
         oriToCheck = geocodingOri.place_id
         oriRouteInfo = {
           place_id: geocodingOri.place_id,
@@ -75,7 +83,14 @@ export class DirectionService {
   
       } else if (data.typeOri === 'coordinate') {
         // geocoding 2 thằng origin và destination để lấy chính xác place_id để đi kiểm tra trong db
-        const geocodingOri = await googleMapService.requestPlaceIdFromCoor({ latitude: data.oriCoor.latitude, longitude: data.oriCoor.longitude })
+        const requestPlaceByAddressResult = await googleMapService.requestPlaceIdFromCoor({ latitude: data.oriCoor.latitude, longitude: data.oriCoor.longitude })
+        
+        if (requestPlaceByAddressResult.code) {
+          console.error(requestPlaceByAddressResult.message);
+          return;
+        }
+
+        const geocodingOri = requestPlaceByAddressResult.data;
         oriToCheck = geocodingOri.place_id
       }
   
@@ -83,7 +98,15 @@ export class DirectionService {
         desToCheck = data.desPlaceId
       } else if (data.typeDes === 'address') {
         // geocoding 2 thằng origin và destination để lấy chính xác place_id để đi kiểm tra trong db
-        const geocodingDes = await googleMapService.requestPlaceIdFromAddress(data.desAddress)
+        const requestPlaceByAddressResult = await googleMapService.requestPlaceIdFromAddress(data.desAddress)
+
+        if (requestPlaceByAddressResult.code) {
+          console.error(requestPlaceByAddressResult.message);
+          return;
+        }
+
+        const geocodingDes = requestPlaceByAddressResult.data;
+
         console.log('🚀 ~ file: direction.service.js:71 ~ getRouteDirection ~ geocodingDes:', geocodingDes)
         desToCheck = geocodingDes.place_id
         desRouteInfo = {
@@ -93,7 +116,14 @@ export class DirectionService {
         }
       } else if (data.typeDes === 'coordinate') {
         // geocoding 2 thằng origin và destination để lấy chính xác place_id để đi kiểm tra trong db
-        const geocodingDes = await googleMapService.requestPlaceIdFromCoor({ latitude: data.oriCoor.latitude, longitude: data.oriCoor.longitude })
+        const requestPlaceByAddressResult = await googleMapService.requestPlaceIdFromCoor({ latitude: data.oriCoor.latitude, longitude: data.oriCoor.longitude })
+        
+        if (requestPlaceByAddressResult.code) {
+          console.error(requestPlaceByAddressResult.message);
+          return;
+        }
+        
+        const geocodingDes = requestPlaceByAddressResult.data;
         desToCheck = geocodingDes.place_id
       }
   

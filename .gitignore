@@ -10,3 +10,4 @@ package-lock.json
 
 # Ignore some keys
 secrets
+!*/secrets/README.md

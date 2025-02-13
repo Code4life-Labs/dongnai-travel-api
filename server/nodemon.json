@@ -2,5 +2,6 @@
   "watch": ["src"],
   "ext": "ts,json",
   "ignore": ["dist", "node_modules"],
-  "exec": "npm start"
+  "exec": "npm start",
+  "legacyWatch": true
 }

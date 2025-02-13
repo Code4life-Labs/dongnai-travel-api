@@ -59,6 +59,18 @@ export class AuthService {
   }
 
   /**
+   * Use to check if a request is from an authorized user
+   * @param req
+   * @returns
+   */
+  static isAuthorizedRequest(req: any) {
+    if (req.locals && req.locals.isAuthorized) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Check policy of a request
    * @param role
    * @param resource

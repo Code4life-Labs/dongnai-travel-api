@@ -28,7 +28,9 @@ export class AuthMiddlewares {
       const result = await authService.verifyToken(token);
 
       if (!result.code) {
+        // Add some custom properties to request
         res.locals.tokenPayload = result.data;
+        req.locals.isAuthorized = true;
         // Go to next middleware
         return next();
       } else {

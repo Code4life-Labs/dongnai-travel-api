@@ -6,8 +6,16 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        userId: Schema.Types.ObjectId,
-        placeId: Schema.Types.ObjectId,
+        placeId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Places",
+          required: true,
+        },
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Users",
+          required: true,
+        },
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

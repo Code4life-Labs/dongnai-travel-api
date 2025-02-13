@@ -51,7 +51,7 @@ const userRoles = [
 // Users
 const users = [
   {
-    _id: ObjectId(),
+    _id: ObjectId("67adafec11c0293b5ae4326b"),
     roleId: userRoles[1]._id,
     firstName: "Tuan",
     lastName: "Nguyen Anh",
@@ -4710,5 +4710,68 @@ instance.BlogTypes.insertMany(blogTypes);
 instance.BusinessStatuses.insertMany(businessStatuses);
 instance.Places.insertMany(places);
 instance.Blogs.insertMany(blogs);
+
+// Insert some data for interactions
+const userFavoritedPlaces = [
+  {
+    placeId: places[0]._id,
+    userId: users[0]._id,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+  {
+    placeId: places[2]._id,
+    userId: users[0]._id,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+  {
+    placeId: places[3]._id,
+    userId: users[0]._id,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+];
+
+const userFavoritedBlogs = [
+  {
+    blogId: blogs[0]._id,
+    userId: users[0]._id,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+  {
+    blogId: blogs[1]._id,
+    userId: users[0]._id,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+];
+
+const placeReviews = [
+  {
+    placeId: places[0]._id,
+    userId: users[0]._id,
+    content:
+      "Tôi đã đi tới địa điểm này, rất là ok, mọi người cũng nên thử đến đây một lần!!",
+    rating: 4.5,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+  {
+    placeId: places[1]._id,
+    userId: users[0]._id,
+    content: "Chỗ này khá ổn, nhưng dịch vụ thì chưa được tốt cho lắm :(",
+    rating: 3.1,
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+];
+
+// Insert
+instance.PlaceReviews.insertMany(placeReviews);
+instance.UserFavoritedPlaces.insertMany(userFavoritedPlaces);
+instance.UserFavoritedBlogs.insertMany(userFavoritedBlogs);
+instance.UserVisitedPlaces.insertMany(userFavoritedPlaces);
 
 console.log("Data inserted successfully");

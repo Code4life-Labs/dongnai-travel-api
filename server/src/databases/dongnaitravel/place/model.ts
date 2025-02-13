@@ -35,6 +35,9 @@ export default function () {
           transform: function (doc, ret) {
             delete ret.id;
 
+            // Delete some fields
+            delete ret.typeIds;
+
             return ret;
           },
         },
@@ -42,9 +45,27 @@ export default function () {
     );
 
     _schema.virtual("types", {
-      ref: "PlaceType",
+      ref: "PlaceTypes",
       localField: "typeIds",
       foreignField: "_id",
+    });
+
+    _schema.virtual("reviews", {
+      ref: "PlaceReviews",
+      localField: "_id",
+      foreignField: "placeId",
+    });
+
+    _schema.virtual("favorites", {
+      ref: "UserFavoritedPlaces",
+      localField: "_id",
+      foreignField: "placeId",
+    });
+
+    _schema.virtual("visits", {
+      ref: "UserVisitedPlaces",
+      localField: "_id",
+      foreignField: "placeId",
     });
   }
   const model = mongoose.model("Places", _schema);

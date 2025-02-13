@@ -4768,8 +4768,27 @@ const placeReviews = [
   },
 ];
 
+const blogComments = [
+  {
+    blogId: blogs[0]._id,
+    userId: users[0]._id,
+    content:
+      "Tôi đã đi tới chỗ này rồi, và bài viết này rất chính xác nha. Cảm ơn tác giả đã chia sẻ :D",
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+  {
+    blogId: blogs[1]._id,
+    userId: users[0]._id,
+    content: "Cảm ơn tác giả đã chia sẻ, chúc các bạn đi du lịch vui vẻ!",
+    createdAt: new Date("02-13-2025").getTime(),
+    updatedAt: new Date("02-13-2025").getTime(),
+  },
+];
+
 // Insert
 instance.PlaceReviews.insertMany(placeReviews);
+instance.BlogComments.insertMany(blogComments);
 instance.UserFavoritedPlaces.insertMany(userFavoritedPlaces);
 instance.UserFavoritedBlogs.insertMany(userFavoritedBlogs);
 instance.UserVisitedPlaces.insertMany(userFavoritedPlaces);

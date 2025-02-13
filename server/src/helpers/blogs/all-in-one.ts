@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 
-export function queryPlaceWithAggregate(
-  placeId: string,
+export function queryBlogWithAggregate(
+  blogId: string,
   MC: DongNaiTravelModelsType,
   userId: string
 ) {
@@ -12,16 +12,16 @@ export function queryPlaceWithAggregate(
   // Count totalFavorites, totalVisits, totalReviews
   // Calculate average of ratings
   // Check if user is liked, visited place or not
-  const aggregate = MC.Places.aggregate([
+  const aggregate = MC.Blogs.aggregate([
     {
-      $match: { _id: new mongoose.Types.ObjectId(placeId) },
+      $match: { _id: new mongoose.Types.ObjectId(blogId) },
     },
     // Count and lookups
     {
       $lookup: {
-        from: "PlaceTypes",
+        from: "BlogTypes",
         localField: "_id",
-        foreignField: "placeId",
+        foreignField: "blogId",
         as: "types",
         pipeline: [
           {
@@ -32,25 +32,25 @@ export function queryPlaceWithAggregate(
     },
     {
       $lookup: {
-        from: "PlaceReviews",
+        from: "BlogReviews",
         localField: "_id",
-        foreignField: "placeId",
+        foreignField: "blogId",
         as: "reviews",
       },
     },
     {
       $lookup: {
-        from: "UserFavoritedPlaces",
+        from: "UserFavoritedBlogs",
         localField: "_id",
-        foreignField: "placeId",
+        foreignField: "blogId",
         as: "favorites",
       },
     },
     {
       $lookup: {
-        from: "UserVisitedPlaces",
+        from: "UserVisitedBlogs",
         localField: "_id",
-        foreignField: "placeId",
+        foreignField: "blogId",
         as: "visits",
       },
     },

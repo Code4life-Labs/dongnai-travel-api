@@ -37,6 +37,20 @@ export default function () {
         },
       }
     );
+
+    _schema.virtual("user", {
+      ref: "Users",
+      localField: "userId",
+      foreignField: "_id",
+      justOne: true,
+    });
+
+    _schema.virtual("place", {
+      ref: "Places",
+      localField: "placeId",
+      foreignField: "_id",
+      justOne: true,
+    });
   }
   const model = mongoose.model("UserFavoritedPlaces", _schema);
   return { model, name: "UserFavoritedPlaces" };

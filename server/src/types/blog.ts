@@ -1,6 +1,7 @@
 // Import types
 import type { ObjectId } from "mongodb";
 import type { BaseMultipleRecordsQuery, BaseModel } from "./general";
+import type { Mongo_BlogComment } from "./blog-comment";
 
 // Use for base type of blog
 type $Extendable = {
@@ -22,10 +23,13 @@ export type Mongo_BlogModel = {
 // The actual blog data structure (A data that is joined from multiple documents)
 export type Mongo_Blog = {
   type: string;
-  author: Array<any>;
+  author: any;
+  content: string;
   mentionedPlaces: Array<any>;
-  // User state
+  comments: Array<Mongo_BlogComment>;
   isLiked: boolean;
+  totalComments: number;
+  totalFavorites: number;
 } & $Extendable;
 
 export type Mongo_BlogQuery = {};

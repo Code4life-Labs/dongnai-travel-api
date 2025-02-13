@@ -8,11 +8,15 @@ import db from "src/databases/dongnaitravel";
 import { RequestUtils } from "src/utils/request";
 
 // Import helpers
-import { buildBlogPopulation } from "src/helpers/blogs/populations";
+import {
+  buildBlogProjection,
+  buildBriefProjection,
+} from "src/helpers/blogs/projections";
 import {
   buildBlogTypeFilter,
   buildBlogNameFilter,
 } from "src/helpers/blogs/to-filter";
+import { computeStateOfBlog } from "src/helpers/blogs/states-computer";
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -29,18 +33,21 @@ blogsEndpoints.createHandler("").get(async (req, res) => {
   // Get `limit` and `skip` from request
   const { limit, skip } = RequestUtils.getLimitNSkip(req);
 
-  // Get blogs from database
-  let query = DNTModes.Places.find({}).skip(skip).limit(limit);
+  // Process query
+  const { userId } = req.query as any;
 
-  // Build filters
-  [buildBlogTypeFilter, buildBlogNameFilter].forEach((fn) => fn(query, req));
+  // Get blogs from database
+  let query = DNTModes.Blogs.find({}).skip(skip).limit(limit);
+
+  // Build filters & projections
+  [buildBlogTypeFilter, buildBlogNameFilter, buildBriefProjection].forEach(
+    (fn) => fn(query, req)
+  );
 
   const blogs = await query.exec();
 
-  // Compute user's state
-
   // Return blogs
-  return blogs;
+  return blogs.map((blog) => computeStateOfBlog(blog.toJSON(), userId));
 });
 
 /**
@@ -60,23 +67,24 @@ blogsEndpoints.createHandler("/types").get(async (req, res, o) => {
  * Get details of blog
  */
 blogsEndpoints.createHandler("/:id").get(async (req, res, o) => {
-  if (req.params.id) {
+  if (!req.params.id) {
     o.code = 400;
     throw new Error("Id of blog is required");
   }
+
+  // Process query
+  const { userId } = req.query as any;
 
   // Get blog from database
   let query = DNTModes.Blogs.findOne({ _id: req.params.id });
 
   // Build populations
-  buildBlogPopulation(query);
+  buildBlogProjection(query);
 
   const blog = await query.exec();
 
-  // Compute user's state
-
-  // Return blogs
-  return blog;
+  // Return blog
+  return computeStateOfBlog(blog.toJSON(), userId);
 });
 
 export default blogsEndpoints;

@@ -1,5 +1,5 @@
 /**
- * Use this function to calculate:
+ * Use this function to compute:
  * - totalFavorites
  * - totalVisits
  * - totalReviews
@@ -10,7 +10,7 @@
  * Note: this function effect the result.
  * @param plainPlace
  */
-export function calculateState(plainPlace: any, userId: string) {
+export function computeStateOfPlace(plainPlace: any, userId: string) {
   if (plainPlace.reviews) {
     let sum = 0,
       total = 0;

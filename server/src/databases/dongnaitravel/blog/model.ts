@@ -6,9 +6,13 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        authorId: Schema.Types.ObjectId,
-        typeId: Schema.Types.ObjectId,
-        mentionedPlaceIds: [Schema.Types.ObjectId],
+        authorId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
+        typeId: {
+          type: Schema.Types.ObjectId,
+          ref: "BlogTypes",
+          required: true,
+        },
+        mentionedPlaceIds: [{ type: Schema.Types.ObjectId }],
         name: Schema.Types.String,
         contentUrl: Schema.Types.String,
         coverImage: Schema.Types.String,
@@ -48,6 +52,25 @@ export default function () {
       localField: "typeId",
       foreignField: "_id",
       justOne: true,
+    });
+
+    _schema.virtual("author", {
+      ref: "Users",
+      localField: "authorId",
+      foreignField: "_id",
+      justOne: true,
+    });
+
+    _schema.virtual("favorites", {
+      ref: "UserFavoritedBlogs",
+      localField: "_id",
+      foreignField: "blogId",
+    });
+
+    _schema.virtual("comments", {
+      ref: "BlogComments",
+      localField: "_id",
+      foreignField: "blogId",
     });
   }
   const model = mongoose.model("Blogs", _schema);

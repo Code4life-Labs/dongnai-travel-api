@@ -6,8 +6,8 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        userId: Schema.Types.ObjectId,
-        blogId: Schema.Types.ObjectId,
+        userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
+        blogId: { type: Schema.Types.ObjectId, ref: "Blogs", required: true },
         content: Schema.Types.String,
         createdAt: {
           type: Schema.Types.Number,
@@ -30,6 +30,20 @@ export default function () {
         },
       }
     );
+
+    _schema.virtual("user", {
+      ref: "Users",
+      localField: "userId",
+      foreignField: "_id",
+      justOne: true,
+    });
+
+    _schema.virtual("blog", {
+      ref: "Blogs",
+      localField: "blogId",
+      foreignField: "_id",
+      justOne: true,
+    });
   }
   const model = mongoose.model("BlogComments", _schema);
   return { model, name: "BlogComments" };

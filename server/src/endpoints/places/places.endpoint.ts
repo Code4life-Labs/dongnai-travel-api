@@ -24,8 +24,8 @@ import {
 } from "src/helpers/places/to-filter";
 import { transformPlaceContentWithLanguage } from "src/helpers/places/transforms";
 import { getLanguageFromQuery } from "src/helpers/other/get-language";
-import { queryOneWithAggregate } from "src/helpers/places/all-in-one";
-import { calculateState } from "src/helpers/places/states-computer";
+import { queryPlaceWithAggregate } from "src/helpers/places/all-in-one";
+import { computeStateOfPlace } from "src/helpers/places/states-computer";
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -45,7 +45,7 @@ placesEndpoints.createHandler("").get(async (req, res) => {
   // Get `limit` and `skip` from request
   const { limit, skip } = RequestUtils.getLimitNSkip(req);
 
-  // Process params
+  // Process query
   const { userId } = req.query as any;
 
   // Get places from database
@@ -67,7 +67,7 @@ placesEndpoints.createHandler("").get(async (req, res) => {
   }
 
   // Return places
-  return places.map((place) => calculateState(place.toJSON(), userId));
+  return places.map((place) => computeStateOfPlace(place.toJSON(), userId));
 });
 
 /**
@@ -125,7 +125,7 @@ placesEndpoints.createHandler("/:id").get(async (req, res, o) => {
   // Final transform data
   const result = transformPlaceContentWithLanguage(placeJSON, lang);
 
-  return calculateState(result, userId);
+  return computeStateOfPlace(result, userId);
 });
 
 export default placesEndpoints;

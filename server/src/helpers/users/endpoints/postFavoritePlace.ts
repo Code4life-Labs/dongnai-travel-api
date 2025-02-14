@@ -18,7 +18,7 @@ export default async function postFavoritedPlace(
   // Check if user liked this place before
   if (await MC.UserFavoritedPlaces.findOne({ userId: id, placeId }).exec()) {
     o!.code = 200;
-    return "You liked this place before";
+    return "You liked this place before or you didn't";
   }
 
   // Create new document (record)
@@ -29,7 +29,7 @@ export default async function postFavoritedPlace(
 
   if (!result || !result._id) {
     o!.code = 500;
-    throw new Error("Cannot add this place as favorited");
+    throw new Error("Cannot marked `favorited` on this place");
   }
 
   o!.code = 201;

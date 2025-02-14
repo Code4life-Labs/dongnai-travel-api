@@ -18,7 +18,7 @@ export default async function deleteFavoritedPlace(
   // Check if user liked this place before
   if (!(await MC.UserFavoritedPlaces.findOne({ userId: id, placeId }).exec())) {
     o!.code = 200;
-    return "You unliked this place";
+    return "You unliked this place or you didn't";
   }
 
   const result = await MC.UserFavoritedPlaces.deleteOne({

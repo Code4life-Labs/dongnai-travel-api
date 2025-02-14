@@ -16,8 +16,14 @@ export default function () {
           ref: "Users",
           required: true,
         },
-        content: Schema.Types.String,
-        rating: Schema.Types.Number,
+        content: {
+          type: Schema.Types.String,
+          required: true,
+        },
+        rating: {
+          type: Schema.Types.Number,
+          required: true,
+        },
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

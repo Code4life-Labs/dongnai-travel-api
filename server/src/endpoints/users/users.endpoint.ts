@@ -5,7 +5,14 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import helpers
-import { buildUserPopulation } from "src/helpers/users/populations";
+import getUser from "src/helpers/users/endpoints/getUser";
+import postFavoritedPlace from "src/helpers/users/endpoints/postFavoritePlace";
+import postPlaceReview from "src/helpers/users/endpoints/postPlaceReview";
+import postVisitedPlace from "src/helpers/users/endpoints/postVisitedPlace";
+import patchPlaceReview from "src/helpers/users/endpoints/patchPlaceReview";
+import deleteFavoritedPlace from "src/helpers/users/endpoints/deleteFavoritePlace";
+import deletePlaceReview from "src/helpers/users/endpoints/deletePlaceReview";
+import deleteVisitedPlace from "src/helpers/users/endpoints/deleteVisitedPlace";
 
 const usersEndpoints = new Endpoints("users");
 let DNTModes: DongNaiTravelModelsType;
@@ -29,22 +36,70 @@ usersEndpoints.createHandler("").get((req, res) => {
  * Get user by id
  */
 usersEndpoints.createHandler("/:id").get(async (req, res, o) => {
-  if (req.params.id) {
-    o.code = 400;
-    throw new Error("Id of user is required");
-  }
-
-  // Get user from database
-  let query = DNTModes.Users.findOne({ _id: req.params.id });
-
-  // Build populations
-  buildUserPopulation(query);
-
-  const user = await query.exec();
-
-  // Compute user's state
-
-  return user;
+  return getUser(DNTModes, req, res, o);
 });
+
+/**
+ * Create favorited place (like place)
+ */
+usersEndpoints
+  .createHandler("/:id/favorites/places/:placeId")
+  .post(async (req, res, o) => {
+    return postFavoritedPlace(DNTModes, req, res, o);
+  });
+
+/**
+ * Delete favorited place (like place)
+ */
+usersEndpoints
+  .createHandler("/:id/favorites/places/:placeId")
+  .delete(async (req, res, o) => {
+    return deleteFavoritedPlace(DNTModes, req, res, o);
+  });
+
+/**
+ * Create visited place (visit place)
+ */
+usersEndpoints
+  .createHandler("/:id/visits/places/:placeId")
+  .post(async (req, res, o) => {
+    return postVisitedPlace(DNTModes, req, res, o);
+  });
+
+/**
+ * Delete visited place (visit place)
+ */
+usersEndpoints
+  .createHandler("/:id/visits/places/:placeId")
+  .delete(async (req, res, o) => {
+    return deleteVisitedPlace(DNTModes, req, res, o);
+  });
+
+/**
+ * Create place review
+ */
+usersEndpoints
+  .createHandler("/:id/reviews/places/:placeId")
+  .post(async (req, res, o) => {
+    return postPlaceReview(DNTModes, req, res, o);
+  });
+
+/**
+ * Update place review
+ */
+usersEndpoints
+  .createHandler("/:id/reviews/places/:placeId")
+  .patch(async (req, res, o) => {
+    return patchPlaceReview(DNTModes, req, res, o);
+  });
+
+/**
+ * Delete place review
+ */
+usersEndpoints
+  .createHandler("/:id/reviews/places/:placeId")
+  .delete(async (req, res, o) => {
+    return deletePlaceReview(DNTModes, req, res, o);
+  });
 
 export default usersEndpoints;

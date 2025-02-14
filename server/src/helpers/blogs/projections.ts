@@ -28,7 +28,7 @@ export function buildBriefProjection(query: Query<any, any>) {
 
   // Exclude some fields
   query.select(
-    BlogProjectionFields.ExcludedFields.map((fields) => `-${fields}`).join(",")
+    BlogProjectionFields.ExcludedFields.map((fields) => `-${fields}`).join(" ")
   );
 
   return query;

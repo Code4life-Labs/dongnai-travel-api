@@ -8,7 +8,7 @@ import db from "src/databases/dongnaitravel";
 
 // Import helpers
 import { buildUserPopulation } from "src/helpers/users/populations";
-import { checkUser } from "src/helpers/users/check-user";
+import { checkUser } from "src/helpers/users/user-checkers";
 import { generateOtp } from "src/helpers/other/otp-generator";
 
 // Import services

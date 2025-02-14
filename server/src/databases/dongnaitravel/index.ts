@@ -50,16 +50,13 @@ export type DongNaiTravelModelsType = {
 };
 
 const models = {};
+let isConnected = false;
 
 export default async function () {
-  const connectionString = `mongodb://${databaseUsername}:${databasePassword}@${databaseHost}:27017/${databaseName}`;
-
-  await mongoose.connect(connectionString, {
-    authSource: "admin",
-  });
+  const hasModels = Object.keys(models).length > 0;
 
   // Everythings is cached, return the final result
-  if (Object.keys(models).length > 0) return models as DongNaiTravelModelsType;
+  if (hasModels) return models as DongNaiTravelModelsType;
 
   // Build model
   const modelFilePaths = reader.getAllPathsToFilesSync(rootPath);
@@ -76,6 +73,17 @@ export default async function () {
     const result = model();
     (models as any)[result.name] = result.model;
   }
+
+  const connectionString = `mongodb://${databaseUsername}:${databasePassword}@${databaseHost}:27017/${databaseName}`;
+
+  console.log(`[${databaseName}] Connecting to MongoDB Database...`);
+
+  await mongoose.connect(connectionString, {
+    authSource: "admin",
+  });
+  isConnected = true;
+
+  console.log(`[${databaseName}] Connected to MongoDB Database`);
 
   return models as DongNaiTravelModelsType;
 }

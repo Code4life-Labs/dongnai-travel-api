@@ -27,7 +27,7 @@ export function computeStateOfPlace(plainPlace: any, userId: string) {
     plainPlace.isFavorited = false;
     for (const favorite of plainPlace.favorites) {
       if (!plainPlace.isFavorited && userId == favorite.userId)
-        plainPlace.isVisited = true;
+        plainPlace.isFavorited = true;
       total++;
     }
     plainPlace.totalFavorites = total;

@@ -6,9 +6,17 @@ import path from "path";
 
 export class DirReader {
   blackList?: Array<string>;
+  blackListRegexp?: Record<string, RegExp>;
 
   constructor(blackList?: Array<string>) {
     this.blackList = blackList;
+
+    if (this.blackList) {
+      this.blackListRegexp = {};
+      for (const restrict of this.blackList) {
+        this.blackListRegexp[restrict] = new RegExp(restrict, "i");
+      }
+    }
   }
 
   /**
@@ -18,9 +26,11 @@ export class DirReader {
    */
   isInBlackList(path: string) {
     if (!this.blackList) return false;
+    if (!this.blackListRegexp) return false;
 
     for (const restrict of this.blackList) {
-      if (path.includes(restrict)) return true;
+      // To Regexp
+      if (this.blackListRegexp[restrict].test(path)) return true;
     }
     return false;
   }
@@ -61,7 +71,7 @@ export class DirReader {
     const files = await this.readDir(startPath);
 
     for (const file of files) {
-      // Check if file is in blacklist
+      // Check if file is in blacklist or not include in choice list
       if (this.isInBlackList(file)) continue;
 
       let pathToFile = path.resolve(startPath, file);
@@ -88,7 +98,7 @@ export class DirReader {
     const files = fs.readdirSync(startPath);
 
     for (const file of files) {
-      // Check if file is in blacklist
+      // Check if file is in blacklist or not include in choice list
       if (this.isInBlackList(file)) continue;
 
       let pathToFile = path.resolve(startPath, file);

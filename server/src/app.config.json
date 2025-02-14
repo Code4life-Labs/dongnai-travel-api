@@ -3,6 +3,7 @@
   "email": "",
   "port": 3000,
   "hostname": "0.0.0.0",
+  "listedEndpointsDir": [".endpoint.ts"],
   "unListedEndpointsDir": ["index.ts"],
   "folders": {
     "templates": "templates",

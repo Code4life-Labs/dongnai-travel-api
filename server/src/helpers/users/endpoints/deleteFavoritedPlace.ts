@@ -6,7 +6,7 @@ import type { Request, Response } from "express";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 import type { HTTPResponseDataType } from "src/utils/http";
 
-export default async function postFavoritedPlace(
+export default async function deleteFavoritedPlace(
   MC: DongNaiTravelModelsType,
   req: Request,
   res?: Response,
@@ -16,23 +16,23 @@ export default async function postFavoritedPlace(
   const { id, placeId } = checkUserPlaceIdInRequest(req, o);
 
   // Check if user liked this place before
-  if (await MC.UserFavoritedPlaces.findOne({ userId: id, placeId }).exec()) {
+  if (
+    !(await MC.UserFavoritedPlaces.findOne({
+      $and: [{ userId: id }, { placeId }],
+    }).exec())
+  ) {
     o!.code = 200;
-    return "You liked this place before or you didn't";
+    return "You unliked this place or you didn't";
   }
 
-  // Create new document (record)
-  const result = await MC.UserFavoritedPlaces.create({
-    placeId: placeId,
-    userId: id,
+  const result = await MC.UserFavoritedPlaces.deleteOne({
+    $and: [{ userId: id }, { placeId }],
   });
 
-  if (!result || !result._id) {
+  if (result.deletedCount === 0) {
     o!.code = 500;
-    throw new Error("Cannot marked `favorited` on this place");
+    return "Cannot unlike this place";
   }
 
-  o!.code = 201;
-
-  return "You have just liked this place";
+  return "You have just unlike this place";
 }

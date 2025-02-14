@@ -6,11 +6,11 @@ import db from "src/databases/dongnaitravel";
 
 // Import helpers
 import getUser from "src/helpers/users/endpoints/getUser";
-import postFavoritedPlace from "src/helpers/users/endpoints/postFavoritePlace";
+import postFavoritedPlace from "src/helpers/users/endpoints/postFavoritedPlace";
 import postPlaceReview from "src/helpers/users/endpoints/postPlaceReview";
 import postVisitedPlace from "src/helpers/users/endpoints/postVisitedPlace";
 import patchPlaceReview from "src/helpers/users/endpoints/patchPlaceReview";
-import deleteFavoritedPlace from "src/helpers/users/endpoints/deleteFavoritePlace";
+import deleteFavoritedPlace from "src/helpers/users/endpoints/deleteFavoritedPlace";
 import deletePlaceReview from "src/helpers/users/endpoints/deletePlaceReview";
 import deleteVisitedPlace from "src/helpers/users/endpoints/deleteVisitedPlace";
 
@@ -98,6 +98,51 @@ usersEndpoints
  */
 usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
+  .delete(async (req, res, o) => {
+    return deletePlaceReview(DNTModes, req, res, o);
+  });
+
+/**
+ * Create liked blog (like blog)
+ */
+usersEndpoints
+  .createHandler("/:id/likes/blogs/:blogId")
+  .post(async (req, res, o) => {
+    return postVisitedPlace(DNTModes, req, res, o);
+  });
+
+/**
+ * Delete liked blog (like blog)
+ */
+usersEndpoints
+  .createHandler("/:id/likes/blogs/:blogId")
+  .delete(async (req, res, o) => {
+    return deleteVisitedPlace(DNTModes, req, res, o);
+  });
+
+/**
+ * Create place comment
+ */
+usersEndpoints
+  .createHandler("/:id/comments/blogs/:blogId")
+  .post(async (req, res, o) => {
+    return postPlaceReview(DNTModes, req, res, o);
+  });
+
+/**
+ * Update place comment
+ */
+usersEndpoints
+  .createHandler("/:id/comments/blogs/:blogId")
+  .patch(async (req, res, o) => {
+    return patchPlaceReview(DNTModes, req, res, o);
+  });
+
+/**
+ * Delete place comment
+ */
+usersEndpoints
+  .createHandler("/:id/comments/blogs/:blogId")
   .delete(async (req, res, o) => {
     return deletePlaceReview(DNTModes, req, res, o);
   });

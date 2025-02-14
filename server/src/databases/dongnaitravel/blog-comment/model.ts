@@ -8,7 +8,7 @@ export default function () {
       {
         userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
         blogId: { type: Schema.Types.ObjectId, ref: "Blogs", required: true },
-        content: Schema.Types.String,
+        content: { type: Schema.Types.String, required: true },
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

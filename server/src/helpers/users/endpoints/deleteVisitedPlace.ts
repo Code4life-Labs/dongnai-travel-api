@@ -16,7 +16,11 @@ export default async function deleteVisitedPlace(
   const { id, placeId } = checkUserPlaceIdInRequest(req, o);
 
   // Check if user marked `visited` on this place before
-  if (!(await MC.UserVisitedPlaces.findOne({ userId: id, placeId }).exec())) {
+  if (
+    !(await MC.UserVisitedPlaces.findOne({
+      $and: [{ userId: id }, { placeId }],
+    }).exec())
+  ) {
     o!.code = 200;
     return "You unmark `visited` on this place before or you didn't";
   }

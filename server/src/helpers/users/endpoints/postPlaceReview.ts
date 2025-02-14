@@ -22,7 +22,11 @@ export default async function postPlaceReview(
   const rating = checkRating(req.body.rating, o!);
 
   // Check if user reviewed this place before
-  if (await MC.PlaceReviews.findOne({ userId: id, placeId }).exec()) {
+  if (
+    await MC.PlaceReviews.findOne({
+      $and: [{ userId: id }, { placeId }],
+    }).exec()
+  ) {
     o!.code = 205;
     return "You reviewed this place before or you didn't";
   }

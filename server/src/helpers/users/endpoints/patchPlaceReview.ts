@@ -33,7 +33,11 @@ export default async function patchPlaceReview(
   }
 
   // Check if user reviewed this place before
-  if (!(await MC.PlaceReviews.findOne({ userId: id, placeId }).exec())) {
+  if (
+    !(await MC.PlaceReviews.findOne({
+      $and: [{ userId: id }, { placeId }],
+    }).exec())
+  ) {
     o!.code = 404;
     throw new Error("Cannot find this review");
   }

@@ -16,7 +16,11 @@ export default async function deletePlaceReview(
   const { id, placeId } = checkUserPlaceIdInRequest(req, o);
 
   // Check if user reviewed this place before
-  if (!(await MC.PlaceReviews.findOne({ userId: id, placeId }).exec())) {
+  if (
+    !(await MC.PlaceReviews.findOne({
+      $and: [{ userId: id }, { placeId }],
+    }).exec())
+  ) {
     o!.code = 200;
     return "You removed this place before or you didn't";
   }

@@ -41,4 +41,11 @@ blogsEndpoints.createHandler("/:id").get(async (req, res, o) => {
   return getBlog(DNTModes, req, res, o);
 });
 
+/**
+ * Delete blog
+ */
+blogsEndpoints.createHandler("/:id").delete(async (req, res, o) => {
+  return getBlog(DNTModes, req, res, o);
+});
+
 export default blogsEndpoints;

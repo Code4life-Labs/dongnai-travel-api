@@ -147,4 +147,22 @@ usersEndpoints
     return deletePlaceReview(DNTModes, req, res, o);
   });
 
+/**
+ * Follow a user
+ */
+usersEndpoints
+  .createHandler("/:id/follow/:userId")
+  .post(async (req, res, o) => {
+    return deletePlaceReview(DNTModes, req, res, o);
+  });
+
+/**
+ * Unfollow a user
+ */
+usersEndpoints
+  .createHandler("/:id/follow/:userId")
+  .delete(async (req, res, o) => {
+    return deletePlaceReview(DNTModes, req, res, o);
+  });
+
 export default usersEndpoints;

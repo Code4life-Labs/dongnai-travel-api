@@ -14,7 +14,7 @@ export default async function postPlaceReview(
   o?: HTTPResponseDataType
 ) {
   // Check if id and placeId are exist
-  const { id, placeId } = checkUserPlaceIdInRequest(req, o);
+  const validData = checkUserPlaceIdInRequest(req, o);
 
   // Check content
   const { content, rating } = checkPlaceReviewWhenCreate(req.body, o!);
@@ -22,7 +22,7 @@ export default async function postPlaceReview(
   // Check if user reviewed this place before
   if (
     await MC.PlaceReviews.findOne({
-      $and: [{ userId: id }, { placeId }],
+      $and: [{ userId: validData.id }, { placeId: validData.placeId }],
     }).exec()
   ) {
     o!.code = 205;
@@ -30,12 +30,10 @@ export default async function postPlaceReview(
   }
 
   // Create new document (record)
-  const result = await MC.PlaceReviews.create({
-    placeId: placeId,
-    userId: id,
-    content,
-    rating,
-  });
+  (validData as any).content = content;
+  (validData as any).rating = content;
+
+  const result = await MC.PlaceReviews.create(validData);
 
   if (!result || !result._id) {
     o!.code = 500;

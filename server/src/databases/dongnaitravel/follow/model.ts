@@ -6,8 +6,14 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        source: Schema.Types.ObjectId,
-        target: Schema.Types.ObjectId,
+        source: {
+          type: Schema.Types.ObjectId,
+          ref: "Users",
+        },
+        target: {
+          type: Schema.Types.ObjectId,
+          ref: "Users",
+        },
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

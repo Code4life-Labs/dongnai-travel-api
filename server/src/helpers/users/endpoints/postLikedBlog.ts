@@ -13,12 +13,12 @@ export default async function postFavoritedBlog(
   o?: HTTPResponseDataType
 ) {
   // Check if id and blogId are exist
-  const { id, blogId } = checkUserBlogIdInRequest(req, o);
+  const validData = checkUserBlogIdInRequest(req, o);
 
   // Check if user liked this blog before
   if (
     await MC.UserFavoritedBlogs.findOne({
-      $and: [{ userId: id }, { blogId }],
+      $and: [{ userId: validData.id }, { blogId: validData.blogId }],
     }).exec()
   ) {
     o!.code = 200;
@@ -26,10 +26,7 @@ export default async function postFavoritedBlog(
   }
 
   // Create new document (record)
-  const result = await MC.UserFavoritedBlogs.create({
-    blogId: blogId,
-    userId: id,
-  });
+  const result = await MC.UserFavoritedBlogs.create(validData);
 
   if (!result || !result._id) {
     o!.code = 500;

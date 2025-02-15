@@ -13,12 +13,12 @@ export default async function postVisitedPlace(
   o?: HTTPResponseDataType
 ) {
   // Check if id and placeId are exist
-  const { id, placeId } = checkUserPlaceIdInRequest(req, o);
+  const validData = checkUserPlaceIdInRequest(req, o);
 
   // Check if user marked `visited` on this place before
   if (
     await MC.UserVisitedPlaces.findOne({
-      $and: [{ userId: id }, { placeId }],
+      $and: [{ userId: validData.id }, { placeId: validData.placeId }],
     }).exec()
   ) {
     o!.code = 200;
@@ -26,10 +26,7 @@ export default async function postVisitedPlace(
   }
 
   // Create new document (record)
-  const result = await MC.UserVisitedPlaces.create({
-    placeId: placeId,
-    userId: id,
-  });
+  const result = await MC.UserVisitedPlaces.create(validData);
 
   if (!result || !result._id) {
     o!.code = 500;

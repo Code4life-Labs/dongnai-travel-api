@@ -4,7 +4,7 @@ const PolicyCollection = policies;
 type PolicyType = {
   type: string;
   actions: Array<string> | string;
-  resources: Array<string> | string;
+  resources?: Array<string> | string;
 };
 
 export class PolicyCheker {
@@ -19,10 +19,26 @@ export class PolicyCheker {
     let check = false,
       i = 0;
     for (const policy of policies) {
-      if (i === 0 && !this._checkResource(resource, policy)) {
-        return check;
+      if (
+        // policy.resources is [...]
+        (Array.isArray(policy.resources) && policy.resources.length > 0) ||
+        // policy.resources isn't [""]
+        (Array.isArray(policy.resources) &&
+          policy.resources.length === 1 &&
+          policy.resources[0] !== "") ||
+        // policy.resources isn't "" or null or undefined
+        policy.resources
+      ) {
+        check = this._checkResource(resource, policy);
+        if (!check) {
+          return check;
+        }
+      } else {
+        if (policy.type === "allow") check = false;
+        else check = true;
       }
-      check = this._checkAction(action, policy);
+
+      check = check && this._checkAction(action, policy);
       if (!check) return check;
       i++;
     }
@@ -48,7 +64,7 @@ export class PolicyCheker {
     // Resource is something else
     // TO DO: check resource
     let check = false;
-    for (const _resource of policy.resources) {
+    for (const _resource of policy.resources!) {
       // 1. _resource is expcilit
       if (_resource === resource) {
         check = true;
@@ -76,8 +92,12 @@ export class PolicyCheker {
             (i < allowedResources.length || i < requiredResources.length))
         )
           check = true;
-
-        if (allowedResources[i] !== requiredResources[i]) break;
+        else if (allowedResources[i] === requiredResources[i]) check = true;
+        else if (allowedResources[i] !== requiredResources[i] && i === 0) break;
+        else if (allowedResources[i] !== requiredResources[i] && i > 0) {
+          check = false;
+          break;
+        }
         i++;
       }
     }
@@ -116,12 +136,26 @@ export class PolicyCheker {
       // if true, set check = true and break the loop
       // because that mean user is allowed to perform all actions to
       // this resources
-      if (action.includes(_action.substring(0, _action.length - 2))) {
+      else if (action.includes(_action.substring(0, _action.length - 2))) {
         check = true;
         break;
       }
 
-      // 3. _action is *, still happend
+      // 3. _action is resource:partOfAction*
+      let [_, allowedActions] = _action.split(":");
+      if (
+        allowedActions[allowedActions.length - 1] === "*" ||
+        allowedActions[0] === "*"
+      ) {
+        const partsOfAllowedAction = allowedActions.split("*");
+        const partsOfRequiredAction = action.split(
+          partsOfAllowedAction[0] || partsOfAllowedAction[1]
+        );
+        check = partsOfRequiredAction.length > 1;
+        break;
+      }
+
+      // 4. _action is *, still happend
       // return `true` immediately
       if (_action === "*") return policy.type === "allow" && true;
     }

@@ -51,6 +51,10 @@ export class AuthService {
             AuthService.roles[r.name] = r.value;
           }
         });
+
+        if (this._signature) {
+          this._canCreateToken = true;
+        }
       });
     } catch (error: any) {
       // Just print error's message
@@ -120,7 +124,7 @@ export class AuthService {
   createToken(role: string) {
     if (!this._canCreateToken) {
       console.warn(
-        "The signature must be assigned before the service creates token"
+        "The signature must be assigned before the service creates token or User Roles must be loaded"
       );
       return null;
     }

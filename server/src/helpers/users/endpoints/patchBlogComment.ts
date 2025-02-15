@@ -1,6 +1,6 @@
 // Import helpers
 import { checkUserBlogIdInRequest } from "../params-checkers";
-import { checkReviewOrCommentContent as checkBlogCommentContent } from "../content-checkers";
+import { checkBlogCommentWhenUpdate } from "../content-checkers";
 
 // Import types
 import type { Request, Response } from "express";
@@ -17,13 +17,7 @@ export default async function patchBlogComment(
   const { id, blogId } = checkUserBlogIdInRequest(req, o);
 
   // Check content
-  const newParts: Record<string, any> = {};
-  let content: string | undefined = req.body.content;
-
-  if (content) {
-    content = checkBlogCommentContent(content, o!);
-    newParts.content = content;
-  }
+  const { content } = checkBlogCommentWhenUpdate(req.body, o!);
 
   // Check if user commented this blog before
   if (!(await MC.BlogComments.findOne({ userId: id, blogId }).exec())) {

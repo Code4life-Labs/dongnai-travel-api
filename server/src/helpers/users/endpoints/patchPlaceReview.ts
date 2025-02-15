@@ -1,7 +1,6 @@
 // Import helpers
 import { checkUserPlaceIdInRequest } from "../params-checkers";
-import { checkReviewOrCommentContent as checkPlaceReviewContent } from "../content-checkers";
-import { checkRating } from "../number-fields-checkers";
+import { checkPlaceReviewWhenUpdate } from "../content-checkers";
 
 // Import types
 import type { Request, Response } from "express";
@@ -19,17 +18,14 @@ export default async function patchPlaceReview(
 
   // Check content
   const newParts: Record<string, any> = {};
-  let content: string | undefined = req.body.content,
-    rating: number | undefined = req.body.rating;
+  const { content, rating } = checkPlaceReviewWhenUpdate(req.body, o!);
 
   if (content) {
-    content = checkPlaceReviewContent(content, o!);
     newParts.content = content;
   }
 
   if (rating) {
-    rating = checkRating(rating, o!);
-    newParts.rating = content;
+    newParts.rating = rating;
   }
 
   // Check if user reviewed this place before

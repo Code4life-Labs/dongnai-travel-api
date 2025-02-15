@@ -4,9 +4,9 @@ import { Endpoints } from "src/classes/Endpoints";
 // Import models
 import db from "src/databases/dongnaitravel";
 
-import getPlaces from "src/helpers/places/endpoints/getPlaces";
-import getPlaceTypes from "src/helpers/places/endpoints/getPlaceTypes";
-import getPlace from "src/helpers/places/endpoints/getPlace";
+import getPlaces from "src/helpers/places/endpoints/get-places";
+import getPlaceTypes from "src/helpers/places/endpoints/get-place-types";
+import getPlace from "src/helpers/places/endpoints/get-place";
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";

@@ -1,7 +1,6 @@
 // Import helpers
 import { checkUserPlaceIdInRequest } from "../params-checkers";
-import { checkReviewOrCommentContent as checkPlaceReviewContent } from "../content-checkers";
-import { checkRating } from "../number-fields-checkers";
+import { checkPlaceReviewWhenCreate } from "../content-checkers";
 
 // Import types
 import type { Request, Response } from "express";
@@ -18,8 +17,7 @@ export default async function postPlaceReview(
   const { id, placeId } = checkUserPlaceIdInRequest(req, o);
 
   // Check content
-  const content = checkPlaceReviewContent(req.body.content, o!);
-  const rating = checkRating(req.body.rating, o!);
+  const { content, rating } = checkPlaceReviewWhenCreate(req.body, o!);
 
   // Check if user reviewed this place before
   if (

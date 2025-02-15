@@ -1,30 +1,64 @@
-// Import utils
-import { REVIEW_COMMENT_CHARACTER_LIMIT } from "src/utils/constants";
+// Import validators
+import {
+  PlaceReviewValidator,
+  PlaceReviewUpdateValidator,
+  BlogCommentValidator,
+  BlogCommentUpdateValidator,
+} from "src/services/validators/content";
 
 // Import types
 import type { HTTPResponseDataType } from "src/utils/http";
 
-export function checkReviewOrCommentContent(
-  content: any,
-  o: HTTPResponseDataType
-) {
+export function checkPlaceReviewWhenCreate(data: any, o: HTTPResponseDataType) {
   // Check content first
-  if (content === undefined || content === null) {
-    o.code = 400;
-    throw new Error("Content is required");
+  const validationResult = PlaceReviewValidator.validate(data);
+  if (validationResult.error) {
+    o!.code = 400;
+    throw new Error(validationResult.error.message);
   }
 
-  if (typeof content !== "string") {
-    o.code = 400;
-    throw new Error("Content must be a string");
+  return validationResult.value;
+}
+
+export function checkPlaceReviewWhenUpdate(data: any, o: HTTPResponseDataType) {
+  // Check content first
+  const validationResult = PlaceReviewUpdateValidator.validate(data);
+  if (validationResult.error) {
+    o!.code = 400;
+    throw new Error(validationResult.error.message);
   }
 
-  if (content.length > REVIEW_COMMENT_CHARACTER_LIMIT) {
-    o.code = 400;
-    throw new Error(
-      `Content exceeds amount of characters (reach limit at ${REVIEW_COMMENT_CHARACTER_LIMIT})`
-    );
+  if (!validationResult.value.content && !validationResult.value.rating) {
+    o!.code = 205;
+    return "Nothing change";
   }
 
-  return content;
+  return validationResult.value;
+}
+
+export function checkBlogCommentWhenCreate(data: any, o: HTTPResponseDataType) {
+  // Check content first
+  const validationResult = BlogCommentValidator.validate(data);
+  if (validationResult.error) {
+    o!.code = 400;
+    throw new Error(validationResult.error.message);
+  }
+
+  return validationResult.value;
+}
+
+export function checkBlogCommentWhenUpdate(data: any, o: HTTPResponseDataType) {
+  // Check content first
+  const validationResult = BlogCommentUpdateValidator.validate(data);
+  if (validationResult.error) {
+    o!.code = 400;
+    throw new Error(validationResult.error.message);
+  }
+
+  if (!validationResult.value.content) {
+    o!.code = 205;
+    return "Nothing change";
+  }
+
+  return validationResult.value;
 }

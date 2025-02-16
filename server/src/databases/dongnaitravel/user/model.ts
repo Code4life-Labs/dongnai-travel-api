@@ -32,6 +32,7 @@ export default function () {
           transform: function (doc, ret) {
             delete ret.id;
             delete ret.roleId;
+            delete ret.__v;
 
             return ret;
           },

@@ -22,7 +22,7 @@ export default async function postPlaceReview(
   // Check if user reviewed this place before
   if (
     await MC.PlaceReviews.findOne({
-      $and: [{ userId: validData.id }, { placeId: validData.placeId }],
+      $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
     }).exec()
   ) {
     o!.code = 205;
@@ -31,7 +31,7 @@ export default async function postPlaceReview(
 
   // Create new document (record)
   (validData as any).content = content;
-  (validData as any).rating = content;
+  (validData as any).rating = rating;
 
   const result = await MC.PlaceReviews.create(validData);
 

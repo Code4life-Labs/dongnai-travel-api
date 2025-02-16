@@ -14,25 +14,25 @@ export default async function postBlogComment(
   o?: HTTPResponseDataType
 ) {
   // Check if id and blogId are exist
-  const { id, blogId } = checkUserBlogIdInRequest(req, o);
+  const validData = checkUserBlogIdInRequest(req, o);
 
   // Check content
   const { content } = checkBlogCommentWhenCreate(req.body, o!);
 
   // Check if user commented this blog before
   if (
-    await MC.BlogComments.findOne({ $and: [{ userId: id }, { blogId }] }).exec()
+    await MC.BlogComments.findOne({
+      $and: [{ userId: validData.userId }, { blogId: validData.blogId }],
+    }).exec()
   ) {
     o!.code = 205;
     return "You commented this blog before or you didn't";
   }
 
   // Create new document (record)
-  const result = await MC.BlogComments.create({
-    blogId: blogId,
-    userId: id,
-    content,
-  });
+  (validData as any).content = content;
+
+  const result = await MC.BlogComments.create(validData);
 
   if (!result || !result._id) {
     o!.code = 500;

@@ -12,7 +12,8 @@ export default async function deleteFollow(
   res?: Response,
   o?: HTTPResponseDataType
 ) {
-  const validData = checkFollow(
+  const validData = await checkFollow(
+    MC,
     { source: req.params.id, target: req.params.userId },
     o!
   );
@@ -20,7 +21,7 @@ export default async function deleteFollow(
   // Check if has follow
   if (
     !(await MC.Follows.findOne({
-      $or: [{ source: validData.source }, { target: validData.target }],
+      $and: [{ source: validData.source }, { target: validData.target }],
     }).exec())
   ) {
     o!.code = 400;
@@ -29,7 +30,7 @@ export default async function deleteFollow(
 
   // Delete existed follow
   const result = await MC.Follows.deleteOne({
-    $or: [{ source: validData.source }, { target: validData.target }],
+    $and: [{ source: validData.source }, { target: validData.target }],
   });
 
   if (!result) {

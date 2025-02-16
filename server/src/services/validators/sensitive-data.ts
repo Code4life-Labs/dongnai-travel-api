@@ -6,6 +6,7 @@ function createObjectIdValidator(name: string) {
     .messages({
       "string.empty": `"${name}" cannot be empty`,
       "string.base": `"${name}" should be a type of 'text'`,
+      "any.required": `"${name}" is required`,
     });
 }
 

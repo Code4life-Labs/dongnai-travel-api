@@ -18,7 +18,7 @@ export default async function postVisitedPlace(
   // Check if user marked `visited` on this place before
   if (
     await MC.UserVisitedPlaces.findOne({
-      $and: [{ userId: validData.id }, { placeId: validData.placeId }],
+      $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
     }).exec()
   ) {
     o!.code = 200;

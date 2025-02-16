@@ -18,7 +18,7 @@ export default async function postFavoritedPlace(
   // Check if user liked this place before
   if (
     await MC.UserFavoritedPlaces.findOne({
-      $and: [{ userId: validData.id }, { placeId: validData.placeId }],
+      $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
     }).exec()
   ) {
     o!.code = 200;

@@ -13,12 +13,12 @@ export default async function deleteFavoritedPlace(
   o?: HTTPResponseDataType
 ) {
   // Check if id and placeId are exist
-  const { id, placeId } = checkUserPlaceIdInRequest(req, o);
+  const validData = checkUserPlaceIdInRequest(req, o);
 
   // Check if user liked this place before
   if (
     !(await MC.UserFavoritedPlaces.findOne({
-      $and: [{ userId: id }, { placeId }],
+      $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
     }).exec())
   ) {
     o!.code = 200;
@@ -26,7 +26,7 @@ export default async function deleteFavoritedPlace(
   }
 
   const result = await MC.UserFavoritedPlaces.deleteOne({
-    $and: [{ userId: id }, { placeId }],
+    $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
   });
 
   if (result.deletedCount === 0) {

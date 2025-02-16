@@ -25,7 +25,7 @@ export function checkUserPlaceIdInRequest(req: any, o: any) {
     throw new Error(placeIdCheckResult.error.message);
   }
 
-  return { id: req.params.id, placeId: req.params.placeId };
+  return { userId: req.params.id, placeId: req.params.placeId };
 }
 
 /**
@@ -42,11 +42,11 @@ export function checkUserBlogIdInRequest(req: any, o: any) {
     throw new Error(userIdCheckResult.error.message);
   }
 
-  const placeIdCheckResult = BlogIdValidator.validate(req.params.placeId);
+  const placeIdCheckResult = BlogIdValidator.validate(req.params.blogId);
   if (placeIdCheckResult.error) {
     o!.code = 400;
     throw new Error(placeIdCheckResult.error.message);
   }
 
-  return { id: req.params.id, blogId: req.params.blogId };
+  return { userId: req.params.id, blogId: req.params.blogId };
 }

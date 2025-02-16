@@ -166,7 +166,7 @@ usersEndpoints
  * Follow a user
  */
 usersEndpoints
-  .createHandler("/:id/follow/:userId")
+  .createHandler("/:id/follows/:userId")
   .post(async (req, res, o) => {
     return postFollow(DNTModes, req, res, o);
   });
@@ -175,7 +175,7 @@ usersEndpoints
  * Unfollow a user
  */
 usersEndpoints
-  .createHandler("/:id/follow/:userId")
+  .createHandler("/:id/follows/:userId")
   .delete(async (req, res, o) => {
     return deleteFollow(DNTModes, req, res, o);
   });

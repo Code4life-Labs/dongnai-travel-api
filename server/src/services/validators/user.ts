@@ -30,6 +30,17 @@ const _BaseUserLastNameValidator = Joi.string()
     "string.max": `"lastName" should have a maximum length of {#limit}`,
   });
 
+const _BaseUserDisplayNameValidator = Joi.string()
+  .min(LASTNAME_CHARACTER_LIMITS[0])
+  .max(LASTNAME_CHARACTER_LIMITS[1] + FIRSTNAME_CHARACTER_LIMITS[1])
+  .pattern(new RegExp("^[a-zA-Z\\s]+$"))
+  .messages({
+    "string.empty": `"displayName" cannot be empty`,
+    "string.base": `"displayName" should be a type of 'text'`,
+    "string.min": `"displayName" should have a minimum length of {#limit}`,
+    "string.max": `"displayName" should have a maximum length of {#limit}`,
+  });
+
 const _BaseUserNameValidator = Joi.string()
   .min(USERNAME_CHARACTER_LIMITS[0])
   .max(USERNAME_CHARACTER_LIMITS[1])
@@ -61,6 +72,11 @@ const _BaseUserPasswordValidator = Joi.string()
     "string.max": `"password" should have a maximum length of {#limit}`,
   });
 
+const _BaseUserBirthDayValidator = Joi.number().messages({
+  "number.empty": `"birthday" cannot be empty`,
+  "number.base": `"birthday" should be a type of 'number'`,
+});
+
 export const UserDataSignUpValidator = Joi.object({
   firstName: _BaseUserFirstNameValidator.required(),
   lastName: _BaseUserLastNameValidator.required(),
@@ -68,6 +84,7 @@ export const UserDataSignUpValidator = Joi.object({
   email: _BaseUserEmailValidator.required(),
   confirmedPassword: Joi.ref("password"),
   password: _BaseUserPasswordValidator.required(),
+  birthday: _BaseUserBirthDayValidator.required(),
 }).with("password", "confirmedPassword");
 
 export const UserDataSignInValidator = Joi.object({
@@ -78,4 +95,13 @@ export const UserDataSignInValidator = Joi.object({
 
 export const UserResetPasswordValidator = Joi.object({
   username: _BaseUserNameValidator.required(),
+});
+
+export const UserDataUpdateValidator = Joi.object({
+  firstName: _BaseUserFirstNameValidator,
+  lastName: _BaseUserLastNameValidator,
+  username: _BaseUserNameValidator,
+  password: _BaseUserPasswordValidator,
+  displayName: _BaseUserDisplayNameValidator,
+  birthday: _BaseUserBirthDayValidator,
 });

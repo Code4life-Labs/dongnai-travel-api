@@ -9,6 +9,42 @@ import type { Request, Response, NextFunction } from "express";
 
 export class AuthMiddlewares {
   /**
+   * Use this middleware to allow guest accesses endpoint
+   * @param req
+   * @param res
+   * @param next
+   * @returns
+   */
+  static allowGuestSendsRequest(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    return ErrorUtils.handleError(this, req, res, async function ($, $$, o) {
+      const authorization = req.headers.authorization;
+
+      if (!authorization) {
+        o.code = 401;
+        throw new Error("Token is required");
+      }
+
+      const [, token] = authorization.split(" ");
+      const result = await authService.verifyToken(token);
+
+      if (!result.code) {
+        // Add some custom properties to request
+        res.locals.tokenPayload = result.data;
+        req.locals.isAuthorized = true;
+        // Go to next middleware
+        return next();
+      } else {
+        o.code = 401;
+        throw new Error(result.message ? result.message : "Token is invalid");
+      }
+    });
+  }
+
+  /**
    * Validate a token, is it valid?
    * @param req
    * @param res

@@ -34,6 +34,7 @@ export default function () {
           virtuals: true,
           transform: function (doc, ret) {
             delete ret.id;
+            delete ret.__v;
 
             // Delete some fields
             delete ret.typeIds;

@@ -18,7 +18,7 @@ export default async function postFavoritedBlog(
   // Check if user liked this blog before
   if (
     await MC.UserFavoritedBlogs.findOne({
-      $and: [{ userId: validData.id }, { blogId: validData.blogId }],
+      $and: [{ userId: validData.userId }, { blogId: validData.blogId }],
     }).exec()
   ) {
     o!.code = 200;

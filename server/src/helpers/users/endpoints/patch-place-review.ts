@@ -14,7 +14,7 @@ export default async function patchPlaceReview(
   o?: HTTPResponseDataType
 ) {
   // Check if id and placeId are exist
-  const { id, placeId } = checkUserPlaceIdInRequest(req, o);
+  const validData = checkUserPlaceIdInRequest(req, o);
 
   // Check content
   const newParts: Record<string, any> = {};
@@ -31,7 +31,7 @@ export default async function patchPlaceReview(
   // Check if user reviewed this place before
   if (
     !(await MC.PlaceReviews.findOne({
-      $and: [{ userId: id }, { placeId }],
+      $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
     }).exec())
   ) {
     o!.code = 404;
@@ -40,10 +40,11 @@ export default async function patchPlaceReview(
 
   // Create new document (record)
   const result = await MC.PlaceReviews.updateOne(
-    { placeId: placeId, userId: id },
+    { $and: [{ userId: validData.userId }, { placeId: validData.placeId }] },
     {
       content,
       rating,
+      updatedAt: Date.now(),
     }
   );
 

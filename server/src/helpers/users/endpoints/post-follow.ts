@@ -12,12 +12,12 @@ export default async function postFollow(
   res?: Response,
   o?: HTTPResponseDataType
 ) {
-  const validData = checkFollowWhenCreateInRequest(req, o!);
+  const validData = await checkFollowWhenCreateInRequest(MC, req, o!);
 
   // Check if has follow
   if (
     await MC.Follows.findOne({
-      $or: [{ source: validData.source }, { target: validData.target }],
+      $and: [{ source: validData.source }, { target: validData.target }],
     }).exec()
   ) {
     o!.code = 400;

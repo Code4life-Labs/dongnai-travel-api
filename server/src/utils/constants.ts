@@ -1,5 +1,5 @@
 export const DEFAULT_LANGUAGE = "vi";
-export const REVIEW_COMMENT_CHARACTER_LIMITS = [15, 150];
+export const REVIEW_COMMENT_CHARACTER_LIMITS = [15, 300];
 export const MIN_MAX_RATING = [0, 5];
 export const PASSWORD_SALT = 12;
 

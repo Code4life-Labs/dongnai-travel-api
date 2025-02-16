@@ -14,22 +14,27 @@ export default async function patchBlogComment(
   o?: HTTPResponseDataType
 ) {
   // Check if id and blogId are exist
-  const { id, blogId } = checkUserBlogIdInRequest(req, o);
+  const validData = checkUserBlogIdInRequest(req, o);
 
   // Check content
   const { content } = checkBlogCommentWhenUpdate(req.body, o!);
 
   // Check if user commented this blog before
-  if (!(await MC.BlogComments.findOne({ userId: id, blogId }).exec())) {
+  if (
+    !(await MC.BlogComments.findOne({
+      $and: [{ userId: validData.userId }, { blogId: validData.blogId }],
+    }).exec())
+  ) {
     o!.code = 404;
     throw new Error("Cannot find this comment");
   }
 
   // Create new document (record)
   const result = await MC.BlogComments.updateOne(
-    { blogId: blogId, userId: id },
+    { $and: [{ userId: validData.userId }, { blogId: validData.blogId }] },
     {
       content,
+      updatedAt: Date.now(),
     }
   );
 

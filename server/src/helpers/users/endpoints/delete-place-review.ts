@@ -13,12 +13,12 @@ export default async function deletePlaceReview(
   o?: HTTPResponseDataType
 ) {
   // Check if id and placeId are exist
-  const { id, placeId } = checkUserPlaceIdInRequest(req, o);
+  const validData = checkUserPlaceIdInRequest(req, o);
 
   // Check if user reviewed this place before
   if (
     !(await MC.PlaceReviews.findOne({
-      $and: [{ userId: id }, { placeId }],
+      $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
     }).exec())
   ) {
     o!.code = 200;
@@ -26,7 +26,7 @@ export default async function deletePlaceReview(
   }
 
   const result = await MC.PlaceReviews.deleteOne({
-    $and: [{ userId: id }, { placeId }],
+    $and: [{ userId: validData.userId }, { placeId: validData.placeId }],
   });
 
   if (result.deletedCount === 0) {

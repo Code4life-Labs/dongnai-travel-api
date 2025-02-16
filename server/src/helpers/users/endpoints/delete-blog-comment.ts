@@ -13,12 +13,12 @@ export default async function deleteBlogComment(
   o?: HTTPResponseDataType
 ) {
   // Check if id and blogId are exist
-  const { id, blogId } = checkUserBlogIdInRequest(req, o);
+  const validData = checkUserBlogIdInRequest(req, o);
 
   // Check if user commented this blog before
   if (
     !(await MC.BlogComments.findOne({
-      $and: [{ userId: id }, { blogId }],
+      $and: [{ userId: validData.userId }, { blogId: validData.blogId }],
     }).exec())
   ) {
     o!.code = 200;
@@ -26,7 +26,7 @@ export default async function deleteBlogComment(
   }
 
   const result = await MC.BlogComments.deleteOne({
-    $and: [{ userId: id }, { blogId }],
+    $and: [{ userId: validData.userId }, { blogId: validData.blogId }],
   });
 
   if (result.deletedCount === 0) {

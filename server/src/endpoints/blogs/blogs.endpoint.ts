@@ -5,9 +5,10 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import helpers
-import getBlog from "src/helpers/blogs/endpoints/getBlog";
-import getBlogs from "src/helpers/blogs/endpoints/getBlogs";
-import getBlogTypes from "src/helpers/blogs/endpoints/getBlogTypes";
+import getBlog from "src/helpers/blogs/endpoints/get-blog";
+import getBlogs from "src/helpers/blogs/endpoints/get-blogs";
+import getBlogTypes from "src/helpers/blogs/endpoints/get-blog-types";
+import getBlogComments from "src/helpers/blogs/endpoints/get-blog-comments";
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -46,6 +47,13 @@ blogsEndpoints.createHandler("/:id").get(async (req, res, o) => {
  */
 blogsEndpoints.createHandler("/:id").delete(async (req, res, o) => {
   return getBlog(DNTModes, req, res, o);
+});
+
+/**
+ * Get comments of blog
+ */
+blogsEndpoints.createHandler("/:id/comments").get(async (req, res, o) => {
+  return getBlogComments(DNTModes, req, res, o);
 });
 
 export default blogsEndpoints;

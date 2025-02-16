@@ -1,6 +1,3 @@
-// Import utils
-import { RequestUtils } from "src/utils/request";
-
 // Import helpers
 import { buildBriefProjection } from "src/helpers/blogs/projections";
 import {
@@ -8,6 +5,9 @@ import {
   buildBlogNameFilter,
 } from "src/helpers/blogs/filters";
 import { computeStateOfBlog } from "src/helpers/blogs/states-computer";
+
+// Import utils
+import { RequestUtils } from "src/utils/request";
 
 // Import types
 import type { Request, Response } from "express";

@@ -1,9 +1,6 @@
 // Import services
 import { AuthService } from "src/services/auth";
 
-// Import utils
-import { RequestUtils } from "src/utils/request";
-
 // Import helpers
 import { buildBriefProjection } from "src/helpers/places/projections";
 import {
@@ -12,6 +9,9 @@ import {
   buildPlaceNameFilter,
 } from "src/helpers/places/filters";
 import { computeStateOfPlace } from "src/helpers/places/states-computer";
+
+// Import utils
+import { RequestUtils } from "src/utils/request";
 
 // Import types
 import type { Request, Response } from "express";

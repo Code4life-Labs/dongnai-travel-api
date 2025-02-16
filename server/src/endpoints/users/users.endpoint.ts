@@ -5,14 +5,22 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import helpers
-import getUser from "src/helpers/users/endpoints/getUser";
-import postFavoritedPlace from "src/helpers/users/endpoints/postFavoritedPlace";
-import postPlaceReview from "src/helpers/users/endpoints/postPlaceReview";
-import postVisitedPlace from "src/helpers/users/endpoints/postVisitedPlace";
-import patchPlaceReview from "src/helpers/users/endpoints/patchPlaceReview";
-import deleteFavoritedPlace from "src/helpers/users/endpoints/deleteFavoritedPlace";
-import deletePlaceReview from "src/helpers/users/endpoints/deletePlaceReview";
-import deleteVisitedPlace from "src/helpers/users/endpoints/deleteVisitedPlace";
+import getUser from "src/helpers/users/endpoints/get-user";
+import patchUser from "src/helpers/users/endpoints/patch-user";
+import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place";
+import postPlaceReview from "src/helpers/users/endpoints/post-place-review";
+import postVisitedPlace from "src/helpers/users/endpoints/post-visited-place";
+import patchPlaceReview from "src/helpers/users/endpoints/patch-place-review";
+import deleteFavoritedPlace from "src/helpers/users/endpoints/delete-favorited-place";
+import deletePlaceReview from "src/helpers/users/endpoints/delete-place-review";
+import deleteVisitedPlace from "src/helpers/users/endpoints/delete-visited-place";
+import postBlogComment from "src/helpers/users/endpoints/post-blog-comment";
+import postFavoritedBlog from "src/helpers/users/endpoints/post-liked-blog";
+import patchBlogComment from "src/helpers/users/endpoints/patch-blog-comment";
+import deleteBlogComment from "src/helpers/users/endpoints/delete-blog-comment";
+import deleteFavoritedBlog from "src/helpers/users/endpoints/delete-liked-blog";
+import postFollow from "src/helpers/users/endpoints/post-follow";
+import deleteFollow from "src/helpers/users/endpoints/delete-follow";
 
 const usersEndpoints = new Endpoints("users");
 let DNTModes: DongNaiTravelModelsType;
@@ -37,6 +45,13 @@ usersEndpoints.createHandler("").get((req, res) => {
  */
 usersEndpoints.createHandler("/:id").get(async (req, res, o) => {
   return getUser(DNTModes, req, res, o);
+});
+
+/**
+ * Update user information by id
+ */
+usersEndpoints.createHandler("/:id").patch(async (req, res, o) => {
+  return patchUser(DNTModes, req, res, o);
 });
 
 /**
@@ -108,7 +123,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/likes/blogs/:blogId")
   .post(async (req, res, o) => {
-    return postVisitedPlace(DNTModes, req, res, o);
+    return postFavoritedBlog(DNTModes, req, res, o);
   });
 
 /**
@@ -117,34 +132,34 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/likes/blogs/:blogId")
   .delete(async (req, res, o) => {
-    return deleteVisitedPlace(DNTModes, req, res, o);
+    return deleteFavoritedBlog(DNTModes, req, res, o);
   });
 
 /**
- * Create place comment
+ * Create blog comment
  */
 usersEndpoints
   .createHandler("/:id/comments/blogs/:blogId")
   .post(async (req, res, o) => {
-    return postPlaceReview(DNTModes, req, res, o);
+    return postBlogComment(DNTModes, req, res, o);
   });
 
 /**
- * Update place comment
+ * Update blog comment
  */
 usersEndpoints
   .createHandler("/:id/comments/blogs/:blogId")
   .patch(async (req, res, o) => {
-    return patchPlaceReview(DNTModes, req, res, o);
+    return patchBlogComment(DNTModes, req, res, o);
   });
 
 /**
- * Delete place comment
+ * Delete blog comment
  */
 usersEndpoints
   .createHandler("/:id/comments/blogs/:blogId")
   .delete(async (req, res, o) => {
-    return deletePlaceReview(DNTModes, req, res, o);
+    return deleteBlogComment(DNTModes, req, res, o);
   });
 
 /**
@@ -153,7 +168,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/follow/:userId")
   .post(async (req, res, o) => {
-    return deletePlaceReview(DNTModes, req, res, o);
+    return postFollow(DNTModes, req, res, o);
   });
 
 /**
@@ -162,7 +177,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/follow/:userId")
   .delete(async (req, res, o) => {
-    return deletePlaceReview(DNTModes, req, res, o);
+    return deleteFollow(DNTModes, req, res, o);
   });
 
 export default usersEndpoints;

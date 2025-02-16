@@ -12,7 +12,6 @@ export function checkFollow(data: any, o: any) {
 }
 
 export function checkFollowWhenCreateInRequest(req: any, o: any) {
-  const bodyData = req.body;
   const { id, userId } = req.params;
 
   if (!id) {

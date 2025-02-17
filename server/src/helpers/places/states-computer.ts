@@ -20,6 +20,9 @@ export function computeStateOfPlace(plainPlace: any, userId: string) {
     }
     plainPlace.totalReviews = total;
     plainPlace.rating = sum / total;
+
+    // Remove reviews
+    delete plainPlace.reviews;
   }
 
   if (plainPlace.favorites) {

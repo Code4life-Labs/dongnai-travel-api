@@ -14,10 +14,10 @@ import getBlogComments from "src/helpers/blogs/endpoints/get-blog-comments";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 
 const blogsEndpoints = new Endpoints("blogs");
-let DNTModes: DongNaiTravelModelsType;
+let DNTModels: DongNaiTravelModelsType;
 
 db().then((models) => {
-  DNTModes = models;
+  DNTModels = models;
 });
 
 // Add your handlers here
@@ -25,35 +25,35 @@ db().then((models) => {
  * Get blogs
  */
 blogsEndpoints.createHandler("").get(async (req, res, o) => {
-  return getBlogs(DNTModes, req, res, o);
+  return getBlogs(DNTModels, req, res, o);
 });
 
 /**
  * Get all types of blogs
  */
 blogsEndpoints.createHandler("/types").get(async (req, res, o) => {
-  return getBlogTypes(DNTModes, req, res, o);
+  return getBlogTypes(DNTModels, req, res, o);
 });
 
 /**
  * Get details of blog
  */
 blogsEndpoints.createHandler("/:id").get(async (req, res, o) => {
-  return getBlog(DNTModes, req, res, o);
+  return getBlog(DNTModels, req, res, o);
 });
 
 /**
  * Delete blog
  */
 blogsEndpoints.createHandler("/:id").delete(async (req, res, o) => {
-  return getBlog(DNTModes, req, res, o);
+  return getBlog(DNTModels, req, res, o);
 });
 
 /**
  * Get comments of blog
  */
 blogsEndpoints.createHandler("/:id/comments").get(async (req, res, o) => {
-  return getBlogComments(DNTModes, req, res, o);
+  return getBlogComments(DNTModels, req, res, o);
 });
 
 export default blogsEndpoints;

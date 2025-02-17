@@ -5,6 +5,9 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import helpers
+import getFavoritedPlaces from "src/helpers/users/endpoints/get-favorited-places";
+import getVisitedPlaces from "src/helpers/users/endpoints/get-visited-places";
+import getLikedBlogs from "src/helpers/users/endpoints/get-liked-blogs";
 import getUser from "src/helpers/users/endpoints/get-user";
 import patchUser from "src/helpers/users/endpoints/patch-user";
 import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place";
@@ -23,13 +26,13 @@ import postFollow from "src/helpers/users/endpoints/post-follow";
 import deleteFollow from "src/helpers/users/endpoints/delete-follow";
 
 const usersEndpoints = new Endpoints("users");
-let DNTModes: DongNaiTravelModelsType;
+let DNTModels: DongNaiTravelModelsType;
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 
 db().then((models) => {
-  DNTModes = models;
+  DNTModels = models;
 });
 
 // Add your handlers here
@@ -44,14 +47,30 @@ usersEndpoints.createHandler("").get((req, res) => {
  * Get user by id
  */
 usersEndpoints.createHandler("/:id").get(async (req, res, o) => {
-  return getUser(DNTModes, req, res, o);
+  return getUser(DNTModels, req, res, o);
 });
 
 /**
  * Update user information by id
  */
 usersEndpoints.createHandler("/:id").patch(async (req, res, o) => {
-  return patchUser(DNTModes, req, res, o);
+  return patchUser(DNTModels, req, res, o);
+});
+
+/**
+ * Get favorited places
+ */
+usersEndpoints
+  .createHandler("/:id/favorites/places")
+  .get(async (req, res, o) => {
+    return getFavoritedPlaces(DNTModels, req, res, o);
+  });
+
+/**
+ * Get favorited places
+ */
+usersEndpoints.createHandler("/:id/visits/places").get(async (req, res, o) => {
+  return getVisitedPlaces(DNTModels, req, res, o);
 });
 
 /**
@@ -60,7 +79,7 @@ usersEndpoints.createHandler("/:id").patch(async (req, res, o) => {
 usersEndpoints
   .createHandler("/:id/favorites/places/:placeId")
   .post(async (req, res, o) => {
-    return postFavoritedPlace(DNTModes, req, res, o);
+    return postFavoritedPlace(DNTModels, req, res, o);
   });
 
 /**
@@ -69,7 +88,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/favorites/places/:placeId")
   .delete(async (req, res, o) => {
-    return deleteFavoritedPlace(DNTModes, req, res, o);
+    return deleteFavoritedPlace(DNTModels, req, res, o);
   });
 
 /**
@@ -78,7 +97,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/visits/places/:placeId")
   .post(async (req, res, o) => {
-    return postVisitedPlace(DNTModes, req, res, o);
+    return postVisitedPlace(DNTModels, req, res, o);
   });
 
 /**
@@ -87,7 +106,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/visits/places/:placeId")
   .delete(async (req, res, o) => {
-    return deleteVisitedPlace(DNTModes, req, res, o);
+    return deleteVisitedPlace(DNTModels, req, res, o);
   });
 
 /**
@@ -96,7 +115,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .post(async (req, res, o) => {
-    return postPlaceReview(DNTModes, req, res, o);
+    return postPlaceReview(DNTModels, req, res, o);
   });
 
 /**
@@ -105,7 +124,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .patch(async (req, res, o) => {
-    return patchPlaceReview(DNTModes, req, res, o);
+    return patchPlaceReview(DNTModels, req, res, o);
   });
 
 /**
@@ -114,8 +133,15 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .delete(async (req, res, o) => {
-    return deletePlaceReview(DNTModes, req, res, o);
+    return deletePlaceReview(DNTModels, req, res, o);
   });
+
+/**
+ * Get liked blogs
+ */
+usersEndpoints.createHandler("/:id/likes/blogs").get(async (req, res, o) => {
+  return getLikedBlogs(DNTModels, req, res, o);
+});
 
 /**
  * Create liked blog (like blog)
@@ -123,7 +149,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/likes/blogs/:blogId")
   .post(async (req, res, o) => {
-    return postFavoritedBlog(DNTModes, req, res, o);
+    return postFavoritedBlog(DNTModels, req, res, o);
   });
 
 /**
@@ -132,7 +158,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/likes/blogs/:blogId")
   .delete(async (req, res, o) => {
-    return deleteFavoritedBlog(DNTModes, req, res, o);
+    return deleteFavoritedBlog(DNTModels, req, res, o);
   });
 
 /**
@@ -141,7 +167,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/comments/blogs/:blogId")
   .post(async (req, res, o) => {
-    return postBlogComment(DNTModes, req, res, o);
+    return postBlogComment(DNTModels, req, res, o);
   });
 
 /**
@@ -150,7 +176,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/comments/blogs/:blogId")
   .patch(async (req, res, o) => {
-    return patchBlogComment(DNTModes, req, res, o);
+    return patchBlogComment(DNTModels, req, res, o);
   });
 
 /**
@@ -159,7 +185,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/comments/blogs/:blogId")
   .delete(async (req, res, o) => {
-    return deleteBlogComment(DNTModes, req, res, o);
+    return deleteBlogComment(DNTModels, req, res, o);
   });
 
 /**
@@ -168,7 +194,7 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/follows/:userId")
   .post(async (req, res, o) => {
-    return postFollow(DNTModes, req, res, o);
+    return postFollow(DNTModels, req, res, o);
   });
 
 /**
@@ -177,7 +203,21 @@ usersEndpoints
 usersEndpoints
   .createHandler("/:id/follows/:userId")
   .delete(async (req, res, o) => {
-    return deleteFollow(DNTModes, req, res, o);
+    return deleteFollow(DNTModels, req, res, o);
   });
+
+/**
+ * Get followers of users
+ */
+usersEndpoints.createHandler("/:id/followers").get(async (req, res, o) => {
+  return postFollow(DNTModels, req, res, o);
+});
+
+/**
+ * Get followers of users
+ */
+usersEndpoints.createHandler("/:id/follows").get(async (req, res, o) => {
+  return postFollow(DNTModels, req, res, o);
+});
 
 export default usersEndpoints;

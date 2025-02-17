@@ -6,7 +6,7 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        typeIds: [{ type: Schema.Types.ObjectId }],
+        typeIds: [{ type: Schema.Types.ObjectId, ref: "PlaceTypes" }],
         placeId: Schema.Types.String,
         addressComponents: [{ type: Schema.Types.Mixed }],
         geometry: Schema.Types.Mixed,

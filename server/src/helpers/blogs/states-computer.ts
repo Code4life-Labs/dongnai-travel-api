@@ -9,6 +9,8 @@
 export function computeStateOfBlog(plainBlog: any, userId: string) {
   if (plainBlog.comments) {
     plainBlog.totalComments = plainBlog.comments.length;
+    // Delete comments
+    delete plainBlog.comments;
   }
 
   if (plainBlog.favorites) {

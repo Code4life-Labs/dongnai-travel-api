@@ -1,3 +1,6 @@
+// Import helpers
+import { transformExcludedFieldsToStr } from "../other/field-transformers";
+
 // Import types
 import type { Query } from "mongoose";
 
@@ -28,7 +31,7 @@ export function buildBriefProjection(query: Query<any, any>) {
 
   // Exclude some fields
   query.select(
-    BlogProjectionFields.ExcludedFields.map((fields) => `-${fields}`).join(" ")
+    transformExcludedFieldsToStr(BlogProjectionFields.ExcludedFields)
   );
 
   return query;

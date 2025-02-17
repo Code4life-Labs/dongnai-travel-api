@@ -1,5 +1,5 @@
 // Import helpers
-import { buildUserPopulation } from "src/helpers/users/populations";
+import { buildUserPopulation } from "src/helpers/users/projections";
 
 // Import types
 import type { Request, Response } from "express";

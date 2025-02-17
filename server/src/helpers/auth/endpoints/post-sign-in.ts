@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 // Import helpers
-import { buildUserPopulation } from "src/helpers/users/populations";
+import { buildUserPopulation } from "src/helpers/users/projections";
 
 // Import services
 import { authService } from "src/services/auth";

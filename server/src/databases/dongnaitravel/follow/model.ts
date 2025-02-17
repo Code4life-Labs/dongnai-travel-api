@@ -31,6 +31,16 @@ export default function () {
             delete ret.id;
             delete ret.__v;
 
+            if (typeof ret.source === "object") {
+              ret.user = ret.source;
+              delete ret.source;
+            }
+
+            if (typeof ret.target === "object") {
+              ret.user = ret.target;
+              delete ret.target;
+            }
+
             return ret;
           },
         },

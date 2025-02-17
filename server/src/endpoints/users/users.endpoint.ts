@@ -8,6 +8,8 @@ import db from "src/databases/dongnaitravel";
 import getFavoritedPlaces from "src/helpers/users/endpoints/get-favorited-places";
 import getVisitedPlaces from "src/helpers/users/endpoints/get-visited-places";
 import getLikedBlogs from "src/helpers/users/endpoints/get-liked-blogs";
+import getFollows from "src/helpers/users/endpoints/get-follows";
+import getFollowers from "src/helpers/users/endpoints/get-followers";
 import getUser from "src/helpers/users/endpoints/get-user";
 import patchUser from "src/helpers/users/endpoints/patch-user";
 import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place";
@@ -210,14 +212,14 @@ usersEndpoints
  * Get followers of users
  */
 usersEndpoints.createHandler("/:id/followers").get(async (req, res, o) => {
-  return postFollow(DNTModels, req, res, o);
+  return getFollowers(DNTModels, req, res, o);
 });
 
 /**
  * Get followers of users
  */
 usersEndpoints.createHandler("/:id/follows").get(async (req, res, o) => {
-  return postFollow(DNTModels, req, res, o);
+  return getFollows(DNTModels, req, res, o);
 });
 
 export default usersEndpoints;

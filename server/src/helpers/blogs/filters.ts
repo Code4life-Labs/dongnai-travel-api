@@ -11,16 +11,17 @@ function buildBlogBaseFilter(query: Query<any, any>) {
 /**
  * Use this function to build a type query of blog
  * @param query
- * @param requestQuery
+ * @param req
  * @returns
  */
-export function buildBlogTypeFilter(query: Query<any, any>, requestQuery: any) {
+export function buildBlogTypeFilter(query: Query<any, any>, req: any) {
   query = buildBlogBaseFilter(query);
 
-  if (!requestQuery.query.type) return query;
+  if (!req.query.type) return query;
+  if (req.query.types === "all") return query;
 
   // Build query
-  query.where("typeId").equals(requestQuery.query.type);
+  query.where("typeId").equals(req.query.type);
 
   return query;
 }
@@ -28,16 +29,16 @@ export function buildBlogTypeFilter(query: Query<any, any>, requestQuery: any) {
 /**
  * Use this function to build a name query of blog
  * @param query
- * @param requestQuery
+ * @param req
  * @returns
  */
-export function buildBlogNameFilter(query: Query<any, any>, requestQuery: any) {
+export function buildBlogNameFilter(query: Query<any, any>, req: any) {
   query = buildBlogBaseFilter(query);
 
-  if (!requestQuery.query.name) return query;
+  if (!req.query.name) return query;
 
   // Build query
-  query.where("name").regex(new RegExp(requestQuery.query.name, "i"));
+  query.where("name").regex(new RegExp(req.query.name, "i"));
 
   return query;
 }

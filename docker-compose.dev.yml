@@ -1,6 +1,8 @@
 version: "3"
 services:
   database:
+    networks:
+      - mynetwork
     env_file: "./_docker-compose-env/database.env"
     ports:
       - "27017:27017"
@@ -8,6 +10,8 @@ services:
       dockerfile: dockerfile
       context: ./database
   server:
+    networks:
+      - mynetwork
     env_file: "./_docker-compose-env/server.env"
     depends_on:
       - database
@@ -20,3 +24,6 @@ services:
     volumes:
       - ./server/src:/root/app/src
       - /root/app/node_modules
+networks:
+  mynetwork:
+    driver: bridge

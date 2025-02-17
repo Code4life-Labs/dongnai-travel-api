@@ -62,6 +62,13 @@ Nhưng dù là cách triển khai nào đi chăng nữa, thì mình chỉ cần 
 
 Note: để có thể xài được podman compose thì mình phải cài `podman-compose` qua thư viện python `pip install podman-compose`.
 
+Và nếu như ứng dụng không thể acces được từ các thiết bị khác ở trong mạng, thì vấn đề là từ Network Interace của Host tới VM (WSL) chưa có connect với nhau, vì thế mà mình cần phải dùng kỹ thuật Port Forwarding.
+
+```bash
+wsl hostname -I
+netsh interface portproxy set v4tov4 listenport=3000 listenaddress=0.0.0.0 connectport=3000 connectaddress=172.25.207.155
+```
+
 ## Demo
 
 Xem [tại đây](https://www.youtube.com/watch?v=6lMZkIQiZ68)

@@ -5,7 +5,7 @@ import { transformExcludedFieldsToStr } from "../other/field-transformers";
 import type { Query } from "mongoose";
 
 export const BlogProjectionFields = {
-  ExcludedFields: ["createdAt", "isApproved"],
+  ExcludedFields: ["isApproved"],
 };
 
 export function buildBlogProjection(query: Query<any, any>) {

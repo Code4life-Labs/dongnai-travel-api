@@ -62,7 +62,7 @@ Nhưng dù là cách triển khai nào đi chăng nữa, thì mình chỉ cần 
 
 Note: để có thể xài được podman compose thì mình phải cài `podman-compose` qua thư viện python `pip install podman-compose`.
 
-Và nếu như ứng dụng không thể acces được từ các thiết bị khác ở trong mạng, thì vấn đề là từ Network Interace của Host tới VM (WSL) chưa có connect với nhau, vì thế mà mình cần phải dùng kỹ thuật Port Forwarding.
+Và nếu như ứng dụng không thể acces được từ các thiết bị khác ở trong mạng, thì vấn đề là từ Network Interace của Host tới VM (WSL) chưa có "connect" với nhau, vì thế mà mình cần phải dùng kỹ thuật Port Forwarding để khi thiết bị khác gửi request tới máy host, nó sẽ forward về cho VM (WSL).
 
 ```bash
 wsl hostname -I

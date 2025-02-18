@@ -24,7 +24,7 @@ export default async function signin(
 
   // Find user with username
   const query = MC.Users.findOne({
-    username: validData.username,
+    $or: [{ username: validData.username }, { email: validData.email }],
   });
 
   // Build populations
@@ -34,16 +34,18 @@ export default async function signin(
 
   if (!findUserResult) {
     o!.code = 400;
-    throw new Error(`The user \`${validData.username}\` is not registered`);
+    throw new Error(
+      `The user \`${validData.username || validData.email}\` is not registered`
+    );
   }
 
   const user = findUserResult.toJSON();
-  let tokenCheck = (await authService.verifyToken(validData.token)).code === 0;
+  let tokenCheck = await authService.verifyToken(validData.token);
 
-  if (validData.token && !tokenCheck) {
+  if (validData.token && tokenCheck.code) {
     o!.code = 401;
     throw new Error("Invalid token");
-  } else if (validData.token && tokenCheck) {
+  } else if (validData.token && !tokenCheck.code) {
     // Token is valid
     return {
       user: user,

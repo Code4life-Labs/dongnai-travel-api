@@ -6,6 +6,9 @@ import {
 } from "src/helpers/blogs/filters";
 import { computeStateOfBlog } from "src/helpers/blogs/states-computer";
 
+// Impor services
+import { AuthService } from "src/services/auth";
+
 // Import utils
 import { RequestUtils } from "src/utils/request";
 
@@ -23,19 +26,22 @@ export default async function getBlogs(
   // Get `limit` and `skip` from request
   const { limit, skip } = RequestUtils.getLimitNSkip(req);
 
-  // Process query
-  const { userId } = req.query as any;
-
   // Get blogs from database
   let query = MC.Blogs.find({}).skip(skip).limit(limit);
 
   // Build filters & projections
-  [buildBlogTypeFilter, buildBlogNameFilter, buildBriefProjection].forEach(
-    (fn) => fn(query, req)
-  );
+  buildBlogTypeFilter(query, req);
+  buildBlogNameFilter(query, req);
+  buildBriefProjection(query);
 
   const blogs = await query.exec();
 
+  if (AuthService.isAuthorizedRequest(req)) {
+    return blogs.map((blog) =>
+      computeStateOfBlog(blog.toJSON(), req.locals.tokenPayload.userId)
+    );
+  }
+
   // Return blogs
-  return blogs.map((blog) => computeStateOfBlog(blog.toJSON(), userId));
+  return blogs.map((blog) => computeStateOfBlog(blog.toJSON()));
 }

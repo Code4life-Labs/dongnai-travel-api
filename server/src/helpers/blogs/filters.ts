@@ -1,3 +1,6 @@
+// Import helpers
+import { SimpleMemoryStore } from "../other/memory-store";
+
 // Import types
 import type { Query } from "mongoose";
 
@@ -18,10 +21,15 @@ export function buildBlogTypeFilter(query: Query<any, any>, req: any) {
   query = buildBlogBaseFilter(query);
 
   if (!req.query.type) return query;
-  if (req.query.types === "all") return query;
+  if (req.query.type === "all") return query;
+
+  const blogTypes = SimpleMemoryStore.get("blog-types");
+  const requestTypeId = blogTypes.find(
+    (t: any) => t.value === req.query.type
+  )._id;
 
   // Build query
-  query.where("typeId").equals(req.query.type);
+  query.where("typeId").equals(requestTypeId);
 
   return query;
 }

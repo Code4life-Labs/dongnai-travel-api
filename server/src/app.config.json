@@ -3,6 +3,10 @@
   "email": "",
   "port": 3000,
   "hostname": "0.0.0.0",
+  "redis": {
+    "hostname": "memorystore",
+    "port": "6379"
+  },
   "listedEndpointsDir": [".endpoint.ts"],
   "unListedEndpointsDir": ["index.ts"],
   "folders": {

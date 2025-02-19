@@ -73,6 +73,6 @@ export default async function signin(
 
   return {
     user: user,
-    token: authService.createToken(user.role.name),
+    token: authService.createToken(user._id, user.role.name),
   };
 }

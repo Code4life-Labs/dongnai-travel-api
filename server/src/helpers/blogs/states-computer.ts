@@ -6,7 +6,7 @@
  * Note: this function effect the result.
  * @param plainBlog
  */
-export function computeStateOfBlog(plainBlog: any, userId: string) {
+export function computeStateOfBlog(plainBlog: any, userId?: string | null) {
   if (plainBlog.comments) {
     plainBlog.totalComments = plainBlog.comments.length;
     // Delete comments
@@ -17,7 +17,7 @@ export function computeStateOfBlog(plainBlog: any, userId: string) {
     let total = 0;
     plainBlog.isLiked = false;
     for (const favorite of plainBlog.favorites) {
-      if (!plainBlog.isLiked && userId == favorite.userId)
+      if (!plainBlog.isLiked && userId && userId == favorite.userId)
         plainBlog.isLiked = true;
       total++;
     }

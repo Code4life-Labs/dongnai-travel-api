@@ -1,3 +1,6 @@
+// Import helpers
+import { SimpleMemoryStore } from "../other/memory-store";
+
 // Import types
 import type { Query } from "mongoose";
 
@@ -9,10 +12,19 @@ import type { Query } from "mongoose";
  */
 export function buildPlaceTypeFilter(query: Query<any, any>, req: any) {
   if (!req.query.types) return query;
-  if (req.query.types === "all") return query;
+  if (req.query.types.includes("all")) return query;
+  if (req.query.types.includes("recommended")) {
+    query.where("isRecommended").equals(true);
+  }
+
+  const placeTypes = SimpleMemoryStore.get("place-types");
+  const requestTypeIds = req.query.types.split(";").map((t: string) => {
+    const place = placeTypes.find((_t: any) => _t.value === t);
+    if (place) return place._id;
+  });
 
   // Build query
-  query.where("typeIds").in(req.query.types.split(";"));
+  query.where("typeIds").in(requestTypeIds);
 
   return query;
 }
@@ -24,7 +36,7 @@ export function buildPlaceTypeFilter(query: Query<any, any>, req: any) {
  * @returns
  */
 export function buildPlaceNameFilter(query: Query<any, any>, req: any) {
-  if (!req.query.name) return;
+  if (!req.query.name) return query;
 
   // Build query
   query.where("name").regex(new RegExp(req.query.name, "i"));

@@ -1,14 +1,13 @@
-// Import services
-import { AuthService } from "src/services/auth";
-
 // Import helpers
 import { buildBriefProjection } from "src/helpers/places/projections";
 import {
   buildPlaceTypeFilter,
-  buildPlaceRecommendationFilter,
   buildPlaceNameFilter,
 } from "src/helpers/places/filters";
 import { computeStateOfPlace } from "src/helpers/places/states-computer";
+
+// Impor services
+import { AuthService } from "src/services/auth";
 
 // Import utils
 import { RequestUtils } from "src/utils/request";
@@ -27,27 +26,22 @@ export default async function getPlaces(
   // Get `limit` and `skip` from request
   const { limit, skip } = RequestUtils.getLimitNSkip(req);
 
-  // Process query
-  const { userId } = req.query as any;
-
   // Get places from database
   let query = MC.Places.find({}).skip(skip).limit(limit);
 
   // Build filters
-  [
-    buildPlaceTypeFilter,
-    buildPlaceRecommendationFilter,
-    buildPlaceNameFilter,
-    buildBriefProjection,
-  ].forEach((fn) => fn(query, req));
+  buildPlaceTypeFilter(query, req);
+  buildPlaceNameFilter(query, req);
+  buildBriefProjection(query);
 
   const places = await query.exec();
 
-  // Compute user's state
-  if (AuthService.isAuthorizedRequest(req) && userId) {
-    // computeStateWithPlace(placeJSON, DNTModels, userId);
+  if (AuthService.isAuthorizedRequest(req)) {
+    return places.map((place) =>
+      computeStateOfPlace(place.toJSON(), req.locals.tokenPayload.userId)
+    );
   }
 
   // Return places
-  return places.map((place) => computeStateOfPlace(place.toJSON(), userId));
+  return places.map((place) => computeStateOfPlace(place.toJSON()));
 }

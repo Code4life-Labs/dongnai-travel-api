@@ -70,7 +70,7 @@ export default async function signup(
   );
 
   return {
-    user: { ...validData.value, id: insertResult.id, role },
-    token: authService.createToken(role.name),
+    user: { ...validData.value, id: insertResult._id, role },
+    token: authService.createToken(insertResult._id, role.name),
   };
 }

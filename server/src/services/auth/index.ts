@@ -1,8 +1,8 @@
 import fs from "fs";
 import jwt from "jsonwebtoken";
 
-// Import models
-import db from "src/databases/dongnaitravel";
+// Import helpers
+import { SimpleMemoryStore } from "src/helpers/other/memory-store";
 
 // Import utils
 import { StringUtils } from "src/utils/string";
@@ -18,6 +18,7 @@ import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 let DNTModels: DongNaiTravelModelsType;
 
 type AccessTokenPayloadType = {
+  userId: string;
   role: string;
   expire: number;
   issuer: string;
@@ -42,20 +43,15 @@ export class AuthService {
 
       // Get role
       AuthService.roles = {};
-      db().then((models) => {
-        DNTModels = models;
+      const userRoles = SimpleMemoryStore.get("user-roles");
 
-        DNTModels.UserRoles.find().then((roles) => {
-          for (const role of roles) {
-            const r = role.toJSON();
-            AuthService.roles[r.name] = r.value;
-          }
-        });
+      for (const role of userRoles) {
+        AuthService.roles[role.name] = role.value;
+      }
 
-        if (this._signature) {
-          this._canCreateToken = true;
-        }
-      });
+      if (this._signature) {
+        this._canCreateToken = true;
+      }
     } catch (error: any) {
       // Just print error's message
       console.error(error.message);
@@ -121,7 +117,7 @@ export class AuthService {
    * @param credential
    * @returns
    */
-  createToken(role: string) {
+  createToken(userId: string, role: string) {
     if (!this._canCreateToken) {
       console.warn(
         "The signature must be assigned before the service creates token or User Roles must be loaded"
@@ -137,6 +133,7 @@ export class AuthService {
     if (!AuthService.roles[role]) throw new Error("Invalid role");
 
     let tokenPayload: AccessTokenPayloadType = {
+      userId,
       role: AuthService.roles[role],
       expire: period,
       issuer: AuthSettings.ISSUER,

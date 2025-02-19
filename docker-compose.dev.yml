@@ -9,12 +9,17 @@ services:
     build:
       dockerfile: dockerfile
       context: ./database
+  memorystore:
+    image: redis:8.0-M03-alpine
+    ports:
+      - "6379:6379"
   server:
     networks:
       - mynetwork
     env_file: "./_docker-compose-env/server.env"
     depends_on:
       - database
+      - memorystore
     build:
       dockerfile: dockerfile.dev
       context: ./server
@@ -23,7 +28,7 @@ services:
     # For development
     volumes:
       - ./server/src:/root/app/src
-      - /root/app/node_modules
+      # - /root/app/node_modules
 networks:
   mynetwork:
     driver: bridge

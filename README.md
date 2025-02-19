@@ -26,7 +26,7 @@ Phần hướng dẫn này sẽ tập trung vào cho môi trường phát triể
 Nhưng dù là cách triển khai nào đi chăng nữa, thì mình chỉ cần quan tâm tới những thứ như sau:
 
 - File `database/scripts/init.js` dùng trong quá trình khởi tạo của MongoDB để tạo các dữ liệu mặc định (bất kể là trong máy ảo hay container).
-- File `server/secrets` là thư mục chứa các thông tin được bảo vệ, về phần này thì các bạn có thể hỏi nhóm tác giả để biết thêm thông tin chi tiết.
+- File `server/secrets` là thư mục chứa các thông tin được bảo vệ, về phần này thì các bạn có thể hỏi nhóm tác giả để biết thêm thông tin chi tiết. Cách cài đặt là copy nội dung trong thư mục `secrets` được chia sẻ bởi nhóm tác giả vào trong `server/secrets`.
 - File `server/src/db.config.json` là file chứa các cấu hình để giao tiếp với cơ sở dữ liệu, rất quan trọng. Để đảm bảo cho server có thể kết nối được tới database, thì mình phải đảm bảo được các cấu hình trong file này phù hợp với các yêu cầu của database server đang chạy.
 
 Ở trong môi trường phát triển thì mình không cần quan tâm tới `server/src/db.config.json` nhưng vẫn cần `server/src/db.config.json` để chạy được. Để có thể chạy được thì cần phải cài Docker hoặc Docker Desktop hoặc Podman ở trong máy, sau đó làm theo các bước hướng dẫn sau:

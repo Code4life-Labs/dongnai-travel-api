@@ -1,3 +1,6 @@
+// Import database
+import db from "src/databases/dongnaitravel";
+
 // Import service
 import { authService } from ".";
 
@@ -6,6 +9,13 @@ import { ErrorUtils } from "src/utils/error";
 
 // Import types
 import type { Request, Response, NextFunction } from "express";
+import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
+
+let DNTModels: DongNaiTravelModelsType;
+
+db().then((models) => {
+  DNTModels = models;
+});
 
 export class AuthMiddlewares {
   /**
@@ -15,32 +25,47 @@ export class AuthMiddlewares {
    * @param next
    * @returns
    */
-  static allowGuestSendsRequest(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  static allowGuest(req: Request, res: Response, next: NextFunction) {
     return ErrorUtils.handleError(this, req, res, async function ($, $$, o) {
-      const authorization = req.headers.authorization;
+      res.locals.isGuestAllowed = true;
+      return next();
+    });
+  }
 
-      if (!authorization) {
-        o.code = 401;
-        throw new Error("Token is required");
+  /**
+   * Use this middleware to allow only verified user. Note: use this middleware after request is verfied
+   * @param req
+   * @param res
+   * @param next
+   * @returns
+   */
+  static checkVerifiedUser(req: Request, res: Response, next: NextFunction) {
+    return ErrorUtils.handleError(this, req, res, async function ($, $$, o) {
+      if (
+        (res.locals && res.locals.isGuestAllowed) ||
+        !res.locals.tokenPayload
+      ) {
+        o.code = 403;
+        throw new Error("You don't have permission to do this action");
       }
 
-      const [, token] = authorization.split(" ");
-      const result = await authService.verifyToken(token);
+      const userId = res.locals.tokenPayload.userId;
+      // Get user from databases
+      const user = await DNTModels.Users.findOne({ _id: userId }).exec();
 
-      if (!result.code) {
-        // Add some custom properties to request
-        res.locals.tokenPayload = result.data;
-        req.locals.isAuthorized = true;
-        // Go to next middleware
-        return next();
-      } else {
+      if (!user) {
         o.code = 401;
-        throw new Error(result.message ? result.message : "Token is invalid");
+        throw new Error(`User with id [${userId}] isn't found`);
       }
+
+      if (!user.isVerified) {
+        o.code = 403;
+        throw new Error(
+          "You don't have permission. Please verify you account first"
+        );
+      }
+
+      return next();
     });
   }
 
@@ -55,6 +80,13 @@ export class AuthMiddlewares {
     return ErrorUtils.handleError(this, req, res, async function ($, $$, o) {
       const authorization = req.headers.authorization;
 
+      if (res.locals && res.locals.isGuestAllowed && !authorization) {
+        return next();
+      } else if (res.locals && !res.locals.isGuestAllowed && !authorization) {
+        o.code = 401;
+        throw new Error("You are unauthenticated, please sign in first");
+      }
+
       if (!authorization) {
         o.code = 401;
         throw new Error("Token is required");
@@ -66,7 +98,7 @@ export class AuthMiddlewares {
       if (!result.code) {
         // Add some custom properties to request
         res.locals.tokenPayload = result.data;
-        req.locals.isAuthorized = true;
+        res.locals.isAuthorized = true;
         // Go to next middleware
         return next();
       } else {
@@ -91,6 +123,16 @@ export class AuthMiddlewares {
       next: NextFunction
     ) {
       return ErrorUtils.handleError(that, req, res, function ($, $$, o) {
+        // If guest is allowed
+        if (
+          res.locals &&
+          res.locals.isGuestAllowed &&
+          authService.checkPolicy("guest", resource, action)
+        ) {
+          // Go to next middleware
+          return next();
+        }
+
         const tokenPayload = res.locals.tokenPayload;
 
         if (!tokenPayload) {

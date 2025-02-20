@@ -9,10 +9,6 @@ services:
     build:
       dockerfile: dockerfile
       context: ./database
-  memorystore:
-    image: redis:8.0-M03-alpine
-    ports:
-      - "6379:6379"
   server:
     networks:
       - mynetwork

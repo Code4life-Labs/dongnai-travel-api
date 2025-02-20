@@ -62,6 +62,8 @@ export default async function () {
   // Build model
   const modelFilePaths = reader.getAllPathsToFilesSync(rootPath);
 
+  console.log(`[${databaseName}] Start building models from schemas...`);
+
   for (const modelFilePath of modelFilePaths) {
     const modelDefault = require(modelFilePath);
 
@@ -74,6 +76,8 @@ export default async function () {
     const result = model();
     (models as any)[result.name] = result.model;
   }
+
+  console.log(`[${databaseName}] Finish build models`);
 
   const connectionString = `mongodb://${databaseUsername}:${databasePassword}@${databaseHost}:27017/${databaseName}`;
 

@@ -36,9 +36,9 @@ export default async function getBlogs(
 
   const blogs = await query.exec();
 
-  if (AuthService.isAuthorizedRequest(req)) {
+  if (AuthService.isAuthorizedRequest(res!)) {
     return blogs.map((blog) =>
-      computeStateOfBlog(blog.toJSON(), req.locals.tokenPayload.userId)
+      computeStateOfBlog(blog.toJSON(), res!.locals.tokenPayload.userId)
     );
   }
 

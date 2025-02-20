@@ -63,8 +63,8 @@ export class AuthService {
    * @param req
    * @returns
    */
-  static isAuthorizedRequest(req: any) {
-    if (req.locals && req.locals.isAuthorized) {
+  static isAuthorizedRequest(res: any) {
+    if (res.locals.isAuthorized) {
       return true;
     }
     return false;

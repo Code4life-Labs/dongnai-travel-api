@@ -36,9 +36,9 @@ export default async function getPlaces(
 
   const places = await query.exec();
 
-  if (AuthService.isAuthorizedRequest(req)) {
+  if (AuthService.isAuthorizedRequest(res!)) {
     return places.map((place) =>
-      computeStateOfPlace(place.toJSON(), req.locals.tokenPayload.userId)
+      computeStateOfPlace(place.toJSON(), res!.locals.tokenPayload.userId)
     );
   }
 

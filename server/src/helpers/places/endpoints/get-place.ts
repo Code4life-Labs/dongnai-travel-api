@@ -4,6 +4,9 @@ import { transformPlaceContentWithLanguage } from "src/helpers/places/transforms
 import { getLanguageFromQuery } from "src/helpers/other/get-language";
 import { computeStateOfPlace } from "src/helpers/places/states-computer";
 
+// Impor services
+import { AuthService } from "src/services/auth";
+
 // Import types
 import type { Request, Response } from "express";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -59,5 +62,10 @@ export default async function getPlace(
   // Final transform data
   const result = transformPlaceContentWithLanguage(placeJSON, lang);
 
-  return computeStateOfPlace(result, userId);
+  if (AuthService.isAuthorizedRequest(res!)) {
+    console.log("UserId:", res!.locals.tokenPayload.userId);
+    return computeStateOfPlace(result, res!.locals.tokenPayload.userId);
+  }
+
+  return computeStateOfPlace(result);
 }

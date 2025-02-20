@@ -2,6 +2,9 @@
 import { buildBlogProjection } from "src/helpers/blogs/projections";
 import { computeStateOfBlog } from "src/helpers/blogs/states-computer";
 
+// Impor services
+import { AuthService } from "src/services/auth";
+
 // Import types
 import type { Request, Response } from "express";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -34,6 +37,10 @@ export default async function getBlog(
     throw new Error(`Blog isn't found`);
   }
 
+  if (AuthService.isAuthorizedRequest(res!)) {
+    return computeStateOfBlog(blog.toJSON(), res!.locals.tokenPayload.userId);
+  }
+
   // Return blog
-  return computeStateOfBlog(blog.toJSON(), userId);
+  return computeStateOfBlog(blog.toJSON());
 }

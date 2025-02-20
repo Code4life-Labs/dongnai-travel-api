@@ -1,13 +1,17 @@
 // Import classes
 import { Endpoints } from "src/classes/Endpoints";
 
-// Import models
+// Import database
 import db from "src/databases/dongnaitravel";
 
+// Import helpers
 import getPlaces from "src/helpers/places/endpoints/get-places";
 import getPlaceTypes from "src/helpers/places/endpoints/get-place-types";
 import getPlace from "src/helpers/places/endpoints/get-place";
 import getPlaceReviews from "src/helpers/places/endpoints/get-place-reviews";
+
+// Import services
+import { AuthMiddlewares } from "src/services/auth/middlewares";
 
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
@@ -23,9 +27,14 @@ db().then((models) => {
 /**
  * Get places
  */
-placesEndpoints.createHandler("").get(async (req, res, o) => {
-  return getPlaces(DNTModels, req, res, o);
-});
+placesEndpoints
+  .createHandler("")
+  .use(AuthMiddlewares.allowGuest)
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:getPlaces"))
+  .get(async (req, res, o) => {
+    return getPlaces(DNTModels, req, res, o);
+  });
 
 /**
  * Get all types of places
@@ -37,15 +46,25 @@ placesEndpoints.createHandler("/types").get(async (req, res, o) => {
 /**
  * Get details of place
  */
-placesEndpoints.createHandler("/:id").get(async (req, res, o) => {
-  return getPlace(DNTModels, req, res, o);
-});
+placesEndpoints
+  .createHandler("/:id")
+  .use(AuthMiddlewares.allowGuest)
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:getPlace"))
+  .get(async (req, res, o) => {
+    return getPlace(DNTModels, req, res, o);
+  });
 
 /**
  * Get reviews of place
  */
-placesEndpoints.createHandler("/:id/reviews").get(async (req, res, o) => {
-  return getPlaceReviews(DNTModels, req, res, o);
-});
+placesEndpoints
+  .createHandler("/:id/reviews")
+  .use(AuthMiddlewares.allowGuest)
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:getPlaceReviews"))
+  .get(async (req, res, o) => {
+    return getPlaceReviews(DNTModels, req, res, o);
+  });
 
 export default placesEndpoints;

@@ -1,5 +1,5 @@
 // Import helpers
-import { buildUserPopulation } from "src/helpers/users/projections";
+import { buildUserProjection } from "src/helpers/users/projections";
 
 // Import types
 import type { Request, Response } from "express";
@@ -21,7 +21,7 @@ export default async function getUser(
   let query = MC.Users.findOne({ _id: req.params.id });
 
   // Build populations
-  buildUserPopulation(query);
+  buildUserProjection(query);
 
   const user = await query.exec();
 

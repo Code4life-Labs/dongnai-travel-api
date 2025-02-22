@@ -16,6 +16,7 @@ export default function () {
         birthday: Schema.Types.Number,
         avatar: Schema.Types.String,
         coverPhoto: Schema.Types.String,
+        isVerified: Schema.Types.Boolean,
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

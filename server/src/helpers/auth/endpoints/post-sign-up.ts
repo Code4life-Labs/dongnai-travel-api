@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 // Import helpers
-import { buildUserPopulation } from "src/helpers/users/projections";
+import { buildUserProjection } from "src/helpers/users/projections";
 import { checkUser } from "src/helpers/users/user-checkers";
 import { generateOtp } from "src/helpers/other/otp-generator";
 

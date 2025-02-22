@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 // Import helpers
-import { buildUserPopulation } from "src/helpers/users/projections";
+import { buildUserProjection } from "src/helpers/users/projections";
 
 // Import services
 import { authService } from "src/services/auth";
@@ -28,7 +28,7 @@ export default async function signin(
   });
 
   // Build populations
-  buildUserPopulation(query);
+  buildUserProjection(query);
 
   const findUserResult = await query.exec();
 
@@ -57,6 +57,9 @@ export default async function signin(
     throw new Error("Password is required");
   }
 
+  console.log("Valid data:", validData);
+  console.log("User:", user);
+
   let passwordCheck = bcrypt.compareSync(
     validData.password,
     user.hashedPassword
@@ -69,7 +72,6 @@ export default async function signin(
 
   // Delete some fields
   delete user.hashedPassword;
-  delete user.roleId;
 
   return {
     user: user,

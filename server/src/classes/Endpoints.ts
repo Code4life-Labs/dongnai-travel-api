@@ -17,6 +17,10 @@ interface HandlerFn {
   (req: Request, res: Response, result: HTTPResponseDataType): any;
 }
 
+interface ErrorHandlerFn<T = any> {
+  (error: T, result: HTTPResponseDataType): void;
+}
+
 type HandlerMetaType = {
   path: string;
   method: string;
@@ -66,13 +70,22 @@ class Handler {
    * @param handlerFn
    * @returns
    */
-  get(handlerFn: HandlerFn | HandlerFnAsync): HandlerMetaType {
+  get(
+    handlerFn: HandlerFn | HandlerFnAsync,
+    errorHandlerFn?: ErrorHandlerFn
+  ): HandlerMetaType {
     if (this.result.handlerFn)
       throw new Error(`The handler of ${this.result.path} is set`);
 
     this.result.method = "get";
     this.result.handlerFn = function (req, res) {
-      return ErrorUtils.handleJSONResponseError(this, req, res, handlerFn);
+      return ErrorUtils.handleJSONResponseError(
+        this,
+        req,
+        res,
+        handlerFn,
+        errorHandlerFn
+      );
     };
     return this.result;
   }
@@ -82,13 +95,22 @@ class Handler {
    * @param handlerFn
    * @returns
    */
-  post(handlerFn: HandlerFn | HandlerFnAsync): HandlerMetaType {
+  post(
+    handlerFn: HandlerFn | HandlerFnAsync,
+    errorHandlerFn?: ErrorHandlerFn
+  ): HandlerMetaType {
     if (this.result.handlerFn)
       throw new Error(`The handler of ${this.result.path} is set`);
 
     this.result.method = "post";
     this.result.handlerFn = function (req, res) {
-      return ErrorUtils.handleJSONResponseError(this, req, res, handlerFn);
+      return ErrorUtils.handleJSONResponseError(
+        this,
+        req,
+        res,
+        handlerFn,
+        errorHandlerFn
+      );
     };
     return this.result;
   }
@@ -98,13 +120,22 @@ class Handler {
    * @param handlerFn
    * @returns
    */
-  put(handlerFn: HandlerFn | HandlerFnAsync): HandlerMetaType {
+  put(
+    handlerFn: HandlerFn | HandlerFnAsync,
+    errorHandlerFn?: ErrorHandlerFn
+  ): HandlerMetaType {
     if (this.result.handlerFn)
       throw new Error(`The handler of ${this.result.path} is set`);
 
     this.result.method = "put";
     this.result.handlerFn = function (req, res) {
-      return ErrorUtils.handleJSONResponseError(this, req, res, handlerFn);
+      return ErrorUtils.handleJSONResponseError(
+        this,
+        req,
+        res,
+        handlerFn,
+        errorHandlerFn
+      );
     };
     return this.result;
   }
@@ -114,13 +145,22 @@ class Handler {
    * @param handlerFn
    * @returns
    */
-  delete(handlerFn: HandlerFn | HandlerFnAsync): HandlerMetaType {
+  delete(
+    handlerFn: HandlerFn | HandlerFnAsync,
+    errorHandlerFn?: ErrorHandlerFn
+  ): HandlerMetaType {
     if (this.result.handlerFn)
       throw new Error(`The handler of ${this.result.path} is set`);
 
     this.result.method = "delete";
     this.result.handlerFn = function (req, res) {
-      return ErrorUtils.handleJSONResponseError(this, req, res, handlerFn);
+      return ErrorUtils.handleJSONResponseError(
+        this,
+        req,
+        res,
+        handlerFn,
+        errorHandlerFn
+      );
     };
     return this.result;
   }
@@ -130,13 +170,22 @@ class Handler {
    * @param handlerFn
    * @returns
    */
-  patch(handlerFn: HandlerFn | HandlerFnAsync): HandlerMetaType {
+  patch(
+    handlerFn: HandlerFn | HandlerFnAsync,
+    errorHandlerFn?: ErrorHandlerFn
+  ): HandlerMetaType {
     if (this.result.handlerFn)
       throw new Error(`The handler of ${this.result.path} is set`);
 
     this.result.method = "patch";
     this.result.handlerFn = function (req, res) {
-      return ErrorUtils.handleJSONResponseError(this, req, res, handlerFn);
+      return ErrorUtils.handleJSONResponseError(
+        this,
+        req,
+        res,
+        handlerFn,
+        errorHandlerFn
+      );
     };
     return this.result;
   }

@@ -80,11 +80,22 @@ export class AuthMiddlewares {
     return ErrorUtils.handleError(this, req, res, async function ($, $$, o) {
       const authorization = req.headers.authorization;
 
+      // If allow guest, pass this middleware
       if (res.locals && res.locals.isGuestAllowed && !authorization) {
         return next();
-      } else if (res.locals && !res.locals.isGuestAllowed && !authorization) {
+      }
+      // If not allow guest, return 401
+      else if (res.locals && !res.locals.isGuestAllowed && !authorization) {
         o.code = 401;
         throw new Error("You are unauthenticated, please sign in first");
+      }
+
+      // If has userId in params, check it
+      if (req.params.userId) {
+        if (req.params.userId !== res.locals.tokenPayload.userId) {
+          o.code = 400;
+          throw new Error("UserId in request params and in token are mismatch");
+        }
       }
 
       if (!authorization) {
@@ -94,6 +105,8 @@ export class AuthMiddlewares {
 
       const [, token] = authorization.split(" ");
       const result = await authService.verifyToken(token);
+
+      console.log("Check token result:", result);
 
       if (!result.code) {
         // Add some custom properties to request

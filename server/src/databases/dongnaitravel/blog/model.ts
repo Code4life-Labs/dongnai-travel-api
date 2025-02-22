@@ -14,10 +14,11 @@ export default function () {
         },
         mentionedPlaceIds: [{ type: Schema.Types.ObjectId }],
         name: Schema.Types.String,
-        contentUrl: Schema.Types.String,
+        content: Schema.Types.String,
         coverImage: Schema.Types.String,
+        images: [Schema.Types.String],
         readTime: Schema.Types.Number,
-        isApproved: Schema.Types.Boolean,
+        isApproved: { type: Schema.Types.Boolean, default: true },
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

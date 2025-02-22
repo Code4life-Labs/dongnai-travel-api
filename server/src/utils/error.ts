@@ -20,7 +20,8 @@ export class ErrorUtils {
       req: Request,
       res: Response,
       result: HTTPResponseDataType
-    ) => any
+    ) => any,
+    errorFn?: (error: any, result: HTTPResponseDataType) => void
   ) {
     let result = HTTPUtils.generateHTTPResponseData(200, "Successfully");
     try {
@@ -32,6 +33,9 @@ export class ErrorUtils {
         result.data = maybePromisedData;
       }
     } catch (error: any) {
+      if (errorFn) {
+        errorFn(error, result);
+      }
       let code = result.code === 200 ? 500 : result.code;
       result = HTTPUtils.generateHTTPResponseData(code, error.message);
     } finally {
@@ -58,13 +62,17 @@ export class ErrorUtils {
       req: Request,
       res: Response,
       result: HTTPResponseDataType
-    ) => any
+    ) => any,
+    errorFn?: (error: any, result: HTTPResponseDataType) => void
   ) {
     let result = HTTPUtils.generateHTTPResponseData(200, "Successfully");
 
     try {
       await fn.call(ctx, req, res, result);
     } catch (error: any) {
+      if (errorFn) {
+        errorFn(error, result);
+      }
       let code = result.code === 200 ? 500 : result.code;
       result = HTTPUtils.generateHTTPResponseData(code, error.message);
       return res.status(result.code).json(result);
@@ -83,7 +91,8 @@ export class ErrorUtils {
     fn: (
       this: C,
       result: InterchangeDateType<T>
-    ) => Promise<T | undefined> | T | undefined
+    ) => Promise<T | undefined> | T | undefined,
+    errorFn?: (error: any, result: InterchangeDateType<T>) => void
   ) {
     let result = HTTPUtils.generateInterchange<T>();
 
@@ -94,6 +103,9 @@ export class ErrorUtils {
         result.data = await maybePromisedData;
       } else result.data = maybePromisedData;
     } catch (error: any) {
+      if (errorFn) {
+        errorFn(error, result);
+      }
       result.code = 1;
       result.message = error.message;
     } finally {

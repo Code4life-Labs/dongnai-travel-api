@@ -106,6 +106,7 @@ export class AuthMiddlewares {
       const [, token] = authorization.split(" ");
       const result = await authService.verifyToken(token);
 
+      console.log("Token:", authorization);
       console.log("Check token result:", result);
 
       if (!result.code) {

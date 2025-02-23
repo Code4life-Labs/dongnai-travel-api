@@ -22,7 +22,7 @@ export default async function postFavoritedBlog(
     }).exec()
   ) {
     o!.code = 200;
-    return "You liked this blog before or you didn't";
+    return "You liked this blog before";
   }
 
   // Create new document (record)

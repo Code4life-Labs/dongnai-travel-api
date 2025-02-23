@@ -244,9 +244,14 @@ usersEndpoints
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
   .use(AuthMiddlewares.createPolicyChecker("blog", "blog:createBlogComment"))
-  .post(async (req, res, o) => {
-    return postBlogComment(DNTModels, req, res, o);
-  });
+  .post(
+    async (req, res, o) => {
+      return postBlogComment(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Blog Comment Error:", error);
+    }
+  );
 
 /**
  * Update blog comment

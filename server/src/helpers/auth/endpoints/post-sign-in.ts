@@ -46,9 +46,13 @@ export default async function signin(
     o!.code = 401;
     throw new Error("Invalid token");
   } else if (validData.token && !tokenCheck.code) {
+    // Delete some fields
+    delete user.hashedPassword;
+
     // Token is valid
     return {
       user: user,
+      token: validData.token,
     };
   }
 
@@ -56,9 +60,6 @@ export default async function signin(
     o!.code = 400;
     throw new Error("Password is required");
   }
-
-  console.log("Valid data:", validData);
-  console.log("User:", user);
 
   let passwordCheck = bcrypt.compareSync(
     validData.password,

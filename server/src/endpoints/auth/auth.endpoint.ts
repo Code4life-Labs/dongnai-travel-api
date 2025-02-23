@@ -36,9 +36,14 @@ authEndpoints.createHandler("sign-up").post(async (req, res, o) => {
 /**
  * Allow user signs in
  */
-authEndpoints.createHandler("sign-in").post(async (req, res, o) => {
-  return signin(DNTModels, req, res, o);
-});
+authEndpoints.createHandler("sign-in").post(
+  async (req, res, o) => {
+    return signin(DNTModels, req, res, o);
+  },
+  function (error) {
+    console.error("Sign In Error:", error);
+  }
+);
 
 /**
  * Allow user reset his/her password

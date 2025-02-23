@@ -1,6 +1,6 @@
 // Import helpers
 import { checkUserBlogIdInRequest } from "../params-checkers";
-import { checkBlogCommentWhenCreate } from "../content-checkers";
+import { checkBlogComment } from "../content-checkers";
 
 // Import types
 import type { Request, Response } from "express";
@@ -17,7 +17,7 @@ export default async function postBlogComment(
   const validData = checkUserBlogIdInRequest(req, o);
 
   // Check content
-  const { content } = checkBlogCommentWhenCreate(req.body, o!);
+  const { content } = checkBlogComment(req.body, o!);
 
   // Check if user commented this blog before
   if (
@@ -26,7 +26,7 @@ export default async function postBlogComment(
     }).exec()
   ) {
     o!.code = 205;
-    return "You commented this blog before or you didn't";
+    return "You commented this blog before";
   }
 
   // Create new document (record)

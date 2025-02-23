@@ -26,7 +26,9 @@ export default async function getBlogComments(
 
   // Get blog comments from database
   let query = MC.BlogComments.find({ blogId: req.params.id })
+    .sort({ createdAt: "desc" })
     .populate("blog", "_id name type")
+    .populate("user", "_id firstName lastName displayName avatar")
     .skip(skip)
     .limit(limit);
 

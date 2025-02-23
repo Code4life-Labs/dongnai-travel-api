@@ -26,7 +26,9 @@ export default async function getPlaceReviews(
 
   // Get place reviews from database
   let query = MC.PlaceReviews.find({ placeId: req.params.id })
+    .sort({ createdAt: "desc" })
     .populate("place", "_id name types")
+    .populate("user", "_id firstName lastName displayName avatar")
     .skip(skip)
     .limit(limit);
 

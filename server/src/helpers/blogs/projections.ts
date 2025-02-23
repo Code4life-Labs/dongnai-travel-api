@@ -5,7 +5,7 @@ import { transformExcludedFieldsToStr } from "../other/field-transformers";
 import type { Query } from "mongoose";
 
 export const BlogProjectionFields = {
-  ExcludedFields: ["isApproved"],
+  ExcludedFields: ["isApproved", "content", "images"],
 };
 
 export function buildBlogProjection(query: Query<any, any>) {
@@ -17,7 +17,6 @@ export function buildBlogProjection(query: Query<any, any>) {
   );
   query.populate("author", "_id firstName lastName displayName avatar");
   query.populate("favorites");
-  query.populate("comments");
 
   return query;
 }
@@ -27,7 +26,6 @@ export function buildBriefProjection(query: Query<any, any>) {
   query.populate("type", "_id name value");
   query.populate("author", "_id firstName lastName displayName avatar");
   query.populate("favorites");
-  query.populate("comments");
 
   // Exclude some fields
   query.select(

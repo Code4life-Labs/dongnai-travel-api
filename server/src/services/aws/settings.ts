@@ -11,7 +11,7 @@ type AWSAccessKey = {
 const FILENAME = "key.json";
 const FOLDERNAME = "aws-credentials";
 const AWSSettings = {
-  AccessKey: null as unknown as AWSAccessKey,
+  AccessKey: null as AWSAccessKey | null,
 };
 
 export function getAWSSettings() {

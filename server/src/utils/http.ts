@@ -1,6 +1,6 @@
 export type HTTPResponseDataType = {
   data: any;
-  error: { title: string } | null;
+  error: { title: string; content?: any } | null;
   success: { title: string } | null;
   message: string;
   code: number;

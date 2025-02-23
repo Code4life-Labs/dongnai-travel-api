@@ -15,7 +15,6 @@ services:
     env_file: "./_docker-compose-env/server.env"
     depends_on:
       - database
-      - memorystore
     build:
       dockerfile: dockerfile.dev
       context: ./server

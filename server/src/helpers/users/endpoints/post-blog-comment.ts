@@ -41,5 +41,5 @@ export default async function postBlogComment(
 
   o!.code = 201;
 
-  return "You have just commented this blog";
+  return result;
 }

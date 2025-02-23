@@ -76,6 +76,9 @@ export default async function postBlog(
     }),
   ]);
 
+  // Delete files
+  if (req.files) await deleteAllFilesDependOnRequest(req.files);
+
   // Save blog content to database
   const createResult = await MC.Blogs.create({
     ...validData,

@@ -63,12 +63,17 @@ class AWSS3Service {
 
     this._rootBucket = AppConfig.cloud.aws.s3.buckets.main.name;
     this._rootUploadsFolder = RootUploadDirPath;
+
+    const credentials = settings.AccessKey
+      ? {
+          accessKeyId: settings.AccessKey.KeyId,
+          secretAccessKey: settings.AccessKey.SecretKey,
+        }
+      : undefined;
+
     this._client = new S3Client({
       region: AppConfig.cloud.aws.s3.buckets.main.region,
-      credentials: {
-        accessKeyId: settings.AccessKey.KeyId,
-        secretAccessKey: settings.AccessKey.SecretKey,
-      },
+      credentials,
     });
   }
 

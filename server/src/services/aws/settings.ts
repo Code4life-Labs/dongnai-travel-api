@@ -11,16 +11,21 @@ type AWSAccessKey = {
 const FILENAME = "key.json";
 const FOLDERNAME = "aws-credentials";
 const AWSSettings = {
-  AccessKey: null as unknown as AWSAccessKey,
+  AccessKey: null as AWSAccessKey | null,
 };
 
 export function getAWSSettings() {
   // Load access key
   if (AWSSettings.AccessKey === null) {
+    const awsCredentialsPath = StringUtils.getRootDirTo(
+      "secrets",
+      FOLDERNAME,
+      FILENAME
+    );
+    if (!fs.existsSync(awsCredentialsPath)) return AWSSettings;
+
     const accessKey = JSON.parse(
-      fs
-        .readFileSync(StringUtils.getRootDirTo("secrets", FOLDERNAME, FILENAME))
-        .toString()
+      fs.readFileSync(awsCredentialsPath).toString()
     );
 
     AWSSettings.AccessKey = {

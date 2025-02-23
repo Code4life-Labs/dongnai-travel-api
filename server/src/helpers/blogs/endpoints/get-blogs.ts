@@ -27,7 +27,10 @@ export default async function getBlogs(
   const { limit, skip } = RequestUtils.getLimitNSkip(req);
 
   // Get blogs from database
-  let query = MC.Blogs.find({}).skip(skip).limit(limit);
+  let query = MC.Blogs.find({})
+    .sort({ createAt: "desc" })
+    .skip(skip)
+    .limit(limit);
 
   // Build filters & projections
   buildBlogTypeFilter(query, req);

@@ -142,7 +142,7 @@ export class AuthService {
     let token = jwt.sign(tokenPayload, this._signature, {
       algorithm: "HS256",
       expiresIn: periodAsJWTFormat,
-    }) as any;
+    } as any);
 
     return token;
   }

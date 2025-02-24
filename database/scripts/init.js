@@ -4815,7 +4815,7 @@ const placeReviews = [
     userId: users[0]._id,
     content:
       "Tôi đã đi tới địa điểm này, rất là ok, mọi người cũng nên thử đến đây một lần!!",
-    rating: 4.5,
+    rating: 4,
     createdAt: new Date("02-13-2025").getTime(),
     updatedAt: new Date("02-13-2025").getTime(),
   },
@@ -4823,7 +4823,7 @@ const placeReviews = [
     placeId: places[1]._id,
     userId: users[0]._id,
     content: "Chỗ này khá ổn, nhưng dịch vụ thì chưa được tốt cho lắm :(",
-    rating: 3.1,
+    rating: 3,
     createdAt: new Date("02-13-2025").getTime(),
     updatedAt: new Date("02-13-2025").getTime(),
   },

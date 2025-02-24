@@ -9,6 +9,7 @@ import getPlaces from "src/helpers/places/endpoints/get-places";
 import getPlaceTypes from "src/helpers/places/endpoints/get-place-types";
 import getPlace from "src/helpers/places/endpoints/get-place";
 import getPlaceReviews from "src/helpers/places/endpoints/get-place-reviews";
+import getTotalReviewsOfPlace from "src/helpers/places/endpoints/get-total-reviews";
 
 // Import services
 import { AuthMiddlewares } from "src/services/auth/middlewares";
@@ -66,5 +67,12 @@ placesEndpoints
   .get(async (req, res, o) => {
     return getPlaceReviews(DNTModels, req, res, o);
   });
+
+/**
+ * Get total reviews of a place
+ */
+placesEndpoints.createHandler("/:id/total-reviews").get(async (req, res, o) => {
+  return getTotalReviewsOfPlace(DNTModels, req, res, o);
+});
 
 export default placesEndpoints;

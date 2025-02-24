@@ -1,11 +1,24 @@
+import fs from "fs";
+
 import policies from "../../../secrets/policies.json";
 
-const PolicyCollection = policies;
+// Import utils
+import { StringUtils } from "src/utils/string";
+
+let PolicyCollection: Record<string, any> = {};
 type PolicyType = {
   type: string;
   actions: Array<string> | string;
   resources?: Array<string> | string;
 };
+
+if (Object.keys(PolicyCollection).length === 0) {
+  PolicyCollection = JSON.parse(
+    fs
+      .readFileSync(StringUtils.getRootDirTo("secrets/policies.json"))
+      .toString()
+  );
+}
 
 export class PolicyCheker {
   checkPermission(role: string, resource: string, action: string) {

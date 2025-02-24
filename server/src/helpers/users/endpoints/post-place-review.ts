@@ -42,5 +42,5 @@ export default async function postPlaceReview(
 
   o!.code = 201;
 
-  return "You have just reviewed this place";
+  return result;
 }

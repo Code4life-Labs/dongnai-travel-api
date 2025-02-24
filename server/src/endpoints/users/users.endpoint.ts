@@ -149,10 +149,15 @@ usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:createPlaceReview"))
-  .post(async (req, res, o) => {
-    return postPlaceReview(DNTModels, req, res, o);
-  });
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:createReview"))
+  .post(
+    async (req, res, o) => {
+      return postPlaceReview(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Place Review Error:", error);
+    }
+  );
 
 /**
  * Update place review
@@ -161,7 +166,7 @@ usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:updatePlaceReview"))
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:updateReview"))
   .patch(async (req, res, o) => {
     return patchPlaceReview(DNTModels, req, res, o);
   });
@@ -173,7 +178,7 @@ usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:deletePlaceReview"))
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:deleteReview"))
   .delete(async (req, res, o) => {
     return deletePlaceReview(DNTModels, req, res, o);
   });

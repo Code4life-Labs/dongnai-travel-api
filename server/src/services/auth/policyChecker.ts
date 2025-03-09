@@ -1,7 +1,5 @@
 import fs from "fs";
 
-import policies from "../../../secrets/policies.json";
-
 // Import utils
 import { StringUtils } from "src/utils/string";
 

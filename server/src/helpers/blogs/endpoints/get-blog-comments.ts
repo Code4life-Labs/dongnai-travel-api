@@ -1,5 +1,5 @@
 // Import helpers
-import { checkBlogById } from "../blog-checkers";
+import { isBlogExistsWithId } from "../blog-checkers";
 
 // Import utils
 import { RequestUtils } from "src/utils/request";
@@ -16,7 +16,7 @@ export default async function getBlogComments(
   o?: HTTPResponseDataType
 ) {
   // Check if blog exists
-  if (!(await checkBlogById(MC.Blogs, req.params.id))) {
+  if (!(await isBlogExistsWithId(MC.Blogs, req.params.id))) {
     o!.code = 400;
     throw new Error("This blog doesn't exist");
   }

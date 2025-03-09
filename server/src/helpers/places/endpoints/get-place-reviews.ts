@@ -1,5 +1,5 @@
 // Import helpers
-import { checkPlaceById } from "../place-checkers";
+import { isPlaceExistsWithId } from "../place-checkers";
 
 // Import utils
 import { RequestUtils } from "src/utils/request";
@@ -16,7 +16,7 @@ export default async function getPlaceReviews(
   o?: HTTPResponseDataType
 ) {
   // Check if place exists
-  if (!(await checkPlaceById(MC.Places, req.params.id))) {
+  if (!(await isPlaceExistsWithId(MC.Places, req.params.id))) {
     o!.code = 400;
     throw new Error("This place doesn't exist");
   }

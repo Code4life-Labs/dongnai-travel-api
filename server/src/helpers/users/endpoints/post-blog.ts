@@ -87,5 +87,5 @@ export default async function postBlog(
   });
 
   // Return blogs
-  return "Publish blog successfully";
+  return createResult;
 }

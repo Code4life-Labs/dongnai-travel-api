@@ -1,23 +1,14 @@
-import fs from "fs/promises";
-
 // Import helpers
-import { buildBriefProjection } from "src/helpers/blogs/projections";
-import {
-  buildBlogTypeFilter,
-  buildBlogNameFilter,
-} from "src/helpers/blogs/filters";
-import { computeStateOfBlog } from "src/helpers/blogs/states-computer";
+import { isBlogExistsWithId } from "src/helpers/blogs/blog-checkers";
 import { deleteAllFilesDependOnRequest } from "src/helpers/other/delete-terminators";
 
 // Impor services
-import { AuthService } from "src/services/auth";
 import { awsS3Service } from "src/services/aws/s3";
 
 // Import validators
 import { BlogCreateValidator } from "src/services/validators/blog";
 
 // Import utils
-import { RequestUtils } from "src/utils/request";
 import { StringUtils } from "src/utils/string";
 
 // Import types
@@ -25,7 +16,7 @@ import type { Request, Response, Express } from "express";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 import type { HTTPResponseDataType } from "src/utils/http";
 
-export default async function postBlog(
+export default async function patchBlog(
   MC: DongNaiTravelModelsType,
   req: Request,
   res?: Response,
@@ -35,6 +26,17 @@ export default async function postBlog(
   if (req.body.mentionedPlaces && typeof req.body.mentionedPlaces === "string")
     req.body.mentionedPlaces = JSON.parse(req.body.mentionedPlaces);
 
+  const oldBlog = await MC.Blogs.findOne({ _id: req.params.blogId });
+  if (!oldBlog) {
+    // Delete all images if error
+    if (req.files) {
+      await deleteAllFilesDependOnRequest(req.files);
+    }
+
+    o!.code = 400;
+    throw new Error(`Blog with id "${req.params.blogId}" is not found`);
+  }
+
   const { images, coverImage } = req.files as unknown as {
     [fieldName: string]: Array<Express.Multer.File>;
   };
@@ -42,6 +44,15 @@ export default async function postBlog(
     req.body.name
   ).replaceAll(/\s+/g, "-");
   const prefixes = ["blog-images", req.body.authorId, unicodeName];
+
+  // Delete existing images first
+  await awsS3Service.deleteFiles({
+    userId: req.body.authorId,
+    prefixParts: prefixes,
+    fileNames: oldBlog.images
+      .map((image: string) => image)
+      .concat(oldBlog.coverImage),
+  });
 
   // Upload images to Storage Provider
   // If there is any error, create an Interval to upload files
@@ -65,12 +76,17 @@ export default async function postBlog(
   if (req.files) await deleteAllFilesDependOnRequest(req.files);
 
   // Save blog content to database
-  const createResult = await MC.Blogs.create({
-    ...req.body,
-    coverImage: coverImageResult.data,
-    images: imagesResult.data,
-  });
+  const updateResult = await MC.Blogs.updateOne(
+    {
+      _id: req.params.blogId,
+    },
+    {
+      ...req.body,
+      coverImage: coverImageResult.data,
+      images: imagesResult.data,
+    }
+  );
 
   // Return blogs
-  return createResult;
+  return updateResult;
 }

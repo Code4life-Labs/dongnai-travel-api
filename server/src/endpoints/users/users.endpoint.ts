@@ -21,6 +21,7 @@ import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place
 import postPlaceReview from "src/helpers/users/endpoints/post-place-review";
 import postVisitedPlace from "src/helpers/users/endpoints/post-visited-place";
 import postBlog from "src/helpers/users/endpoints/post-blog";
+import patchBlog from "src/helpers/users/endpoints/patch-blog";
 import patchPlaceReview from "src/helpers/users/endpoints/patch-place-review";
 import deleteFavoritedPlace from "src/helpers/users/endpoints/delete-favorited-place";
 import deletePlaceReview from "src/helpers/users/endpoints/delete-place-review";
@@ -204,6 +205,27 @@ usersEndpoints
     },
     function (error) {
       console.error("Post blog Error:", error);
+    }
+  );
+
+usersEndpoints
+  .createHandler("/:id/blogs/:blogId")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:updateBlog"))
+  .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
+  .use(
+    UploadMediaFileMiddlewares.uploadMultiplyByFields([
+      { name: "coverImage", maxCount: 1 },
+      { name: "images", maxCount: 10 },
+    ])
+  )
+  .patch(
+    async (req, res, o) => {
+      return patchBlog(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Update blog Error:", error);
     }
   );
 

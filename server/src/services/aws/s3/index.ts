@@ -2,8 +2,9 @@ import fs from "fs";
 import path from "path";
 import {
   S3Client,
-  ListBucketsCommand,
   paginateListObjectsV2,
+  DeleteObjectCommand,
+  DeleteObjectsCommand,
   PutObjectCommand,
   S3ServiceException,
 } from "@aws-sdk/client-s3";
@@ -25,18 +26,24 @@ type ListFilesOptions = {
   prefixParts: Array<string>;
   pageSize: number;
 };
-type UploadFileOptions = {
+type _WriteRequestBaseOptions = {
   userId: string;
   prefixParts: Array<string>;
+};
+type UploadFileOptions = {
   fileName: string;
   returnURL?: boolean;
-};
+} & _WriteRequestBaseOptions;
 type UploadFilesOptions = {
-  userId: string;
-  prefixParts: Array<string>;
   fileNames: Array<string>;
   returnURLs?: boolean;
-};
+} & _WriteRequestBaseOptions;
+type DeleteFileOptions = {
+  fileName: string;
+} & _WriteRequestBaseOptions;
+type DeleteFilesOptions = {
+  fileNames: Array<string>;
+} & _WriteRequestBaseOptions;
 
 class AWSS3Service {
   private _client!: S3Client;
@@ -212,6 +219,64 @@ class AWSS3Service {
           )
         );
       }
+
+      return;
+    });
+  }
+
+  /**
+   * Use to delete a file to S3 (support prefix)
+   * @param options
+   * @returns
+   */
+  async deleteFile(options: DeleteFileOptions) {
+    return ErrorUtils.handleInterchangeError(
+      this,
+      async function (o) {
+        const completePath = options.prefixParts
+          ? StringUtils.getPath(...options.prefixParts)
+          : this._rootBucket;
+
+        await this._client.send(
+          new DeleteObjectCommand({
+            Bucket: this._rootBucket,
+            Key: AWSS3Service.getObjectKey(completePath, options.fileName),
+          })
+        );
+
+        o.message = "Delete File Successfully";
+
+        return;
+      },
+      function (error) {
+        console.log("Error:", error);
+      }
+    );
+  }
+
+  /**
+   * Use to delete multiple file to S3
+   * @param options
+   * @returns
+   */
+  async deleteFiles(options: DeleteFilesOptions) {
+    return ErrorUtils.handleInterchangeError(this, async function (o) {
+      const completePath = options.prefixParts
+        ? StringUtils.getPath(...options.prefixParts)
+        : this._rootBucket;
+
+      await this._client.send(
+        new DeleteObjectsCommand({
+          Bucket: this._rootBucket,
+          Delete: {
+            Objects: options.fileNames.map((fileName) => ({
+              Key: AWSS3Service.getObjectKey(completePath, fileName),
+            })),
+          },
+        })
+      );
+
+      o.message = "Delete Files Successfully";
 
       return;
     });

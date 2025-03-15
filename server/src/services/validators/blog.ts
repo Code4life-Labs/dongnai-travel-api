@@ -40,6 +40,17 @@ const _BaseAuthorIdValidator = Joi.string().messages({
   "string.base": `"authorId" should be a type of 'text'`,
 });
 
+const _BaseImagesValidator = Joi.array()
+  .items(
+    Joi.string().uri().messages({
+      "string.base": `"images" should be a type of 'text'`,
+      "string.uri": `"images" should be a valid URI`,
+    })
+  )
+  .messages({
+    "array.base": `"imagess" should be an array of valid image URLs`,
+  });
+
 export const BlogCreateValidator = Joi.object({
   name: _BaseBlogNameValidator.required(),
   typeId: _BaseTypeIdValidator.required(),
@@ -52,5 +63,10 @@ export const BlogUpdateValidator = Joi.object({
   name: _BaseBlogNameValidator,
   typeId: _BaseTypeIdValidator,
   content: _BaseBlogContentValidator,
+  deletedCoverImage: Joi.string().messages({
+    "string.empty": `"deletedCoverImage" cannot be empty`,
+    "string.base": `"deletedCoverImage" should be a type of 'text'`,
+  }),
+  deletedImages: _BaseImagesValidator,
   mentionedPlaces: _BaseMentiondPlacesValidator,
 });

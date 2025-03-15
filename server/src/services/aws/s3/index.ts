@@ -26,10 +26,12 @@ type ListFilesOptions = {
   prefixParts: Array<string>;
   pageSize: number;
 };
-type _WriteRequestBaseOptions = {
-  userId: string;
+type _BaseRequestOptions = {
   prefixParts: Array<string>;
 };
+type _WriteRequestBaseOptions = {
+  userId: string;
+} & _BaseRequestOptions;
 type UploadFileOptions = {
   fileName: string;
   returnURL?: boolean;
@@ -40,10 +42,10 @@ type UploadFilesOptions = {
 } & _WriteRequestBaseOptions;
 type DeleteFileOptions = {
   fileName: string;
-} & _WriteRequestBaseOptions;
+} & _BaseRequestOptions;
 type DeleteFilesOptions = {
   fileNames: Array<string>;
-} & _WriteRequestBaseOptions;
+} & _BaseRequestOptions;
 
 class AWSS3Service {
   private _client!: S3Client;

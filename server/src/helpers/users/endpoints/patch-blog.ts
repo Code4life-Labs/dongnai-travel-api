@@ -37,7 +37,7 @@ export default async function patchBlog(
     throw new Error(`Blog with id "${req.params.blogId}" is not found`);
   }
 
-  const { images, coverImage } = req.files as unknown as {
+  const { newImages, newCoverImage } = req.files as unknown as {
     [fieldName: string]: Array<Express.Multer.File>;
   };
   const unicodeName = StringUtils.toLowerCaseNonAccentVietnamese(
@@ -45,35 +45,60 @@ export default async function patchBlog(
   ).replaceAll(/\s+/g, "-");
   const prefixes = ["blog-images", req.body.authorId, unicodeName];
 
-  // Delete existing images first
-  await awsS3Service.deleteFiles({
-    userId: req.body.authorId,
-    prefixParts: prefixes,
-    fileNames: oldBlog.images
-      .map((image: string) => image)
-      .concat(oldBlog.coverImage),
-  });
+  // Delete images
+  if (req.body.deletedImages) {
+    await awsS3Service.deleteFiles({
+      prefixParts: prefixes,
+      fileNames: req.body.deletedImages.map((image: string) => {
+        const urlParts = image.split("/");
+        return urlParts[urlParts.length - 1];
+      }),
+    });
+  }
+
+  if (req.body.deletedCoverImage) {
+    const urlParts = req.body.deletedCoverImage.split("/");
+
+    await awsS3Service.deleteFile({
+      prefixParts: prefixes,
+      fileName: urlParts[urlParts.length - 1],
+    });
+  }
 
   // Upload images to Storage Provider
   // If there is any error, create an Interval to upload files
   // and notify to user later.
-  const [coverImageResult, imagesResult] = await Promise.all([
-    awsS3Service.uploadFile({
-      userId: req.body.authorId,
-      fileName: coverImage[0].filename,
-      prefixParts: prefixes,
-      returnURL: true,
-    }),
-    awsS3Service.uploadFiles({
-      userId: req.body.authorId,
-      fileNames: images.map((image) => image.filename),
-      prefixParts: prefixes,
-      returnURLs: true,
-    }),
-  ]);
+  const promises = [];
+
+  if (newCoverImage) {
+    promises.push(
+      awsS3Service.uploadFile({
+        userId: req.body.authorId,
+        fileName: newCoverImage[0].filename,
+        prefixParts: prefixes,
+        returnURL: true,
+      })
+    );
+  }
+
+  if (newImages) {
+    promises.push(
+      awsS3Service.uploadFiles({
+        userId: req.body.authorId,
+        fileNames: newImages.map((image) => image.filename),
+        prefixParts: prefixes,
+        returnURLs: true,
+      })
+    );
+  }
+
+  const [coverImageResult, imagesResult] = await Promise.all(promises);
 
   // Delete files
   if (req.files) await deleteAllFilesDependOnRequest(req.files);
+
+  if (req.body.deletedCoverImage) delete req.body.deletedCoverImage;
+  if (req.body.deletedImages) delete req.body.deletedImages;
 
   // Save blog content to database
   const updateResult = await MC.Blogs.updateOne(
@@ -82,8 +107,12 @@ export default async function patchBlog(
     },
     {
       ...req.body,
-      coverImage: coverImageResult.data,
-      images: imagesResult.data,
+      // Promises can include only images or coverImage, so
+      // I have to check it first.
+      coverImage: Array.isArray(coverImageResult) ? "" : coverImageResult.data,
+      images: Array.isArray(coverImageResult)
+        ? coverImageResult.data
+        : imagesResult.data,
     }
   );
 

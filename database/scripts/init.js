@@ -101,6 +101,23 @@ const users = [
     updatedAt: new Date("01-02-2025").getTime(),
     createdAt: new Date("01-02-2025").getTime(),
   },
+  {
+    _id: ObjectId("67d42c566073c0868c92d3b4"),
+    roleId: userRoles[0]._id,
+    firstName: "Tuan",
+    lastName: "Nguyen Anh",
+    email: "admin@gmail.com",
+    username: "adminuser",
+    hashedPassword:
+      "$2a$12$Uxfwn0iyKd6cSz47QtCgNO6u00Qc7Uc15wuet5P3PVONcL5.9uq0C",
+    displayName: "Nguyen Anh Tuan",
+    birthday: new Date("12-19-2002").getTime(),
+    avatar: "",
+    isVerified: true,
+    coverPhoto: "",
+    updatedAt: new Date("01-02-2025").getTime(),
+    createdAt: new Date("01-02-2025").getTime(),
+  },
 ];
 
 // PlaceTypes

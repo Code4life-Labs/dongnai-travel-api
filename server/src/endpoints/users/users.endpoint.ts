@@ -21,6 +21,7 @@ import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place
 import postPlaceReview from "src/helpers/users/endpoints/post-place-review";
 import postVisitedPlace from "src/helpers/users/endpoints/post-visited-place";
 import postBlog from "src/helpers/users/endpoints/post-blog";
+import createAdminUser from "src/helpers/users/endpoints/post-admin-user";
 import patchBlog from "src/helpers/users/endpoints/patch-blog";
 import patchPlaceReview from "src/helpers/users/endpoints/patch-place-review";
 import deleteFavoritedPlace from "src/helpers/users/endpoints/delete-favorited-place";
@@ -61,6 +62,18 @@ usersEndpoints
   .use(AuthMiddlewares.createPolicyChecker("user", "user:getUserInformation"))
   .get(async (req, res, o) => {
     return getUser(DNTModels, req, res, o);
+  });
+
+/**
+ * Update user information by id
+ */
+usersEndpoints
+  .createHandler("/:id/admin-user")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  .use(AuthMiddlewares.createPolicyChecker("admin", "admin:createAdminUser"))
+  .patch(async (req, res, o) => {
+    return createAdminUser(DNTModels, req, res, o);
   });
 
 /**
@@ -216,8 +229,8 @@ usersEndpoints
   .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
   .use(
     UploadMediaFileMiddlewares.uploadMultiplyByFields([
-      { name: "coverImage", maxCount: 1 },
-      { name: "images", maxCount: 10 },
+      { name: "newCoverImage", maxCount: 1 },
+      { name: "newImages", maxCount: 10 },
     ])
   )
   .patch(

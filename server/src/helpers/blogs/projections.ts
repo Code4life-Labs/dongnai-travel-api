@@ -11,10 +11,7 @@ export const BlogProjectionFields = {
 export function buildBlogProjection(query: Query<any, any>) {
   // Populate type
   query.populate("type", "_id name value");
-  query.populate(
-    "mentionedPlaces",
-    "mentionedPlaces._id mentionedPlaces.name mentionedPlaces.coverImage"
-  );
+  query.populate("mentionedPlaces", "_id name photos");
   query.populate("author", "_id firstName lastName displayName avatar");
   query.populate("favorites");
 

@@ -27,7 +27,6 @@ db().then((models) => {
  */
 placeEndpoints
   .createHandler("")
-  .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.createPolicyChecker("place", "place:createPlace"))
   .use(UploadMediaFileMiddlewares.preProcessUploadFiles)

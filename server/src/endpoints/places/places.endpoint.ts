@@ -64,7 +64,6 @@ placesEndpoints
  */
 placesEndpoints
   .createHandler("/:id")
-  .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.createPolicyChecker("place", "place:updatePlace"))
   .use(UploadMediaFileMiddlewares.preProcessUploadFiles)

@@ -142,23 +142,15 @@ export class PolicyCheker {
         break;
       }
 
-      // 2. _action is resource:*
-      // check if action includes `_action.substring(0, _action.length - 2)`
-      // if true, set check = true and break the loop
-      // because that mean user is allowed to perform all actions to
-      // this resources
-      else if (action.includes(_action.substring(0, _action.length - 2))) {
-        check = true;
-        break;
-      }
-
-      // 3. _action is resource:partOfAction*
-      let [_, allowedActions] = _action.split(":");
+      // 2. _action is resource:partOfAction*
+      let [_, allowedAction] = _action.split(":");
       if (
-        allowedActions[allowedActions.length - 1] === "*" ||
-        allowedActions[0] === "*"
+        allowedAction[allowedAction.length - 1] === "*" ||
+        allowedAction[0] === "*"
       ) {
-        const partsOfAllowedAction = allowedActions.split("*");
+        if (!action.includes(_action.substring(0, _action.length - 1)))
+          continue;
+        const partsOfAllowedAction = allowedAction.split("*");
         const partsOfRequiredAction = action.split(
           partsOfAllowedAction[0] || partsOfAllowedAction[1]
         );

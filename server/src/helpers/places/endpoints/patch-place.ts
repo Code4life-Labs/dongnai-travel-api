@@ -23,6 +23,16 @@ export default async function patchPlace(
   if (typeof req.body.typeIds === "string")
     req.body.typeIds = [req.body.typeIds];
 
+  if (req.body.addressComponents) {
+    req.body.addressComponents = req.body.addressComponents.map(
+      (addressComponent: string) => {
+        return JSON.parse(addressComponent);
+      }
+    );
+  }
+
+  console.log("Body:", req.body);
+
   const validData = await checkPlaceWhenUpdate(req.body, o!);
 
   if (req.params.id !== validData._id) {
@@ -34,7 +44,7 @@ export default async function patchPlace(
 
   // Check if place exist with name?
   const oldPlace = await MC.Places.findOne({ _id: validData._id });
-  if (oldPlace) {
+  if (!oldPlace) {
     o!.code = 400;
     throw new Error("This place doesn't exist");
   }

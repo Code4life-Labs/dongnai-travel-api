@@ -1,5 +1,5 @@
 // Import helpers
-import { checkBlog } from "../blog-checkers";
+import { checkBlogWhenCreate } from "../blog-checkers";
 
 // Import types
 import type { Request, Response } from "express";
@@ -13,5 +13,5 @@ export default async function checkBlogMetadata(
   o?: HTTPResponseDataType
 ) {
   // Return blog comments
-  return checkBlog(req.body, o!);
+  return checkBlogWhenCreate(req.body, o!);
 }

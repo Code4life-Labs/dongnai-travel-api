@@ -31,7 +31,7 @@ blogsEndpoints
   .createHandler("")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:getBlogs"))
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:getBlogs"))
   .get(async (req, res, o) => {
     return getBlogs(DNTModels, req, res, o);
   });
@@ -50,7 +50,7 @@ blogsEndpoints
   .createHandler("/:id")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:getBlog"))
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:getBlog"))
   .get(async (req, res, o) => {
     return getBlog(DNTModels, req, res, o);
   });
@@ -62,7 +62,7 @@ blogsEndpoints
   .createHandler("/:id")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:deleteBlog"))
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:deleteBlog"))
   .delete(async (req, res, o) => {
     return getBlog(DNTModels, req, res, o);
   });
@@ -74,7 +74,7 @@ blogsEndpoints
   .createHandler("/:id/comments")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:getBlogComments"))
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:getBlogComments"))
   .get(async (req, res, o) => {
     return getBlogComments(DNTModels, req, res, o);
   });

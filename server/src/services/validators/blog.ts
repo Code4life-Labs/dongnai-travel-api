@@ -51,6 +51,10 @@ const _BaseImagesValidator = Joi.array()
     "array.base": `"imagess" should be an array of valid image URLs`,
   });
 
+const _BaseIsApprovedValidator = Joi.boolean().messages({
+  "boolean.base": `"isApproved" should be a boolean value.`,
+});
+
 export const BlogCreateValidator = Joi.object({
   name: _BaseBlogNameValidator.required(),
   typeId: _BaseTypeIdValidator.required(),
@@ -69,4 +73,5 @@ export const BlogUpdateValidator = Joi.object({
   }),
   deletedImages: _BaseImagesValidator,
   mentionedPlaces: _BaseMentiondPlacesValidator,
+  isApproved: _BaseIsApprovedValidator,
 });

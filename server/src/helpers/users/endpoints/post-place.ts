@@ -1,5 +1,5 @@
 // Import helpers
-import { checkPlaceWhenCreate } from "../place-checkers";
+import { checkPlaceWhenCreate } from "src/helpers/places/place-checkers";
 
 // Import services
 import { awsS3Service } from "src/services/aws/s3";

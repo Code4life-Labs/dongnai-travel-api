@@ -5,11 +5,13 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import services
+import { AuthService } from "src/services/auth";
 import { AuthMiddlewares } from "src/services/auth/middlewares";
 import { UploadMediaFileMiddlewares } from "src/services/upload-file/middlewares";
 import { BlogMiddlewares } from "src/helpers/blogs/middlewares";
 
 // Import helpers
+import getUsers from "src/helpers/users/endpoints/get-users";
 import getFavoritedPlaces from "src/helpers/users/endpoints/get-favorited-places";
 import getVisitedPlaces from "src/helpers/users/endpoints/get-visited-places";
 import getLikedBlogs from "src/helpers/users/endpoints/get-liked-blogs";
@@ -17,10 +19,12 @@ import getFollows from "src/helpers/users/endpoints/get-follows";
 import getFollowers from "src/helpers/users/endpoints/get-followers";
 import getUser from "src/helpers/users/endpoints/get-user";
 import patchUser from "src/helpers/users/endpoints/patch-user";
+import postPlace from "src/helpers/users/endpoints/post-place";
 import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place";
 import postPlaceReview from "src/helpers/users/endpoints/post-place-review";
 import postVisitedPlace from "src/helpers/users/endpoints/post-visited-place";
 import postBlog from "src/helpers/users/endpoints/post-blog";
+import patchBlogMetadata from "src/helpers/users/endpoints/patch-blog-metadata";
 import createAdminUser from "src/helpers/users/endpoints/post-admin-user";
 import patchBlog from "src/helpers/users/endpoints/patch-blog";
 import patchPlaceReview from "src/helpers/users/endpoints/patch-place-review";
@@ -34,6 +38,9 @@ import deleteBlogComment from "src/helpers/users/endpoints/delete-blog-comment";
 import deleteFavoritedBlog from "src/helpers/users/endpoints/delete-liked-blog";
 import postFollow from "src/helpers/users/endpoints/post-follow";
 import deleteFollow from "src/helpers/users/endpoints/delete-follow";
+
+// Import utils
+import { HTTPUtils } from "src/utils/http";
 
 const usersEndpoints = new Endpoints("users");
 let DNTModels: DongNaiTravelModelsType;
@@ -49,8 +56,8 @@ db().then((models) => {
 /**
  * Get users
  */
-usersEndpoints.createHandler("").get((req, res) => {
-  return "Hello from users root endpoint";
+usersEndpoints.createHandler("").get((req, res, o) => {
+  return getUsers(DNTModels, req, res, o);
 });
 
 /**
@@ -157,6 +164,23 @@ usersEndpoints
   });
 
 /**
+ * Create place
+ */
+usersEndpoints
+  .createHandler("/:id/place")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:createPlace"))
+  .post(
+    async (req, res, o) => {
+      return postPlace(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Place Error:", error);
+    }
+  );
+
+/**
  * Create place review
  */
 usersEndpoints
@@ -241,6 +265,33 @@ usersEndpoints
       console.error("Update blog Error:", error);
     }
   );
+
+/**
+ * Get liked blogs
+ */
+usersEndpoints
+  .createHandler("/:id/blogs/:blogId/metadata")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  // Restrict update
+  .use(function (req, res, next) {
+    // Check some specific fields
+    if (req.body.isApproved !== undefined) {
+      const tokenPayload = res.locals.tokenPayload;
+      if (tokenPayload.role !== AuthService.roles["Admin"]) {
+        const responsePayload = HTTPUtils.generateHTTPResponseData(
+          403,
+          "You don't have any permission to update `isApproved` field"
+        );
+        return res.status(responsePayload.code).json(responsePayload);
+      }
+    }
+    return next();
+  })
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:updateBlog"))
+  .patch(async (req, res, o) => {
+    return patchBlogMetadata(DNTModels, req, res, o);
+  });
 
 /**
  * Get liked blogs

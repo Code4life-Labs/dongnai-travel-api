@@ -10,7 +10,6 @@ import getPlaceTypes from "src/helpers/places/endpoints/get-place-types";
 import getPlace from "src/helpers/places/endpoints/get-place";
 import getPlaceReviews from "src/helpers/places/endpoints/get-place-reviews";
 import getTotalReviewsOfPlace from "src/helpers/places/endpoints/get-total-reviews";
-import postPlace from "src/helpers/places/endpoints/post-place";
 import patchPlace from "src/helpers/places/endpoints/patch-place";
 
 // Import services

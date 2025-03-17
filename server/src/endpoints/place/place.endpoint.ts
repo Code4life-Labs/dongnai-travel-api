@@ -5,7 +5,7 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import helpers
-import postPlace from "src/helpers/places/endpoints/post-place";
+import postPlace from "src/helpers/users/endpoints/post-place";
 
 // Import services
 import { AuthMiddlewares } from "src/services/auth/middlewares";

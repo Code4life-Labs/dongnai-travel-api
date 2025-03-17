@@ -4,7 +4,7 @@
       "name": "dongnaitravel",
       "database": "DongNaiTravel",
       "engine": "mongodb",
-      "host": "database",
+      "host": "localhost",
       "username": "root",
       "password": "letmein12345",
       "objects": {

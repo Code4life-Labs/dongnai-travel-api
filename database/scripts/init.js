@@ -101,6 +101,23 @@ const users = [
     updatedAt: new Date("01-02-2025").getTime(),
     createdAt: new Date("01-02-2025").getTime(),
   },
+  {
+    _id: ObjectId("67d42c566073c0868c92d3b4"),
+    roleId: userRoles[0]._id,
+    firstName: "Tuan",
+    lastName: "Nguyen Anh",
+    email: "admin@gmail.com",
+    username: "adminuser",
+    hashedPassword:
+      "$2a$12$Uxfwn0iyKd6cSz47QtCgNO6u00Qc7Uc15wuet5P3PVONcL5.9uq0C",
+    displayName: "Nguyen Anh Tuan",
+    birthday: new Date("12-19-2002").getTime(),
+    avatar: "",
+    isVerified: true,
+    coverPhoto: "",
+    updatedAt: new Date("01-02-2025").getTime(),
+    createdAt: new Date("01-02-2025").getTime(),
+  },
 ];
 
 // PlaceTypes
@@ -4815,7 +4832,7 @@ const placeReviews = [
     userId: users[0]._id,
     content:
       "Tôi đã đi tới địa điểm này, rất là ok, mọi người cũng nên thử đến đây một lần!!",
-    rating: 4.5,
+    rating: 4,
     createdAt: new Date("02-13-2025").getTime(),
     updatedAt: new Date("02-13-2025").getTime(),
   },
@@ -4823,7 +4840,7 @@ const placeReviews = [
     placeId: places[1]._id,
     userId: users[0]._id,
     content: "Chỗ này khá ổn, nhưng dịch vụ thì chưa được tốt cho lắm :(",
-    rating: 3.1,
+    rating: 3,
     createdAt: new Date("02-13-2025").getTime(),
     updatedAt: new Date("02-13-2025").getTime(),
   },

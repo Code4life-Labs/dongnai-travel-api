@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { buildUserProjection } from "src/helpers/users/projections";
 
 // Import services
-import { authService } from "src/services/auth";
+import { authService, AuthService } from "src/services/auth";
 
 // Import helpers
 import { checkUserDataWhenSignIn } from "../data-checkers";
@@ -14,7 +14,7 @@ import type { Request, Response } from "express";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 import type { HTTPResponseDataType } from "src/utils/http";
 
-export default async function signin(
+export default async function signinAsAdmin(
   MC: DongNaiTravelModelsType,
   req: Request,
   res?: Response,
@@ -40,7 +40,14 @@ export default async function signin(
   }
 
   const user = findUserResult.toJSON();
-  let tokenCheck = await authService.verifyToken(validData.token);
+  const tokenCheck = await authService.verifyToken(validData.token);
+  const tokenPayload = tokenCheck.data as any;
+
+  // Check if this user is admin or not?
+  if (tokenPayload.role !== AuthService.roles["Admin"]) {
+    o!.code = 403;
+    throw new Error("You don't have permission to login as admin");
+  }
 
   if (validData.token && tokenCheck.code) {
     o!.code = 401;

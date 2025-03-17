@@ -3,7 +3,6 @@ import {
   PlaceReviewValidator,
   PlaceReviewUpdateValidator,
   BlogCommentValidator,
-  BlogCommentUpdateValidator,
 } from "src/services/validators/content";
 
 // Import types
@@ -36,28 +35,12 @@ export function checkPlaceReviewWhenUpdate(data: any, o: HTTPResponseDataType) {
   return validationResult.value;
 }
 
-export function checkBlogCommentWhenCreate(data: any, o: HTTPResponseDataType) {
+export function checkBlogComment(data: any, o: HTTPResponseDataType) {
   // Check content first
   const validationResult = BlogCommentValidator.validate(data);
   if (validationResult.error) {
     o!.code = 400;
     throw new Error(validationResult.error.message);
-  }
-
-  return validationResult.value;
-}
-
-export function checkBlogCommentWhenUpdate(data: any, o: HTTPResponseDataType) {
-  // Check content first
-  const validationResult = BlogCommentUpdateValidator.validate(data);
-  if (validationResult.error) {
-    o!.code = 400;
-    throw new Error(validationResult.error.message);
-  }
-
-  if (!validationResult.value.content) {
-    o!.code = 205;
-    return "Nothing change";
   }
 
   return validationResult.value;

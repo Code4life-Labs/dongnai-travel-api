@@ -18,7 +18,7 @@ export default function () {
         coverImage: Schema.Types.String,
         images: [Schema.Types.String],
         readTime: Schema.Types.Number,
-        isApproved: { type: Schema.Types.Boolean, default: true },
+        isApproved: { type: Schema.Types.Boolean, default: false },
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

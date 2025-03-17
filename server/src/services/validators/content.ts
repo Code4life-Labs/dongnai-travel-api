@@ -59,14 +59,3 @@ export const BlogCommentValidator = Joi.object({
       "any.required": `"content" is required`,
     }),
 });
-
-export const BlogCommentUpdateValidator = Joi.object({
-  content: Joi.string()
-    .min(REVIEW_COMMENT_CHARACTER_LIMITS[0])
-    .max(REVIEW_COMMENT_CHARACTER_LIMITS[1])
-    .messages({
-      "string.base": `"content" should be a type of 'text'`,
-      "string.min": `"content" should have a minimum length of {#limit}`,
-      "string.max": `"content" should have a maximum length of {#limit}`,
-    }),
-});

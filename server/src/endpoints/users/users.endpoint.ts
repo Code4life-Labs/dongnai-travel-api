@@ -5,11 +5,13 @@ import { Endpoints } from "src/classes/Endpoints";
 import db from "src/databases/dongnaitravel";
 
 // Import services
+import { AuthService } from "src/services/auth";
 import { AuthMiddlewares } from "src/services/auth/middlewares";
 import { UploadMediaFileMiddlewares } from "src/services/upload-file/middlewares";
 import { BlogMiddlewares } from "src/helpers/blogs/middlewares";
 
 // Import helpers
+import getUsers from "src/helpers/users/endpoints/get-users";
 import getFavoritedPlaces from "src/helpers/users/endpoints/get-favorited-places";
 import getVisitedPlaces from "src/helpers/users/endpoints/get-visited-places";
 import getLikedBlogs from "src/helpers/users/endpoints/get-liked-blogs";
@@ -17,10 +19,14 @@ import getFollows from "src/helpers/users/endpoints/get-follows";
 import getFollowers from "src/helpers/users/endpoints/get-followers";
 import getUser from "src/helpers/users/endpoints/get-user";
 import patchUser from "src/helpers/users/endpoints/patch-user";
+import postPlace from "src/helpers/users/endpoints/post-place";
 import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place";
 import postPlaceReview from "src/helpers/users/endpoints/post-place-review";
 import postVisitedPlace from "src/helpers/users/endpoints/post-visited-place";
 import postBlog from "src/helpers/users/endpoints/post-blog";
+import patchBlogMetadata from "src/helpers/users/endpoints/patch-blog-metadata";
+import createAdminUser from "src/helpers/users/endpoints/post-admin-user";
+import patchBlog from "src/helpers/users/endpoints/patch-blog";
 import patchPlaceReview from "src/helpers/users/endpoints/patch-place-review";
 import deleteFavoritedPlace from "src/helpers/users/endpoints/delete-favorited-place";
 import deletePlaceReview from "src/helpers/users/endpoints/delete-place-review";
@@ -32,6 +38,9 @@ import deleteBlogComment from "src/helpers/users/endpoints/delete-blog-comment";
 import deleteFavoritedBlog from "src/helpers/users/endpoints/delete-liked-blog";
 import postFollow from "src/helpers/users/endpoints/post-follow";
 import deleteFollow from "src/helpers/users/endpoints/delete-follow";
+
+// Import utils
+import { HTTPUtils } from "src/utils/http";
 
 const usersEndpoints = new Endpoints("users");
 let DNTModels: DongNaiTravelModelsType;
@@ -47,8 +56,8 @@ db().then((models) => {
 /**
  * Get users
  */
-usersEndpoints.createHandler("").get((req, res) => {
-  return "Hello from users root endpoint";
+usersEndpoints.createHandler("").get((req, res, o) => {
+  return getUsers(DNTModels, req, res, o);
 });
 
 /**
@@ -60,6 +69,18 @@ usersEndpoints
   .use(AuthMiddlewares.createPolicyChecker("user", "user:getUserInformation"))
   .get(async (req, res, o) => {
     return getUser(DNTModels, req, res, o);
+  });
+
+/**
+ * Update user information by id
+ */
+usersEndpoints
+  .createHandler("/:id/admin-user")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  .use(AuthMiddlewares.createPolicyChecker("admin", "admin:createAdminUser"))
+  .patch(async (req, res, o) => {
+    return createAdminUser(DNTModels, req, res, o);
   });
 
 /**
@@ -143,16 +164,38 @@ usersEndpoints
   });
 
 /**
+ * Create place
+ */
+usersEndpoints
+  .createHandler("/:id/place")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:createPlace"))
+  .post(
+    async (req, res, o) => {
+      return postPlace(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Place Error:", error);
+    }
+  );
+
+/**
  * Create place review
  */
 usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:createPlaceReview"))
-  .post(async (req, res, o) => {
-    return postPlaceReview(DNTModels, req, res, o);
-  });
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:createReview"))
+  .post(
+    async (req, res, o) => {
+      return postPlaceReview(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Place Review Error:", error);
+    }
+  );
 
 /**
  * Update place review
@@ -161,7 +204,7 @@ usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:updatePlaceReview"))
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:updateReview"))
   .patch(async (req, res, o) => {
     return patchPlaceReview(DNTModels, req, res, o);
   });
@@ -173,7 +216,7 @@ usersEndpoints
   .createHandler("/:id/reviews/places/:placeId")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
-  .use(AuthMiddlewares.createPolicyChecker("place", "place:deletePlaceReview"))
+  .use(AuthMiddlewares.createPolicyChecker("place", "place:deleteReview"))
   .delete(async (req, res, o) => {
     return deletePlaceReview(DNTModels, req, res, o);
   });
@@ -201,6 +244,54 @@ usersEndpoints
       console.error("Post blog Error:", error);
     }
   );
+
+usersEndpoints
+  .createHandler("/:id/blogs/:blogId")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:updateBlog"))
+  .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
+  .use(
+    UploadMediaFileMiddlewares.uploadMultiplyByFields([
+      { name: "newCoverImage", maxCount: 1 },
+      { name: "newImages", maxCount: 10 },
+    ])
+  )
+  .patch(
+    async (req, res, o) => {
+      return patchBlog(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Update blog Error:", error);
+    }
+  );
+
+/**
+ * Get liked blogs
+ */
+usersEndpoints
+  .createHandler("/:id/blogs/:blogId/metadata")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.checkVerifiedUser)
+  // Restrict update
+  .use(function (req, res, next) {
+    // Check some specific fields
+    if (req.body.isApproved !== undefined) {
+      const tokenPayload = res.locals.tokenPayload;
+      if (tokenPayload.role !== AuthService.roles["Admin"]) {
+        const responsePayload = HTTPUtils.generateHTTPResponseData(
+          403,
+          "You don't have any permission to update `isApproved` field"
+        );
+        return res.status(responsePayload.code).json(responsePayload);
+      }
+    }
+    return next();
+  })
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:updateBlog"))
+  .patch(async (req, res, o) => {
+    return patchBlogMetadata(DNTModels, req, res, o);
+  });
 
 /**
  * Get liked blogs
@@ -244,9 +335,14 @@ usersEndpoints
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.checkVerifiedUser)
   .use(AuthMiddlewares.createPolicyChecker("blog", "blog:createBlogComment"))
-  .post(async (req, res, o) => {
-    return postBlogComment(DNTModels, req, res, o);
-  });
+  .post(
+    async (req, res, o) => {
+      return postBlogComment(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Blog Comment Error:", error);
+    }
+  );
 
 /**
  * Update blog comment

@@ -1,6 +1,6 @@
 // Import helpers
 import { checkUserBlogIdInRequest } from "../params-checkers";
-import { checkBlogCommentWhenUpdate } from "../content-checkers";
+import { checkBlogComment } from "../content-checkers";
 
 // Import types
 import type { Request, Response } from "express";
@@ -17,7 +17,7 @@ export default async function patchBlogComment(
   const validData = checkUserBlogIdInRequest(req, o);
 
   // Check content
-  const { content } = checkBlogCommentWhenUpdate(req.body, o!);
+  const { content } = checkBlogComment(req.body, o!);
 
   // Check if user commented this blog before
   if (

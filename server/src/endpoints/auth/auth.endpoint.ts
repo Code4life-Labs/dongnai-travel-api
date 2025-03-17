@@ -9,6 +9,7 @@ import db from "src/databases/dongnaitravel";
 // Import helpers
 import signin from "src/helpers/auth/endpoints/post-sign-in";
 import signup from "src/helpers/auth/endpoints/post-sign-up";
+import signinAsAdmin from "src/helpers/auth/endpoints/post-admin-sign-in";
 import resetPassword from "src/helpers/auth/endpoints/post-reset-password";
 import getOTP from "src/helpers/auth/endpoints/get-otp";
 import postOTP from "src/helpers/auth/endpoints/post-otp";
@@ -36,9 +37,26 @@ authEndpoints.createHandler("sign-up").post(async (req, res, o) => {
 /**
  * Allow user signs in
  */
-authEndpoints.createHandler("sign-in").post(async (req, res, o) => {
-  return signin(DNTModels, req, res, o);
-});
+authEndpoints.createHandler("sign-in").post(
+  async (req, res, o) => {
+    return signin(DNTModels, req, res, o);
+  },
+  function (error) {
+    console.error("Sign In Error:", error);
+  }
+);
+
+/**
+ * Allow admin user signs in
+ */
+authEndpoints.createHandler("admin/sign-in").post(
+  async (req, res, o) => {
+    return signinAsAdmin(DNTModels, req, res, o);
+  },
+  function (error) {
+    console.error("Sign In Error:", error);
+  }
+);
 
 /**
  * Allow user reset his/her password

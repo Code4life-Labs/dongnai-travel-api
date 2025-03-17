@@ -35,41 +35,26 @@ export default async function postBlog(
   if (req.body.mentionedPlaces && typeof req.body.mentionedPlaces === "string")
     req.body.mentionedPlaces = JSON.parse(req.body.mentionedPlaces);
 
-  // Validate data
-  const validationResult = BlogCreateValidator.validate(req.body);
-
-  if (validationResult.error) {
-    console.log("Validation error:", validationResult.error);
-    // Delete all images if error
-    if (req.files) {
-      await deleteAllFilesDependOnRequest(req.files);
-    }
-
-    o!.code = 400;
-    throw new Error(validationResult.error.message);
-  }
-
-  const validData = validationResult.value;
   const { images, coverImage } = req.files as unknown as {
     [fieldName: string]: Array<Express.Multer.File>;
   };
   const unicodeName = StringUtils.toLowerCaseNonAccentVietnamese(
-    validData.name
+    req.body.name
   ).replaceAll(/\s+/g, "-");
-  const prefixes = ["blog-images", validData.authorId, unicodeName];
+  const prefixes = ["blog-images", req.body.authorId, unicodeName];
 
   // Upload images to Storage Provider
   // If there is any error, create an Interval to upload files
   // and notify to user later.
   const [coverImageResult, imagesResult] = await Promise.all([
     awsS3Service.uploadFile({
-      userId: validData.authorId,
+      userId: req.body.authorId,
       fileName: coverImage[0].filename,
       prefixParts: prefixes,
       returnURL: true,
     }),
     awsS3Service.uploadFiles({
-      userId: validData.authorId,
+      userId: req.body.authorId,
       fileNames: images.map((image) => image.filename),
       prefixParts: prefixes,
       returnURLs: true,
@@ -81,11 +66,11 @@ export default async function postBlog(
 
   // Save blog content to database
   const createResult = await MC.Blogs.create({
-    ...validData,
+    ...req.body,
     coverImage: coverImageResult.data,
     images: imagesResult.data,
   });
 
   // Return blogs
-  return "Publish blog successfully";
+  return createResult;
 }

@@ -142,12 +142,32 @@ export class PolicyCheker {
         break;
       }
 
-      // 2. _action is resource:partOfAction*
-      let [_, allowedAction] = _action.split(":");
+      // 2. _action is resource:*partOfAction*
+      let [allowedResource, allowedAction] = _action.split(":");
+      let [requiredResource, requiredAction] = action.split(":");
+      if (
+        allowedAction[allowedAction.length - 1] === "*" &&
+        allowedAction[0] === "*"
+      ) {
+        if (allowedResource !== requiredResource) continue;
+        if (
+          !action.includes(allowedAction.substring(1, allowedAction.length - 1))
+        )
+          continue;
+        const partsOfAllowedAction = allowedAction.split("*");
+        const partsOfRequiredAction = action.split(
+          partsOfAllowedAction[0] || partsOfAllowedAction[1]
+        );
+        check = partsOfRequiredAction.length > 1;
+        break;
+      }
+
+      // 3. _action is resource:partOfAction*
       if (
         allowedAction[allowedAction.length - 1] === "*" ||
         allowedAction[0] === "*"
       ) {
+        if (allowedResource !== requiredResource) continue;
         if (!action.includes(_action.substring(0, _action.length - 1)))
           continue;
         const partsOfAllowedAction = allowedAction.split("*");

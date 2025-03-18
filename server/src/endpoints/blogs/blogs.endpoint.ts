@@ -31,7 +31,7 @@ blogsEndpoints
   .createHandler("")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:getBlogs"))
+  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:getAllBlogs"))
   .get(async (req, res, o) => {
     return getBlogs(DNTModels, req, res, o);
   });
@@ -50,7 +50,9 @@ blogsEndpoints
   .createHandler("/:id")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .use(AuthMiddlewares.createPolicyChecker("blog", "blog:getBlog"))
+  .use(
+    AuthMiddlewares.createPolicyChecker("blog", "blog:getOneBlogFromAllUsers")
+  )
   .get(async (req, res, o) => {
     return getBlog(DNTModels, req, res, o);
   });

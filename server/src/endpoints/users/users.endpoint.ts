@@ -18,25 +18,28 @@ import getLikedBlogs from "src/helpers/users/endpoints/get-liked-blogs";
 import getFollows from "src/helpers/users/endpoints/get-follows";
 import getFollowers from "src/helpers/users/endpoints/get-followers";
 import getUser from "src/helpers/users/endpoints/get-user";
+import getReports from "src/helpers/users/endpoints/get-reports";
 import patchUser from "src/helpers/users/endpoints/patch-user";
 import postPlace from "src/helpers/users/endpoints/post-place";
 import postFavoritedPlace from "src/helpers/users/endpoints/post-favorited-place";
 import postPlaceReview from "src/helpers/users/endpoints/post-place-review";
 import postVisitedPlace from "src/helpers/users/endpoints/post-visited-place";
 import postBlog from "src/helpers/users/endpoints/post-blog";
-import patchBlogMetadata from "src/helpers/users/endpoints/patch-blog-metadata";
-import createAdminUser from "src/helpers/users/endpoints/post-admin-user";
+import postBlogComment from "src/helpers/users/endpoints/post-blog-comment";
+import postFavoritedBlog from "src/helpers/users/endpoints/post-liked-blog";
+import postFollow from "src/helpers/users/endpoints/post-follow";
+import postReport from "src/helpers/users/endpoints/post-report";
 import patchBlog from "src/helpers/users/endpoints/patch-blog";
+import patchBlogComment from "src/helpers/users/endpoints/patch-blog-comment";
+import patchBlogMetadata from "src/helpers/users/endpoints/patch-blog-metadata";
 import patchPlaceReview from "src/helpers/users/endpoints/patch-place-review";
+import patchReport from "src/helpers/users/endpoints/patch-report";
+import createAdminUser from "src/helpers/users/endpoints/post-admin-user";
 import deleteFavoritedPlace from "src/helpers/users/endpoints/delete-favorited-place";
 import deletePlaceReview from "src/helpers/users/endpoints/delete-place-review";
 import deleteVisitedPlace from "src/helpers/users/endpoints/delete-visited-place";
-import postBlogComment from "src/helpers/users/endpoints/post-blog-comment";
-import postFavoritedBlog from "src/helpers/users/endpoints/post-liked-blog";
-import patchBlogComment from "src/helpers/users/endpoints/patch-blog-comment";
 import deleteBlogComment from "src/helpers/users/endpoints/delete-blog-comment";
 import deleteFavoritedBlog from "src/helpers/users/endpoints/delete-liked-blog";
-import postFollow from "src/helpers/users/endpoints/post-follow";
 import deleteFollow from "src/helpers/users/endpoints/delete-follow";
 
 // Import utils
@@ -402,7 +405,7 @@ usersEndpoints
   });
 
 /**
- * Get following of users
+ * Get following of user
  */
 usersEndpoints
   .createHandler("/:id/follows")
@@ -410,6 +413,39 @@ usersEndpoints
   .use(AuthMiddlewares.createPolicyChecker("user", "user:getFollowing"))
   .get(async (req, res, o) => {
     return getFollows(DNTModels, req, res, o);
+  });
+
+/**
+ * Get reports of user
+ */
+usersEndpoints
+  .createHandler("/:id/reports")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.createPolicyChecker("report", "report:getReports"))
+  .get(async (req, res, o) => {
+    return getReports(DNTModels, req, res, o);
+  });
+
+/**
+ * Create a report
+ */
+usersEndpoints
+  .createHandler("/:id/report")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.createPolicyChecker("report", "report:createReport"))
+  .post(async (req, res, o) => {
+    return postReport(DNTModels, req, res, o);
+  });
+
+/**
+ * Update a report
+ */
+usersEndpoints
+  .createHandler("/:id/reports/:reportId")
+  .use(AuthMiddlewares.checkToken)
+  .use(AuthMiddlewares.createPolicyChecker("report", "report:updateReport"))
+  .patch(async (req, res, o) => {
+    return patchReport(DNTModels, req, res, o);
   });
 
 export default usersEndpoints;

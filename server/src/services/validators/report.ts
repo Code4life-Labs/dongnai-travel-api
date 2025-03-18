@@ -9,14 +9,6 @@ const _BaseStringdValidator = (fieldName = "id") =>
     "string.empty": `"${fieldName}" cannot be empty`,
   });
 
-const _BaseItemTypeValidator = Joi.string()
-  .valid("Places", "Blogs", "Users")
-  .messages({
-    "any.only": `"itemType" must be one of ['Places', 'Blogs', 'Users']`,
-    "string.empty": `"itemType" cannot be empty`,
-    "string.base": `"itemType" should be a type of 'text'`,
-  });
-
 const _BaseReportDescriptionValidator = Joi.string()
   .max(REPORT_DESCRIPTION_LIMITS[1])
   .messages({
@@ -26,10 +18,9 @@ const _BaseReportDescriptionValidator = Joi.string()
 
 export const ReportCreateValidator = Joi.object({
   reporterId: _BaseStringdValidator("reporterId"),
-  reportedItem: Joi.object({
-    item: _BaseStringdValidator("itemId").required(),
-    itemType: _BaseItemTypeValidator.required(),
-  }).required(),
+  userId: _BaseStringdValidator("userId"),
+  placeId: _BaseStringdValidator("placeId"),
+  blogId: _BaseStringdValidator("blogId"),
   reasonId: _BaseStringdValidator("reasonId").required(),
   description: _BaseReportDescriptionValidator,
 });

@@ -6,16 +6,8 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        value: {
-          type: Schema.Types.String,
-          enum: ["pending", "reviewed", "resolved"],
-          require: true,
-        },
-        name: {
-          type: Schema.Types.String,
-          enum: ["Pending", "Reviewed", "Resolved"],
-          require: true,
-        },
+        value: Schema.Types.String,
+        name: Schema.Types.String,
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

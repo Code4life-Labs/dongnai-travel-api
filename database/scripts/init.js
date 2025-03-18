@@ -268,6 +268,68 @@ const businessStatuses = [
   },
 ];
 
+const reportReasons = [
+  {
+    _id: ObjectId(),
+    name: "Spam",
+    value: "spam",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Harassment",
+    value: "harassment",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Misinformation",
+    value: "misinformation",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Inappropriate Content",
+    value: "inappropriate_content",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Other",
+    value: "other",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+];
+
+const reportStatuses = [
+  {
+    _id: ObjectId(),
+    name: "Pending",
+    value: "pending",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Reviewed",
+    value: "reviewed",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    _id: ObjectId(),
+    name: "Resolved",
+    value: "resolved",
+    updatedAt: new Date("03-18-2025").getTime(),
+    createdAt: new Date("03-18-2025").getTime(),
+  },
+];
+
 // Places
 const places = [
   {
@@ -4791,6 +4853,8 @@ instance.BlogTypes.insertMany(blogTypes);
 instance.BusinessStatuses.insertMany(businessStatuses);
 instance.Places.insertMany(places);
 instance.Blogs.insertMany(blogs);
+instance.ReportReasons.insertMany(reportReasons);
+instance.ReportStatuses.insertMany(reportStatuses);
 
 // Insert some data for interactions
 const userFavoritedPlaces = [
@@ -4867,11 +4931,33 @@ const blogComments = [
   },
 ];
 
+const reports = [
+  {
+    reporterId: users[0]._id,
+    placeId: places[0]._id,
+    reasonId: reportReasons[0]._id,
+    statusId: reportStatuses[0]._id,
+    description: "Information of this place is repeated",
+    createdAt: new Date("03-18-2025").getTime(),
+    updatedAt: new Date("03-18-2025").getTime(),
+  },
+  {
+    reporterId: users[1]._id,
+    placeId: places[3]._id,
+    reasonId: reportReasons[2]._id,
+    statusId: reportStatuses[0]._id,
+    description: "There is something wrong with information of this place",
+    createdAt: new Date("03-18-2025").getTime(),
+    updatedAt: new Date("03-18-2025").getTime(),
+  },
+];
+
 // Insert
 instance.PlaceReviews.insertMany(placeReviews);
 instance.BlogComments.insertMany(blogComments);
 instance.UserFavoritedPlaces.insertMany(userFavoritedPlaces);
 instance.UserFavoritedBlogs.insertMany(userFavoritedBlogs);
 instance.UserVisitedPlaces.insertMany(userFavoritedPlaces);
+instance.Reports.insertMany(reports);
 
 console.log("Data inserted successfully");

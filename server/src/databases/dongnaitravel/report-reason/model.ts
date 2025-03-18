@@ -6,28 +6,8 @@ export default function () {
   if (!_schema) {
     _schema = new Schema(
       {
-        value: {
-          type: Schema.Types.String,
-          enum: [
-            "spam",
-            "harassment",
-            "misinformation",
-            "inappropriate content",
-            "other",
-          ],
-          require: true,
-        },
-        name: {
-          type: Schema.Types.String,
-          enum: [
-            "Spam",
-            "Harassment",
-            "Misinformation",
-            "Inappropriate Content",
-            "Other",
-          ],
-          require: true,
-        },
+        value: Schema.Types.String,
+        name: Schema.Types.String,
         createdAt: {
           type: Schema.Types.Number,
           default: Date.now(),

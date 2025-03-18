@@ -36,6 +36,20 @@ reportsEndpoints
   });
 
 /**
+ * Get report statuses
+ */
+reportsEndpoints.createHandler("/statuses").get(async (req, res, o) => {
+  return getReportStatuses(DNTModels, req, res, o);
+});
+
+/**
+ * Get report reasons
+ */
+reportsEndpoints.createHandler("/reasons").get(async (req, res, o) => {
+  return getReportReasons(DNTModels, req, res, o);
+});
+
+/**
  * Get report by id
  */
 reportsEndpoints
@@ -52,16 +66,4 @@ reportsEndpoints
     return getOneReportFromAllUsers(DNTModels, req, res, o);
   });
 
-/**
- * Get report statuses
- */
-reportsEndpoints.createHandler("/statuses").get(async (req, res, o) => {
-  return getReportStatuses(DNTModels, req, res, o);
-});
-
-/**
- * Get report reasons
- */
-reportsEndpoints.createHandler("/reasons").get(async (req, res, o) => {
-  return getReportReasons(DNTModels, req, res, o);
-});
+export default reportsEndpoints;

@@ -48,7 +48,7 @@
   },
   "apis": {
     "openWeather": {
-      "apiKey": "04b9e23c000a58c304f570907e1bcc30",
+      "apiKey": "",
       "baseURL": "https://api.openweathermap.org",
       "settings": {
         "language": "",

@@ -21,7 +21,10 @@
         "UserFavoritedPlaces": { "collectionName": "UserFavoritedPlaces" },
         "UserFavoritedBlogs": { "collectionName": "UserFavoritedBlogs" },
         "UserVisitedPlaces": { "collectionName": "UserVisitedPlaces" },
-        "Otp": { "collectionName": "Otps" }
+        "Otp": { "collectionName": "Otps" },
+        "Report": { "collectionName": "Reports" },
+        "ReportStatus": { "collectionName": "ReportStatuses" },
+        "ReportReason": { "collectionName": "ReportReasons" }
       }
     }
   ]

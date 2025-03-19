@@ -19,6 +19,7 @@ instance.createCollection("UserRoles");
 instance.createCollection("Follows");
 instance.createCollection("Places");
 instance.createCollection("Blogs");
+instance.createCollection("Banners");
 instance.createCollection("PlaceTypes");
 instance.createCollection("Reports");
 instance.createCollection("ReportReasons");

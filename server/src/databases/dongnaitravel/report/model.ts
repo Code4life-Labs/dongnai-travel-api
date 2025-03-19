@@ -54,6 +54,25 @@ export default function () {
             delete ret.id;
             delete ret.__v;
 
+            if (!ret.place) {
+              delete ret.place;
+            }
+
+            if (!ret.blog) {
+              delete ret.blog;
+            }
+
+            if (!ret.user) {
+              delete ret.user;
+            }
+
+            delete ret.placeId;
+            delete ret.blogId;
+            delete ret.userId;
+            delete ret.reporterId;
+            delete ret.reasonId;
+            delete ret.statusId;
+
             return ret;
           },
         },
@@ -64,31 +83,37 @@ export default function () {
       ref: "Users",
       localField: "reporterId",
       foreignField: "_id",
+      justOne: true,
     });
     _schema.virtual("user", {
       ref: "Users",
       localField: "userId",
       foreignField: "_id",
+      justOne: true,
     });
     _schema.virtual("blog", {
       ref: "Blogs",
       localField: "blogId",
       foreignField: "_id",
+      justOne: true,
     });
     _schema.virtual("place", {
       ref: "Places",
       localField: "placeId",
       foreignField: "_id",
+      justOne: true,
     });
     _schema.virtual("reason", {
       ref: "ReportReasons",
       localField: "reasonId",
       foreignField: "_id",
+      justOne: true,
     });
     _schema.virtual("status", {
       ref: "ReportStatuses",
       localField: "statusId",
       foreignField: "_id",
+      justOne: true,
     });
   }
   const model = mongoose.model("Reports", _schema);

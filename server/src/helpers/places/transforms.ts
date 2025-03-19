@@ -4,6 +4,6 @@
  * @param lang
  */
 export function transformPlaceContentWithLanguage(jsonDoc: any, lang: string) {
-  jsonDoc.content = jsonDoc.content[lang];
+  if (lang !== "all") jsonDoc.content = jsonDoc.content[lang];
   return jsonDoc;
 }

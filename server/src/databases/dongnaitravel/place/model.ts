@@ -10,7 +10,10 @@ export default function () {
         placeId: Schema.Types.String,
         addressComponents: [{ type: Schema.Types.Mixed }],
         geometry: Schema.Types.Mixed,
-        description: Schema.Types.String,
+        content: {
+          vi: Schema.Types.String,
+          en: Schema.Types.String,
+        },
         phoneNumber: Schema.Types.String,
         name: Schema.Types.String,
         plusCode: Schema.Types.Mixed,

@@ -35,15 +35,15 @@ export default function () {
           default: true,
         },
         startDate: {
-          type: Schema.Types.Date,
+          type: Schema.Types.Number,
           required: true,
         },
         endDate: {
-          type: Schema.Types.Date,
+          type: Schema.Types.Number,
           required: true,
         },
         createdAt: {
-          type: Schema.Types.Date,
+          type: Schema.Types.Number,
           default: Date.now(),
         },
       },

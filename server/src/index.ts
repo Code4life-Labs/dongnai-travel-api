@@ -43,12 +43,19 @@ async function main() {
   let DNTModels: DongNaiTravelModelsType = await db();
 
   // Get some initial data
-  const [userRoleObjects, placeTypeObjects, blogTypeObjects] =
-    await Promise.all([
-      DNTModels.UserRoles.find().exec(),
-      DNTModels.PlaceTypes.find().exec(),
-      DNTModels.BlogTypes.find().exec(),
-    ]);
+  const [
+    userRoleObjects,
+    placeTypeObjects,
+    blogTypeObjects,
+    reportReasonObjects,
+    reportStatuseObjects,
+  ] = await Promise.all([
+    DNTModels.UserRoles.find().exec(),
+    DNTModels.PlaceTypes.find().exec(),
+    DNTModels.BlogTypes.find().exec(),
+    DNTModels.ReportReasons.find().exec(),
+    DNTModels.ReportStatuses.find().exec(),
+  ]);
 
   // Save to Memory store
   SimpleMemoryStore.save(
@@ -62,6 +69,14 @@ async function main() {
   SimpleMemoryStore.save(
     "blog-types",
     blogTypeObjects.map((o) => o.toJSON())
+  );
+  SimpleMemoryStore.save(
+    "report-reasons",
+    reportReasonObjects.map((o) => o.toJSON())
+  );
+  SimpleMemoryStore.save(
+    "report-statuses",
+    reportStatuseObjects.map((o) => o.toJSON())
   );
 
   // Build endpoints

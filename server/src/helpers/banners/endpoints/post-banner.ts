@@ -30,7 +30,10 @@ export default async function postBanner(
     throw new Error("This banner already exists");
   }
 
-  if ((await MC.Banners.countDocuments()) >= MAX_BANNER_COUNT) {
+  // Count all of activated banners
+  if (
+    (await MC.Banners.countDocuments({ isActive: true })) >= MAX_BANNER_COUNT
+  ) {
     o!.code = 400;
     throw new Error(`Number of banners reach limit [${MAX_BANNER_COUNT}]`);
   }

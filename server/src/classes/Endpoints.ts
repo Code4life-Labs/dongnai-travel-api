@@ -18,7 +18,7 @@ interface HandlerFn {
 }
 
 interface ErrorHandlerFn<T = any> {
-  (error: T, result: HTTPResponseDataType): void;
+  (error: T, result: HTTPResponseDataType, req: Request): void;
 }
 
 type HandlerMetaType = {

@@ -56,7 +56,7 @@ bannersEndpoints
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.createPolicyChecker("banner", "banner:updateBanner"))
   .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
-  .use(UploadMediaFileMiddlewares.uploadOne("image"))
+  .use(UploadMediaFileMiddlewares.uploadOne("newImage"))
   .patch(
     async (req, res, o) => {
       return patchBanner(DNTModels, req, res, o);

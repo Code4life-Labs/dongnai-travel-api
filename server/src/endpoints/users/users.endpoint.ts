@@ -433,9 +433,14 @@ usersEndpoints
   .createHandler("/:id/report")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.createPolicyChecker("report", "report:createReport"))
-  .post(async (req, res, o) => {
-    return postReport(DNTModels, req, res, o);
-  });
+  .post(
+    async (req, res, o) => {
+      return postReport(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Report Error:", error);
+    }
+  );
 
 /**
  * Update a report

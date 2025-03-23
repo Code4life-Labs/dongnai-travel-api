@@ -6,6 +6,7 @@ import db from "src/databases/dongnaitravel";
 
 // Import helpers
 import postBanner from "src/helpers/banners/endpoints/post-banner";
+import { deleteAllFilesDependOnRequest } from "src/helpers/other/delete-terminators";
 
 // Import services
 import { AuthMiddlewares } from "src/services/auth/middlewares";
@@ -30,13 +31,14 @@ bannerEndpoints
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.createPolicyChecker("banner", "banner:createBanner"))
   .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
-  .use(UploadMediaFileMiddlewares.uploadOne("image"))
+  .use(UploadMediaFileMiddlewares.uploadOne("newImage"))
   .post(
     async (req, res, o) => {
       return postBanner(DNTModels, req, res, o);
     },
-    function (error) {
+    function (error, o, req) {
       console.error("Error - Create new banner:", error);
+      if (req.files) deleteAllFilesDependOnRequest(req.files);
     }
   );
 

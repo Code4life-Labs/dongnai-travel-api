@@ -39,19 +39,25 @@ const _BaseBrandValidator = Joi.object({
       "string.min": `"brand.name" should have a minimum length of {#limit}`,
       "string.max": `"brand.name" should have a maximum length of {#limit}`,
     }),
-  logoUrl: Joi.string().uri().messages({
-    "string.base": `"brand.logoUrl" should be a type of 'text'`,
-    "string.uri": `"brand.logoUrl" should be a valid URI`,
-  }),
-  website: Joi.string().uri().messages({
-    "string.base": `"brand.website" should be a type of 'text'`,
-    "string.uri": `"brand.website" should be a valid URI`,
-  }),
-}).required();
+  logoUrl: Joi.string()
+    .uri()
+    .messages({
+      "string.base": `"brand.logoUrl" should be a type of 'text'`,
+      "string.uri": `"brand.logoUrl" should be a valid URI`,
+    })
+    .allow(null, ""),
+  website: Joi.string()
+    .uri()
+    .messages({
+      "string.base": `"brand.website" should be a type of 'text'`,
+      "string.uri": `"brand.website" should be a valid URI`,
+    })
+    .allow(null, ""),
+});
 
-const _BaseDateValidator = Joi.date().iso().messages({
-  "date.base": `"date" should be a valid date`,
-  "date.format": `"date" should be in ISO 8601 format`,
+const _BaseDateValidator = Joi.number().messages({
+  "date.base": `"date" should be a number`,
+  "date.format": `"date" should be in timestamp format`,
 });
 
 const _BasePriorityValidator = Joi.number().integer().min(1).messages({
@@ -67,9 +73,8 @@ const _BaseIsActiveValidator = Joi.boolean().messages({
 // Create Banner Validator
 export const BannerCreateValidator = Joi.object({
   title: _BaseTitleValidator.required(),
-  image: _BaseImageUrlValidator.required(),
   target: _BaseTargetUrlValidator.required(),
-  brand: _BaseBrandValidator,
+  brand: _BaseBrandValidator.required(),
   startDate: _BaseDateValidator.required(),
   endDate: _BaseDateValidator.required(),
   isActive: _BaseIsActiveValidator.default(true),

@@ -21,7 +21,7 @@ export class ErrorUtils {
       res: Response,
       result: HTTPResponseDataType
     ) => any,
-    errorFn?: (error: any, result: HTTPResponseDataType) => void
+    errorFn?: (error: any, result: HTTPResponseDataType, req: Request) => void
   ) {
     let result = HTTPUtils.generateHTTPResponseData(200, "Successfully");
     try {
@@ -34,7 +34,7 @@ export class ErrorUtils {
       }
     } catch (error: any) {
       if (errorFn) {
-        errorFn(error, result);
+        errorFn(error, result, req);
       }
       let code = result.code === 200 ? 500 : result.code;
       result = HTTPUtils.generateHTTPResponseData(code, error.message);
@@ -63,7 +63,7 @@ export class ErrorUtils {
       res: Response,
       result: HTTPResponseDataType
     ) => any,
-    errorFn?: (error: any, result: HTTPResponseDataType) => void
+    errorFn?: (error: any, result: HTTPResponseDataType, req: Request) => void
   ) {
     let result = HTTPUtils.generateHTTPResponseData(200, "Successfully");
 
@@ -71,7 +71,7 @@ export class ErrorUtils {
       await fn.call(ctx, req, res, result);
     } catch (error: any) {
       if (errorFn) {
-        errorFn(error, result);
+        errorFn(error, result, req);
       }
       let code = result.code === 200 ? 500 : result.code;
       result = HTTPUtils.generateHTTPResponseData(code, error.message);

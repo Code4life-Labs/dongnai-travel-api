@@ -100,7 +100,7 @@ usersEndpoints
   .use(
     UploadMediaFileMiddlewares.uploadMultiplyByFields([
       { name: "newAvatar", maxCount: 1 },
-      { name: "newCoverImage", maxCount: 1 },
+      { name: "newCoverPhoto", maxCount: 1 },
     ])
   )
   .patch(async (req, res, o) => {

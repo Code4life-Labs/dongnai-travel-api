@@ -29,9 +29,14 @@ weatherEndpoints
   .createHandler("/dongnai")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .get(async (req, res, o) => {
-    return getDongNaiWeather(DNTModels, req, res, o);
-  });
+  .get(
+    async (req, res, o) => {
+      return getDongNaiWeather(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Get DongNai weather error: ", error);
+    }
+  );
 
 /**
  * Get weather by location
@@ -40,8 +45,13 @@ weatherEndpoints
   .createHandler("/location")
   .use(AuthMiddlewares.allowGuest)
   .use(AuthMiddlewares.checkToken)
-  .get(async (req, res, o) => {
-    return getLocationWeather(DNTModels, req, res, o);
-  });
+  .get(
+    async (req, res, o) => {
+      return getLocationWeather(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Get random location weather error: ", error);
+    }
+  );
 
 export default weatherEndpoints;

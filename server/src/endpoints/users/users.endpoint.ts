@@ -96,6 +96,13 @@ usersEndpoints
   .use(
     AuthMiddlewares.createPolicyChecker("user", "user:updateUserInformation")
   )
+  .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
+  .use(
+    UploadMediaFileMiddlewares.uploadMultiplyByFields([
+      { name: "newAvatar", maxCount: 1 },
+      { name: "newCoverImage", maxCount: 1 },
+    ])
+  )
   .patch(async (req, res, o) => {
     return patchUser(DNTModels, req, res, o);
   });

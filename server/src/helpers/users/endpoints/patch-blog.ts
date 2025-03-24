@@ -109,8 +109,10 @@ export default async function patchBlog(
       ...req.body,
       // Promises can include only images or coverImage, so
       // I have to check it first.
-      coverImage: Array.isArray(coverImageResult) ? "" : coverImageResult.data,
-      images: Array.isArray(coverImageResult)
+      coverImage: Array.isArray(coverImageResult.data)
+        ? ""
+        : coverImageResult.data,
+      images: Array.isArray(coverImageResult.data)
         ? coverImageResult.data
         : imagesResult.data,
     }

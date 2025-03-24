@@ -7,13 +7,14 @@ import {
   checkUserDataWhenUpdate,
 } from "../user-checkers";
 
-// Import utils
-import { PASSWORD_SALT } from "src/utils/constants";
+// Impor services
+import { awsS3Service } from "src/services/aws/s3";
 
 // Import types
 import type { Request, Response } from "express";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 import type { HTTPResponseDataType } from "src/utils/http";
+import { valid } from "joi";
 
 export default async function patchUser(
   MC: DongNaiTravelModelsType,
@@ -30,20 +31,67 @@ export default async function patchUser(
     throw new Error("This user isn't found");
   }
 
-  if (validData.username) {
-    if (await checkUserByUsername(MC.Users, validData.username)) {
-      o!.code = 400;
-      throw new Error('This "username" is registered by another user');
-    }
+  let promises = [];
+  const { newAvatar, newCoverPhoto } = req.files as unknown as {
+    [fieldName: string]: Array<Express.Multer.File>;
+  };
+  const prefixes = ["user-images", "profile", req.params.id];
+
+  // Delete images
+  if (validData.deletedAvatar) {
+    const urlParts = req.body.deletedAvatar.split("/");
+    promises.push(
+      awsS3Service.deleteFile({
+        prefixParts: prefixes,
+        fileName: urlParts[urlParts.length - 1],
+      })
+    );
   }
 
-  // Hashed new password
-  const hashedPassword = bcrypt.hashSync(validData.password, PASSWORD_SALT);
+  if (validData.deletedCoverPhoto) {
+    const urlParts = req.body.deletedCoverPhoto.split("/");
+    promises.push(
+      awsS3Service.deleteFile({
+        prefixParts: prefixes,
+        fileName: urlParts[urlParts.length - 1],
+      })
+    );
+  }
 
-  // Repare data
-  delete validData.password;
-  validData.hashedPassword = hashedPassword;
+  if (promises.length > 0) {
+    await Promise.all(promises);
+    // Clear
+    promises = [];
+  }
+
+  // Upload images
+  if (newAvatar) {
+    const avatarResult = await awsS3Service.uploadFile({
+      userId: req.params.id,
+      fileName: newAvatar[0].filename,
+      prefixParts: prefixes,
+      returnURL: true,
+    });
+
+    validData.avatar = avatarResult.data;
+  }
+  if (newCoverPhoto) {
+    const coverPhotoResult = await awsS3Service.uploadFile({
+      userId: req.params.id,
+      fileName: newCoverPhoto[0].filename,
+      prefixParts: prefixes,
+      returnURL: true,
+    });
+
+    validData.coverPhoto = coverPhotoResult.data;
+  }
+
+  // Prepare data
   validData.updatedAt = Date.now();
+
+  if (validData.deletedAvatar) delete validData.deletedAvatar;
+  if (validData.deletedCoverPhoto) delete validData.deletedCoverPhoto;
+
   const updateResult = await MC.Users.updateOne(
     { _id: req.params.id },
     validData

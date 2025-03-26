@@ -31,7 +31,18 @@ weatherEndpoints
   .use(AuthMiddlewares.checkToken)
   .get(
     async (req, res, o) => {
-      return getDongNaiWeather(DNTModels, req, res, o);
+      try {
+        return await getDongNaiWeather(DNTModels, req, res, o);
+      } catch (error) {
+        console.error("Get DongNai weather error: ", error);
+        return {
+          data: null,
+          error: {
+            title: "Weather Service Error",
+            content: "An unexpected error occurred while fetching weather data.",
+          },
+        };
+      }
     },
     function (error) {
       console.error("Get DongNai weather error: ", error);
@@ -47,10 +58,21 @@ weatherEndpoints
   .use(AuthMiddlewares.checkToken)
   .get(
     async (req, res, o) => {
-      return getLocationWeather(DNTModels, req, res, o);
+      try {
+        return await getLocationWeather(DNTModels, req, res, o);
+      } catch (error) {
+        console.error("Get location weather error: ", error);
+        return {
+          data: null,
+          error: {
+            title: "Weather Service Error",
+            content: "An unexpected error occurred while fetching weather data.",
+          },
+        };
+      }
     },
     function (error) {
-      console.error("Get random location weather error: ", error);
+      console.error("Get location weather error: ", error);
     }
   );
 

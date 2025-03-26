@@ -66,6 +66,7 @@ export default async function patchUser(
 
   // Upload images
   if (newAvatar) {
+    console.log('Processing avatar file:', newAvatar[0]);
     const avatarResult = await awsS3Service.uploadFile({
       userId: req.params.id,
       fileName: newAvatar[0].filename,
@@ -73,6 +74,7 @@ export default async function patchUser(
       returnURL: true,
     });
 
+    console.log('Avatar upload result:', avatarResult);
     validData.avatar = avatarResult.data;
   }
   if (newCoverPhoto) {
@@ -102,5 +104,6 @@ export default async function patchUser(
     throw new Error("Cannot update this user's information");
   }
 
-  return "Update user successfully";
+  const updatedUser = await MC.Users.findById(req.params.id).exec();
+  return updatedUser;
 }

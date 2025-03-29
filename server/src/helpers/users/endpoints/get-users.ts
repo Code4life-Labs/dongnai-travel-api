@@ -26,13 +26,21 @@ export default async function getUsers(
   // Get users from database
   const tokenPayload = res!.locals.tokenPayload;
   if (
-    tokenPayload &&
-    AuthService.roles["Admin"] === tokenPayload.role &&
-    (req.query.type === "admin" || req.query.type === "all")
+    (tokenPayload &&
+      AuthService.roles["Admin"] === tokenPayload.role &&
+      (req.query.type === "admin" ||
+        req.query.type === "all" ||
+        !req.query.type)) ||
+    (!tokenPayload &&
+      (req.query.type === "admin" ||
+        req.query.type === "all" ||
+        !req.query.type))
   ) {
     o!.code = 403;
     throw new Error(
-      `You don't have any permission to query users with type of [${req.query.type}]`
+      `You don't have any permission to query users with type of [${
+        req.query.type || "all"
+      }]`
     );
   }
 

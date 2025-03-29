@@ -33,7 +33,9 @@ export function buildUserNameFilter(query: Query<any, any>, req: any) {
   if (!req.query.name) return query;
 
   // Build query
-  query.where("displayName").regex(new RegExp(req.query.name, "i"));
+  query
+    .where("displayName")
+    .regex(new RegExp(req.query.name, "i"))
 
   return query;
 }

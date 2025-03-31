@@ -331,6 +331,193 @@ const reportStatuses = [
   },
 ];
 
+// Banners
+const banners = [
+  {
+    _id: ObjectId("67e9fb4d60affd27666afa54"),
+    title: "Giới thiệu về khu du lịch Bửu Long",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/buu-long/buulong-banner-1743387468283-631478554.jpg",
+    target: "https://buulong.com.vn/",
+    brand: {
+      name: "Bửu Long",
+      logoUrl: "",
+      website: "https://buulong.com.vn/",
+    },
+    isActive: true,
+    startDate: 1743387311716,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+];
+DongNaiTravel >
+  db.Banners.find()[
+    ({
+      _id: ObjectId("67e9fb4d60affd27666afa54"),
+      title: "Giới thiệu về khu du lịch Bửu Long",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/buu-long/buulong-banner-1743387468283-631478554.jpg",
+      target: "https://buulong.com.vn/",
+      brand: {
+        name: "Bửu Long",
+        logoUrl: "",
+        website: "https://buulong.com.vn/",
+      },
+      isActive: true,
+      startDate: 1743387311716,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67e9fc0160affd27666afa58"),
+      title: "Giới thiệu phố đi bộ Nguyễn Văn Trị và cầu Hoá An",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/pho-di-bo-nguyen-van-tri/cauhoaan-banner-1743387648347-724993282.jpg",
+      target: "https://vi.wikipedia.org/wiki/C%E1%BA%A7u_H%C3%B3a_An",
+      brand: {
+        name: "Phố đi bộ Nguyễn Văn Trị",
+        logoUrl: "",
+        website: "https://www.facebook.com/PhoDiBoNguyenVanTri",
+      },
+      isActive: true,
+      startDate: 1743387533551,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea011860affd27666afa6f"),
+      title: "Giới thiệu về đá Ba chồng",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/dinh-quan/dabachong-banner-1743388950042-837843514.jpg",
+      target: "https://vi.wikipedia.org/wiki/%C4%90%C3%A1_Ba_Ch%E1%BB%93ng",
+      brand: {
+        name: "Định Quán",
+        logoUrl: "",
+        website: "https://dinhquan.dongnai.gov.vn",
+      },
+      isActive: true,
+      startDate: 1743388307633,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea01a760affd27666afa73"),
+      title: "Giới thiệu khu du lịch Đảo ó",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/cti-travel/khudulichdaoo-banner-1743389093454-338576940.jpg",
+      target: "https://mia.vn/cam-nang-du-lich/khu-du-lich-dao-o-12896",
+      brand: {
+        name: "CTI Travel",
+        logoUrl: "",
+        website: "https://ctitravel.vn/",
+      },
+      isActive: true,
+      startDate: 1743388990699,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea027d60affd27666afa8a"),
+      title: "Giới thiệu khu du lịch sinh thái làng bưởi Tân Triều",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/nam-hue/langbuoitantrieu-banner-1743389308186-321834424.jpg",
+      target:
+        "https://mia.vn/cam-nang-du-lich/lang-buoi-tan-trieu-nuc-tieng-dong-nai-14216",
+      brand: {
+        name: "Nam Hue",
+        logoUrl: "",
+        website:
+          "https://www.facebook.com/p/Khu-Du-L%E1%BB%8Bch-Sinh-Th%C3%A1i-V%C6%B0%E1%BB%9Dn-L%C3%A0ng-B%C6%B0%E1%BB%9Fi-T%C3%A2n-Tri%E1%BB%81u-N%C4%83m-Hu%E1%BB%87-100063498191338",
+      },
+      isActive: true,
+      startDate: 1743389257753,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea034660affd27666afa8e"),
+      title: "Giới thiệu rừng Nam Cát Tiên",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/nam-cat-tien-national-park/namcattien-banner-1743389507935-906413665.jpg",
+      target: "https://www.klook.com/vi/blog/nam-cat-tien/",
+      brand: {
+        name: "Nam Cat Tien National Park",
+        logoUrl: "",
+        website: "https://cattiennationalpark.com.vn/",
+      },
+      isActive: true,
+      startDate: 1743389257753,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea03ae60affd27666afa92"),
+      title: "Giới thiệu núi Chứa Chan",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/xuan-loc/nuichuachan-banner-1743389613317-950229679.jpg",
+      target: "https://mia.vn/cam-nang-du-lich/nui-chua-chan-dong-nai-12379",
+      brand: {
+        name: "Xuân Lộc",
+        logoUrl: "",
+        website: "https://xuanloc.dongnai.gov.vn/",
+      },
+      isActive: true,
+      startDate: 1743389257753,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea040460affd27666afa96"),
+      title: "Giới thiệu khu du lịch Thác đá Hàn",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/thac-da-han/thacdahan-banner-1743389699782-857794613.jpg",
+      target: "https://mia.vn/cam-nang-du-lich/thac-da-han-12153",
+      brand: {
+        name: "Thác Đá Hàn",
+        logoUrl: "",
+        website: "https://www.facebook.com/thacdahan.vn",
+      },
+      isActive: true,
+      startDate: 1743389257753,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea044360affd27666afa9a"),
+      title: "Giới thiệu khu du lịch sinh thái Thác Giang Điền",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/thac-giang-dien/thacgiangdien-banner-1743389762597-47121423.jpg",
+      target:
+        "https://mia.vn/cam-nang-du-lich/thac-giang-dien-va-nhung-trai-nghiem-thu-vi-co-mot-khong-hai-12149",
+      brand: {
+        name: "Thác Giang Điền",
+        logoUrl: "",
+        website: "https://giangdien.vn/",
+      },
+      isActive: true,
+      startDate: 1743389257753,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    },
+    {
+      _id: ObjectId("67ea048e60affd27666afa9e"),
+      title: "Giới thiệu văn miếu Trấn Biên",
+      image:
+        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/bien-hoa/vanmieutranbien-banner-1743389837474-472753606.jpg",
+      target:
+        "https://www.traveloka.com/vi-vn/explore/destination/van-mieu-tran-bien/321629",
+      brand: {
+        name: "Biên Hoà",
+        logoUrl: "",
+        website: "https://bienhoa.dongnai.gov.vn/",
+      },
+      isActive: true,
+      startDate: 1743389257753,
+      endDate: 1744131600000,
+      createdAt: 1743387229826,
+    })
+  ];
+
 // Places
 const places = [
   {
@@ -4856,6 +5043,7 @@ instance.Places.insertMany(places);
 instance.Blogs.insertMany(blogs);
 instance.ReportReasons.insertMany(reportReasons);
 instance.ReportStatuses.insertMany(reportStatuses);
+instance.Banners.insertMany(banners);
 
 // Insert some data for interactions
 const userFavoritedPlaces = [

@@ -2,7 +2,7 @@
 import { MAX_BANNER_COUNT } from "src/utils/constants";
 
 // Import helpers
-import { checkBannerWhenCreate } from "../banner-checkers";
+import { checkBannerWhenUpdate } from "../banner-checkers";
 
 // Import services
 import { awsS3Service } from "src/services/aws/s3";
@@ -22,7 +22,7 @@ export default async function patchBanner(
   o?: HTTPResponseDataType
 ) {
   // Check content
-  const validData = await checkBannerWhenCreate(req.body, o!);
+  const validData = await checkBannerWhenUpdate(req.body, o!);
 
   // Check if banner exist with _id?
   if (!(await MC.Banners.findOne({ _id: validData._id }))) {
@@ -32,6 +32,7 @@ export default async function patchBanner(
 
   // Upload images to S3
   const image = req.file as unknown as Express.Multer.File;
+  console.log("Image:", image);
   if (image) {
     const unicodeName = StringUtils.toLowerCaseNonAccentVietnamese(
       validData.brand.name

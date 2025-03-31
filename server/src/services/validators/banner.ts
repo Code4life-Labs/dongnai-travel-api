@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { string } from "joi";
 
 // Import constants
 import {
@@ -82,8 +82,10 @@ export const BannerCreateValidator = Joi.object({
 
 // Update Banner Validator
 export const BannerUpdateValidator = Joi.object({
+  _id: Joi.string().required(),
   title: _BaseTitleValidator,
   image: _BaseImageUrlValidator,
+  deletedImage: _BaseImageUrlValidator,
   target: _BaseTargetUrlValidator,
   brand: _BaseBrandValidator,
   startDate: _BaseDateValidator,

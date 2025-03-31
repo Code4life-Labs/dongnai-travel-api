@@ -8,20 +8,16 @@ export default function () {
       {
         title: {
           type: Schema.Types.String,
-          required: true,
         },
         image: {
           type: Schema.Types.String,
-          required: true,
         },
         target: {
           type: Schema.Types.String,
-          required: true,
         },
         brand: {
           name: {
             type: Schema.Types.String,
-            required: true,
           },
           logoUrl: {
             type: Schema.Types.String,
@@ -36,11 +32,9 @@ export default function () {
         },
         startDate: {
           type: Schema.Types.Number,
-          required: true,
         },
         endDate: {
           type: Schema.Types.Number,
-          required: true,
         },
         createdAt: {
           type: Schema.Types.Number,

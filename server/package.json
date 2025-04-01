@@ -1,0 +1,53 @@
+{
+  "name": "auto-built-template",
+  "version": "1.0.0",
+  "description": "Develop faster, easier with this template",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --legacy-watch"
+  },
+  "keywords": [
+    "nodets-template"
+  ],
+  "author": "Nguyen Anh Tuan",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.750.0",
+    "@google-cloud/dialogflow": "^6.13.0",
+    "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
+    "bull": "^4.16.5",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "module-alias": "^2.2.3",
+    "mongoose": "^8.8.4",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.5",
+    "nodemailer": "^6.9.16",
+    "openai": "^4.78.0",
+    "path-to-regexp": "^8.2.0",
+    "sequelize": "^6.37.5",
+    "ts-node": "^10.9.2",
+    "uuid": "^11.0.5"
+  },
+  "_moduleAliases": {
+    "src": "./src"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/lodash": "^4.17.14",
+    "@types/module-alias": "^2.0.4",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.10.1",
+    "@types/nodemailer": "^6.4.17",
+    "nodemon": "^3.1.7"
+  }
+}

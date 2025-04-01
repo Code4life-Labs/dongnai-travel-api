@@ -1,0 +1,100 @@
+{
+  "app": "DongNaiTravel",
+  "email": "",
+  "port": 3000,
+  "hostname": "0.0.0.0",
+  "redis": {
+    "hostname": "memorystore",
+    "port": "6379"
+  },
+  "listedEndpointsDir": [".endpoint.ts"],
+  "unListedEndpointsDir": ["index.ts"],
+  "folders": {
+    "templates": "templates",
+    "endpoints": "endpoints",
+    "databases": "databases",
+    "uploads": "uploads"
+  },
+  "origins": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
+  ],
+  "rootIssuer": "DONGNAITRAVEL-MANAGER-ISSUER",
+  "tokenExpiration": {
+    "accessToken": {
+      "value": "15",
+      "postfix": "m"
+    }
+  },
+  "emailServer": {
+    "host": "",
+    "port": "",
+    "username": "",
+    "password": ""
+  },
+  "cloud": {
+    "aws": {
+      "s3": {
+        "buckets": {
+          "main": {
+            "name": "dongnaitravel",
+            "region": "ap-southeast-1"
+          }
+        }
+      }
+    }
+  },
+  "apis": {
+    "openWeather": {
+      "apiKey": "04b9e23c000a58c304f570907e1bcc30",
+      "baseURL": "https://api.openweathermap.org",
+      "settings": {
+        "language": "",
+        "units": "metric",
+        "cnt": 40
+      }
+    },
+    "googleMap": {
+      "apiKey": "",
+      "baseURL": "https://maps.googleapis.com/maps/api",
+      "settings": {
+        "language": "",
+        "nearByRadius": "5000",
+        "maxPhotoWidth": "400"
+      }
+    },
+    "googleRoute": {
+      "apiKey": "",
+      "baseURL": "https://routes.googleapis.com",
+      "settings": {
+        "language": "",
+        "nearByRadius": "5000",
+        "maxPhotoWidth": "400"
+      }
+    },
+    "googleTextToSpeech": {
+      "apiKey": "",
+      "baseURL": "https://texttospeech.googleapis.com/v1",
+      "settings": {
+        "language": ""
+      }
+    },
+    "openAI": {
+      "apiKey": "",
+      "baseURL": "https://maps.googleapis.com/maps/api",
+      "settings": {}
+    },
+    "redis": {
+      "apiKey": "",
+      "baseURL": "https://maps.googleapis.com/maps/api",
+      "settings": {
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": ""
+      }
+    }
+  }
+}

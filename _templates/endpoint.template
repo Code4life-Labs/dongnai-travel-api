@@ -1,0 +1,11 @@
+// Import classes
+import { Endpoints } from "src/classes/Endpoints";
+
+const [ROOT_ENDPOINT_NAME]Endpoints = new Endpoints("[ROOT_ENDPOINT_NAME]");
+
+// Add your handlers here
+[ROOT_ENDPOINT_NAME]Endpoints.createHandler("").get((req, res) => {
+  return "Hello from [ROOT_ENDPOINT_NAME] root endpoint";
+});
+
+[ENDPOINTS]export default [ROOT_ENDPOINT_NAME]Endpoints;

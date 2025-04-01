@@ -1,5 +1,6 @@
 // Import helpers
 import { checkPlaceWhenCreate } from "src/helpers/places/place-checkers";
+import { deleteAllFilesDependOnRequest } from "src/helpers/other/delete-terminators";
 
 // Import services
 import { awsS3Service } from "src/services/aws/s3";
@@ -24,6 +25,7 @@ export default async function postPlace(
   // Check if place exist with name?
   if (await MC.Places.findOne({ name: validData.name })) {
     o!.code = 400;
+    if (req.files) await deleteAllFilesDependOnRequest(req.files);
     throw new Error("This place already exists");
   }
 
@@ -39,6 +41,7 @@ export default async function postPlace(
 
   if (!userId) {
     o!.code = 400;
+    if (req.files) await deleteAllFilesDependOnRequest(req.files);
     throw new Error("UserId isn't found in request");
   }
 
@@ -51,6 +54,9 @@ export default async function postPlace(
 
   // Assign URLs to data
   validData.photos = uploadResult.data;
+
+  // Delete files
+  if (req.files) await deleteAllFilesDependOnRequest(req.files);
 
   // Create new place
   const result = await MC.Places.create(validData);

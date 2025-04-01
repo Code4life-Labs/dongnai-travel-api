@@ -18,13 +18,12 @@ export async function deleteAllFilesDependOnRequest(
     for (const file of files) {
       promises.push(fs.unlink(file.path));
     }
-    return;
-  }
-
-  const keys = Object.keys(files);
-  for (const key of keys) {
-    for (const file of files[key]) {
-      promises.push(fs.unlink(file.path));
+  } else {
+    const keys = Object.keys(files);
+    for (const key of keys) {
+      for (const file of files[key]) {
+        promises.push(fs.unlink(file.path));
+      }
     }
   }
 

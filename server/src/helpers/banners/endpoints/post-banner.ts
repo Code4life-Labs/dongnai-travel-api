@@ -3,6 +3,7 @@ import { MAX_BANNER_COUNT } from "src/utils/constants";
 
 // Import helpers
 import { checkBannerWhenCreate } from "../banner-checkers";
+import { deleteAllFilesDependOnRequest } from "src/helpers/other/delete-terminators";
 
 // Import services
 import { awsS3Service } from "src/services/aws/s3";
@@ -25,8 +26,9 @@ export default async function postBanner(
   const validData = await checkBannerWhenCreate(req.body, o!);
 
   // Check if banner exist with name?
-  if (await MC.Banners.findOne({ name: validData.name })) {
+  if (await MC.Banners.findOne({ title: validData.title })) {
     o!.code = 400;
+    if (req.file) await deleteAllFilesDependOnRequest([req.file]);
     throw new Error("This banner already exists");
   }
 
@@ -35,6 +37,7 @@ export default async function postBanner(
     (await MC.Banners.countDocuments({ isActive: true })) >= MAX_BANNER_COUNT
   ) {
     o!.code = 400;
+    if (req.file) await deleteAllFilesDependOnRequest([req.file]);
     throw new Error(`Number of banners reach limit [${MAX_BANNER_COUNT}]`);
   }
 
@@ -60,6 +63,9 @@ export default async function postBanner(
 
   // Assign URLs to data
   validData.image = uploadResult.data;
+
+  // Delete files
+  if (req.file) await deleteAllFilesDependOnRequest([req.file]);
 
   // Create new banner
   const result = await MC.Banners.create(validData);

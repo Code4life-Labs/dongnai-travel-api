@@ -1,0 +1,31 @@
+{
+  "databases": [
+    {
+      "name": "dongnaitravel",
+      "database": "DongNaiTravel",
+      "engine": "mongodb",
+      "host": "database",
+      "username": "root",
+      "password": "letmein12345",
+      "objects": {
+        "Users": { "collectionName": "Users" },
+        "UserRoles": { "collectionName": "UserRoles" },
+        "Follows": { "collectionName": "Follows" },
+        "Places": { "collectionName": "Places" },
+        "Blogs": { "collectionName": "Blogs" },
+        "PlaceTypes": { "collectionName": "PlaceTypes" },
+        "BlogTypes": { "collectionName": "BlogTypes" },
+        "BlogComments": { "collectionName": "BlogComments" },
+        "BusinessStatuses": { "collectionName": "BusinessStatuses" },
+        "PlaceReviews": { "collectionName": "PlaceReviews" },
+        "UserFavoritedPlaces": { "collectionName": "UserFavoritedPlaces" },
+        "UserFavoritedBlogs": { "collectionName": "UserFavoritedBlogs" },
+        "UserVisitedPlaces": { "collectionName": "UserVisitedPlaces" },
+        "Otp": { "collectionName": "Otps" },
+        "Report": { "collectionName": "Reports" },
+        "ReportStatus": { "collectionName": "ReportStatuses" },
+        "ReportReason": { "collectionName": "ReportReasons" }
+      }
+    }
+  ]
+}

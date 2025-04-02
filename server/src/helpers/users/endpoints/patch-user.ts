@@ -107,3 +107,4 @@ export default async function patchUser(
   const updatedUser = await MC.Users.findById(req.params.id).exec();
   return updatedUser;
 }
+

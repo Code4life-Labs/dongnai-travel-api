@@ -63,7 +63,6 @@ export default async function getPlace(
   const result = transformPlaceContentWithLanguage(placeJSON, lang);
 
   if (AuthService.isAuthorizedRequest(res!)) {
-    console.log("UserId:", res!.locals.tokenPayload.userId);
     return computeStateOfPlace(result, res!.locals.tokenPayload.userId);
   }
 

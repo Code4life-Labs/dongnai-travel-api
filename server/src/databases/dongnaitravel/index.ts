@@ -35,6 +35,7 @@ const databaseEngine = database.engine
 
 export type DongNaiTravelModelsType = {
   Blogs: Model<any>;
+  Banners: Model<any>;
   BlogComments: Model<any>;
   BlogTypes: Model<any>;
   BusinessStatuses: Model<any>;

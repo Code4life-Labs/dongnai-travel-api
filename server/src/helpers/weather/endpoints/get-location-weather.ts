@@ -12,23 +12,34 @@ export default async function getLocationWeather(
   req: Request,
   res: Response,
   result: HTTPResponseDataType
-): Promise<WeatherResponse> {
-  try {
-    // Lấy tọa độ từ query parameters
-    const { lat, lon } = req.query;
-    
-    // Kiểm tra xem có đủ thông tin tọa độ không
-    if (!lat || !lon) {
-      return {
-        error: {
-          title: "Missing Parameters",
-          content: "Latitude (lat) and longitude (lon) are required"
-        }
-      };
-    }
+) {
+  // Lấy tọa độ từ query parameters
+  const { lat, lon } = req.query;
 
-    const { apiKey, baseURL, settings } = AppConfig.apis.openWeather;
-    
+  // Kiểm tra xem có đủ thông tin tọa độ không
+  if (!lat || !lon) {
+    return {
+      error: {
+        title: "Missing Parameters",
+        content: "Latitude (lat) and longitude (lon) are required",
+      },
+    };
+  }
+
+  const { apiKey, baseURL, settings } = AppConfig.apis.openWeather;
+
+  // Check if API key is missing or empty
+  if (!apiKey) {
+    return {
+      data: null,
+      error: {
+        title: "Weather API Not Configured",
+        content: "Weather API key is not configured. Weather data is unavailable.",
+      },
+    };
+  }
+
+  try {
     const response = await axios.get(`${baseURL}/data/2.5/forecast`, {
       params: {
         lat,
@@ -36,8 +47,8 @@ export default async function getLocationWeather(
         appid: apiKey,
         units: settings.units,
         lang: settings.language || req.query.lang || "en",
-        cnt: settings.cnt
-      }
+        cnt: settings.cnt,
+      },
     });
 
     // Tạo một đối tượng mới để tránh circular references
@@ -47,10 +58,10 @@ export default async function getLocationWeather(
         name: response.data.city.name,
         coord: {
           lat: response.data.city.coord.lat,
-          lon: response.data.city.coord.lon
+          lon: response.data.city.coord.lon,
         },
         country: response.data.city.country,
-        timezone: response.data.city.timezone
+        timezone: response.data.city.timezone,
       },
       list: response.data.list.map((item: any): ForecastItem => ({
         dt: item.dt,
@@ -60,48 +71,37 @@ export default async function getLocationWeather(
           temp_min: item.main.temp_min,
           temp_max: item.main.temp_max,
           pressure: item.main.pressure,
-          humidity: item.main.humidity
+          humidity: item.main.humidity,
         },
         weather: item.weather.map((w: any) => ({
           id: w.id,
           main: w.main,
           description: w.description,
-          icon: w.icon
+          icon: w.icon,
         })),
         clouds: {
-          all: item.clouds.all
+          all: item.clouds.all,
         },
         wind: {
           speed: item.wind.speed,
-          deg: item.wind.deg
+          deg: item.wind.deg,
         },
-        dt_txt: item.dt_txt
-      }))
+        dt_txt: item.dt_txt,
+      })),
     };
 
-    // Tạo một đối tượng kết quả mới
+    // Tạo một đối tượng kết quả mới thay vì sử dụng result trực tiếp
     return {
-      data: weatherData
+      data: weatherData,
     };
   } catch (error) {
-    console.error("Get Location Weather Error:", error);
-    
-    // Provide more detailed error information
-    const errorResponse: WeatherResponse = {
+    console.error("Error fetching location weather:", error);
+    return {
+      data: null,
       error: {
-        title: "Internal Server Error",
-        content: "Failed to fetch weather data"
-      }
+        title: "Weather Data Fetch Error",
+        content: "Failed to fetch weather data. Please try again later.",
+      },
     };
-    
-    // If it's an axios error, add more details
-    if (axios.isAxiosError(error) && errorResponse.error) {
-      errorResponse.error.details = {
-        status: error.response?.status,
-        message: error.response?.data?.message || error.message
-      };
-    }
-    
-    return errorResponse;
   }
 }

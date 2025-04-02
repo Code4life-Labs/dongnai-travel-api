@@ -8,6 +8,11 @@ import {
   PASSWORD_CHARACTER_LIMITS,
 } from "src/utils/constants";
 
+const _BaseStringValidator = Joi.string().messages({
+  "string.empty": `"data string" cannot be empty`,
+  "string.base": `"data string" should be a type of 'text'`,
+});
+
 const _BaseUserFirstNameValidator = Joi.string()
   .min(FIRSTNAME_CHARACTER_LIMITS[0])
   .max(FIRSTNAME_CHARACTER_LIMITS[1])
@@ -101,7 +106,9 @@ export const UserDataUpdateValidator = Joi.object({
   firstName: _BaseUserFirstNameValidator,
   lastName: _BaseUserLastNameValidator,
   username: _BaseUserNameValidator,
-  password: _BaseUserPasswordValidator,
+  email: _BaseUserEmailValidator,
   displayName: _BaseUserDisplayNameValidator,
   birthday: _BaseUserBirthDayValidator,
+  deletedAvatar: _BaseStringValidator,
+  deletedCoverPhoto: _BaseStringValidator,
 });

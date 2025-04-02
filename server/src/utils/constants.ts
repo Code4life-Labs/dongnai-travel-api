@@ -15,6 +15,11 @@ export const REPORT_DESCRIPTION_LIMITS = [0, 500];
 // Blog Data
 export const BLOG_NAME_LIMITS = [3, 64];
 
+// Banner Data
+export const MAX_BANNER_COUNT = 12;
+export const BANNER_BRANDNAME_LIMITS = [3, 64];
+export const BANNER_TITLE_LIMITS = [3, 120];
+
 // Upload file
 export const MEDIA_FILE_SIZE_LIMIT = 5242880; // byte = 5 Mb
 export const ALLOW_MEDIA_FILE_TYPES = [

@@ -5,12 +5,33 @@ import { transformExcludedFieldsToStr } from "../other/field-transformers";
 import type { Query } from "mongoose";
 
 export const ReportProjectionFields = {
-  ExcludedFields: ["reporterId", "reasonId", "statusId"],
+  ExcludedFields: [""],
 };
 
 export function buildProjection(query: Query<any, any>) {
   // Populate types
   query.populate("reporter", "_id firstName lastName displayName avatar");
+  query.populate("user");
+  query.populate([
+    {
+      path: "place",
+      populate: [
+        {
+          path: "types",
+          select: "_id name value",
+        },
+      ],
+    },
+    {
+      path: "blog",
+      populate: [
+        {
+          path: "type",
+          select: "_id name value",
+        },
+      ],
+    },
+  ]);
   query.populate("reason");
   query.populate("status");
 
@@ -23,6 +44,27 @@ export function buildProjection(query: Query<any, any>) {
 export function buildFullProjection(query: Query<any, any>) {
   // Populate types
   query.populate("reporter", "_id firstName lastName displayName avatar");
+  query.populate("user");
+  query.populate([
+    {
+      path: "place",
+      populate: [
+        {
+          path: "types",
+          select: "_id name value",
+        },
+      ],
+    },
+    {
+      path: "blog",
+      populate: [
+        {
+          path: "type",
+          select: "_id name value",
+        },
+      ],
+    },
+  ]);
   query.populate("reason");
   query.populate("status");
 
@@ -37,16 +79,34 @@ export function buildFullProjection(query: Query<any, any>) {
 export function buildBriefProjection(query: Query<any, any>) {
   // Populate types
   query.populate("reporter", "_id firstName lastName displayName avatar");
+  query.populate("user");
+  query.populate([
+    {
+      path: "place",
+      populate: [
+        {
+          path: "types",
+          select: "_id name value",
+        },
+      ],
+    },
+    {
+      path: "blog",
+      populate: [
+        {
+          path: "type",
+          select: "_id name value",
+        },
+      ],
+    },
+  ]);
   query.populate("reason");
   query.populate("status");
 
   // Exclude some fields
-  query.select("-description");
-
-  // Exclude some fields
-  query.select(
-    transformExcludedFieldsToStr(ReportProjectionFields.ExcludedFields)
-  );
+  // query.select(
+  //   transformExcludedFieldsToStr(ReportProjectionFields.ExcludedFields)
+  // );
 
   return query;
 }

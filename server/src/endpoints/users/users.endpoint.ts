@@ -96,6 +96,13 @@ usersEndpoints
   .use(
     AuthMiddlewares.createPolicyChecker("user", "user:updateUserInformation")
   )
+  .use(UploadMediaFileMiddlewares.preProcessUploadFiles)
+  .use(
+    UploadMediaFileMiddlewares.uploadMultiplyByFields([
+      { name: "newAvatar", maxCount: 1 },
+      { name: "newCoverPhoto", maxCount: 1 },
+    ])
+  )
   .patch(async (req, res, o) => {
     return patchUser(DNTModels, req, res, o);
   });
@@ -433,9 +440,14 @@ usersEndpoints
   .createHandler("/:id/report")
   .use(AuthMiddlewares.checkToken)
   .use(AuthMiddlewares.createPolicyChecker("report", "report:createReport"))
-  .post(async (req, res, o) => {
-    return postReport(DNTModels, req, res, o);
-  });
+  .post(
+    async (req, res, o) => {
+      return postReport(DNTModels, req, res, o);
+    },
+    function (error) {
+      console.error("Create Report Error:", error);
+    }
+  );
 
 /**
  * Update a report

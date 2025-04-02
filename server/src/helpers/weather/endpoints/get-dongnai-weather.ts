@@ -8,17 +8,28 @@ import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 import { WeatherResponse, ForecastItem, WeatherForecast } from "src/types/weather";
 
 const DONGNAI_LAT = 10.9377;
-const DONGNAI_LON = 106.8230;
+const DONGNAI_LON = 106.823;
 
 export default async function getDongNaiWeather(
   models: DongNaiTravelModelsType,
   req: Request,
   res: Response,
   result: HTTPResponseDataType
-): Promise<WeatherResponse> {
+) {
+  const { apiKey, baseURL, settings } = AppConfig.apis.openWeather;
+
+  // Check if API key is missing or empty
+  if (!apiKey) {
+    return {
+      data: null,
+      error: {
+        title: "Weather API Not Configured",
+        content: "Weather API key is not configured. Weather data is unavailable.",
+      },
+    };
+  }
+
   try {
-    const { apiKey, baseURL, settings } = AppConfig.apis.openWeather;
-    
     const response = await axios.get(`${baseURL}/data/2.5/forecast`, {
       params: {
         lat: DONGNAI_LAT,
@@ -26,8 +37,8 @@ export default async function getDongNaiWeather(
         appid: apiKey,
         units: settings.units,
         lang: settings.language || req.query.lang || "en",
-        cnt: settings.cnt
-      }
+        cnt: settings.cnt,
+      },
     });
 
     // Tạo một đối tượng mới để tránh circular references
@@ -37,10 +48,10 @@ export default async function getDongNaiWeather(
         name: response.data.city.name,
         coord: {
           lat: response.data.city.coord.lat,
-          lon: response.data.city.coord.lon
+          lon: response.data.city.coord.lon,
         },
         country: response.data.city.country,
-        timezone: response.data.city.timezone
+        timezone: response.data.city.timezone,
       },
       list: response.data.list.map((item: any): ForecastItem => ({
         dt: item.dt,
@@ -50,48 +61,37 @@ export default async function getDongNaiWeather(
           temp_min: item.main.temp_min,
           temp_max: item.main.temp_max,
           pressure: item.main.pressure,
-          humidity: item.main.humidity
+          humidity: item.main.humidity,
         },
         weather: item.weather.map((w: any) => ({
           id: w.id,
           main: w.main,
           description: w.description,
-          icon: w.icon
+          icon: w.icon,
         })),
         clouds: {
-          all: item.clouds.all
+          all: item.clouds.all,
         },
         wind: {
           speed: item.wind.speed,
-          deg: item.wind.deg
+          deg: item.wind.deg,
         },
-        dt_txt: item.dt_txt
-      }))
+        dt_txt: item.dt_txt,
+      })),
     };
 
-    // Tạo một đối tượng kết quả mới
+    // Tạo một đối tượng kết quả mới thay vì sử dụng result trực tiếp
     return {
-      data: weatherData
+      data: weatherData,
     };
   } catch (error) {
-    console.error("Get Dong Nai Weather Error:", error);
-    
-    // Provide more detailed error information
-    const errorResponse: WeatherResponse = {
+    console.error("Error fetching Dong Nai weather:", error);
+    return {
+      data: null,
       error: {
-        title: "Internal Server Error",
-        content: "Failed to fetch weather data"
-      }
+        title: "Weather Data Fetch Error",
+        content: "Failed to fetch weather data. Please try again later.",
+      },
     };
-    
-    // If it's an axios error, add more details
-    if (axios.isAxiosError(error) && errorResponse.error) {
-      errorResponse.error.details = {
-        status: error.response?.status,
-        message: error.response?.data?.message || error.message
-      };
-    }
-    
-    return errorResponse;
   }
 }

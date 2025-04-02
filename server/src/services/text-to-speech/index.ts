@@ -2,17 +2,17 @@ import axios from "axios";
 
 // Import utils
 import { ErrorUtils } from "src/utils/error";
-
-// Import AppConfig
-import AppConfig from "src/app.config.json";
+import { ConfigUtils } from "src/utils/config";
 
 export class TextToSpeechService {
   private _baseUrl!: string;
   private _apiKey!: string;
 
   constructor() {
-    this._baseUrl = AppConfig.apis.googleTextToSpeech.baseURL;
-    this._apiKey = AppConfig.apis.googleTextToSpeech.apiKey;
+    const ttsConfig = ConfigUtils.getApiConfig("googleTextToSpeech");
+    
+    this._baseUrl = ttsConfig.baseURL;
+    this._apiKey = ttsConfig.apiKey;
   }
 
   /**

@@ -48,7 +48,7 @@
   },
   "apis": {
     "openWeather": {
-      "apiKey": "04b9e23c000a58c304f570907e1bcc30",
+      "apiKey": "__SECRET_FROM_API_KEYS__",
       "baseURL": "https://api.openweathermap.org",
       "settings": {
         "language": "",
@@ -57,7 +57,7 @@
       }
     },
     "googleMap": {
-      "apiKey": "",
+      "apiKey": "__SECRET_FROM_API_KEYS__",
       "baseURL": "https://maps.googleapis.com/maps/api",
       "settings": {
         "language": "",
@@ -66,7 +66,7 @@
       }
     },
     "googleRoute": {
-      "apiKey": "",
+      "apiKey": "__SECRET_FROM_API_KEYS__",
       "baseURL": "https://routes.googleapis.com",
       "settings": {
         "language": "",
@@ -75,25 +75,25 @@
       }
     },
     "googleTextToSpeech": {
-      "apiKey": "",
+      "apiKey": "__SECRET_FROM_API_KEYS__",
       "baseURL": "https://texttospeech.googleapis.com/v1",
       "settings": {
         "language": ""
       }
     },
     "openAI": {
-      "apiKey": "",
+      "apiKey": "__SECRET_FROM_API_KEYS__",
       "baseURL": "https://maps.googleapis.com/maps/api",
       "settings": {}
     },
     "redis": {
-      "apiKey": "",
+      "apiKey": "__SECRET_FROM_API_KEYS__",
       "baseURL": "https://maps.googleapis.com/maps/api",
       "settings": {
-        "host": "",
-        "port": "",
-        "username": "",
-        "password": ""
+        "host": "__SECRET_FROM_API_KEYS__",
+        "port": "__SECRET_FROM_API_KEYS__",
+        "username": "__SECRET_FROM_API_KEYS__",
+        "password": "__SECRET_FROM_API_KEYS__"
       }
     }
   }

@@ -2,9 +2,7 @@ import axios from "axios";
 
 // Import utils
 import { ErrorUtils } from "src/utils/error";
-
-// Import AppConfig
-import AppConfig from "src/app.config.json";
+import { ConfigUtils } from "src/utils/config";
 
 export class RouteService {
   private _baseUrl!: string;
@@ -12,9 +10,11 @@ export class RouteService {
   private _defaultLanguage!: string;
 
   constructor() {
-    this._baseUrl = AppConfig.apis.googleRoute.baseURL;
-    this._apiKey = AppConfig.apis.googleRoute.apiKey;
-    this._defaultLanguage = AppConfig.apis.googleRoute.settings.language;
+    const googleRouteConfig = ConfigUtils.getApiConfig("googleRoute");
+    
+    this._baseUrl = googleRouteConfig.baseURL;
+    this._apiKey = googleRouteConfig.apiKey;
+    this._defaultLanguage = googleRouteConfig.settings.language;
   }
 
   /**

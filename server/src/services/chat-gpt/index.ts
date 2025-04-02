@@ -3,16 +3,15 @@ import OpenAI from "openai";
 
 // Import utils
 import { ErrorUtils } from "src/utils/error";
-
-// Import AppConfig
-import AppConfig from "src/app.config.json";
+import { ConfigUtils } from "src/utils/config";
 
 export class ChatGPTService {
   private _apiKey!: string;
   private _client!: OpenAI;
 
   constructor() {
-    this._apiKey = AppConfig.apis.openAI.apiKey;
+    const openAIConfig = ConfigUtils.getApiConfig("openAI");
+    this._apiKey = openAIConfig.apiKey;
     this._client = new OpenAI({
       apiKey: this._apiKey,
     });

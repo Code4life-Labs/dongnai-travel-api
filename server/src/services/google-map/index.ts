@@ -2,9 +2,7 @@ import axios from "axios";
 
 // Import utils
 import { ErrorUtils } from "src/utils/error";
-
-// Import AppConfig
-import AppConfig from "src/app.config.json";
+import { ConfigUtils } from "src/utils/config";
 
 export class GoogleMapService {
   nearByRadius!: string;
@@ -15,12 +13,14 @@ export class GoogleMapService {
   private _defaultLanguage!: string;
 
   constructor() {
-    this.nearByRadius = AppConfig.apis.googleMap.settings.nearByRadius;
-    this.maxPhotoWidth = AppConfig.apis.googleMap.settings.maxPhotoWidth;
+    const googleMapConfig = ConfigUtils.getApiConfig("googleMap");
+    
+    this.nearByRadius = googleMapConfig.settings.nearByRadius;
+    this.maxPhotoWidth = googleMapConfig.settings.maxPhotoWidth;
 
-    this._baseUrl = AppConfig.apis.googleMap.baseURL;
-    this._apiKey = AppConfig.apis.googleMap.apiKey;
-    this._defaultLanguage = AppConfig.apis.googleMap.settings.language;
+    this._baseUrl = googleMapConfig.baseURL;
+    this._apiKey = googleMapConfig.apiKey;
+    this._defaultLanguage = googleMapConfig.settings.language;
   }
 
   static StandardDirectionFields = [

@@ -69,6 +69,8 @@ export default async function patchBlog(
   // If there is any error, create an Interval to upload files
   // and notify to user later.
   const promises = [];
+  let coverImageUrl = "";
+  let imageUrls: string[] = [];
 
   if (newCoverImage) {
     promises.push(
@@ -92,7 +94,23 @@ export default async function patchBlog(
     );
   }
 
-  const [coverImageResult, imagesResult] = await Promise.all(promises);
+  // Xử lý kết quả upload
+  if (promises.length > 0) {
+    const results = await Promise.all(promises);
+    
+    // Xử lý kết quả tùy theo số lượng promises
+    if (newCoverImage && newImages) {
+      // Nếu upload cả cover và images
+      coverImageUrl = results[0]?.data || "";
+      imageUrls = results[1]?.data || [];
+    } else if (newCoverImage) {
+      // Nếu chỉ upload cover
+      coverImageUrl = results[0]?.data || "";
+    } else if (newImages) {
+      // Nếu chỉ upload images
+      imageUrls = results[0]?.data || [];
+    }
+  }
 
   // Delete files
   if (req.files) await deleteAllFilesDependOnRequest(req.files);
@@ -107,12 +125,11 @@ export default async function patchBlog(
     },
     {
       ...req.body,
-      // Promises can include only images or coverImage, so
-      // I have to check it first.
-      coverImage: Array.isArray(coverImageResult) ? "" : coverImageResult.data,
-      images: Array.isArray(coverImageResult)
-        ? coverImageResult.data
-        : imagesResult.data,
+      // Sử dụng giá trị đã xử lý
+      coverImage: coverImageUrl || oldBlog.coverImage,
+      images: imageUrls.length > 0 
+        ? imageUrls 
+        : (oldBlog.images || []),
     }
   );
 

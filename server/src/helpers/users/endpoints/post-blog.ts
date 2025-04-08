@@ -33,7 +33,7 @@ export default async function postBlog(
 ) {
   // Transform some array fields in req.body
   if (req.body.mentionedPlaces && typeof req.body.mentionedPlaces === "string")
-    req.body.mentionedPlaces = JSON.parse(req.body.mentionedPlaces);
+    req.body.mentionedPlaceIds = JSON.parse(req.body.mentionedPlaces);
 
   const { images, coverImage } = req.files as unknown as {
     [fieldName: string]: Array<Express.Multer.File>;

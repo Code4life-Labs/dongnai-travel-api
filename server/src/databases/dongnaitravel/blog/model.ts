@@ -21,11 +21,11 @@ export default function () {
         isApproved: { type: Schema.Types.Boolean, default: false },
         createdAt: {
           type: Schema.Types.Number,
-          default: Date.now(),
+          default: Date.now,
         },
         updatedAt: {
           type: Schema.Types.Number,
-          default: Date.now(),
+          default: Date.now,
         },
       },
       {

@@ -10,11 +10,11 @@ export default function () {
         name: Schema.Types.String,
         createdAt: {
           type: Schema.Types.Number,
-          default: Date.now(),
+          default: Date.now,
         },
         updatedAt: {
           type: Schema.Types.Number,
-          default: Date.now(),
+          default: Date.now,
         },
       },
       {

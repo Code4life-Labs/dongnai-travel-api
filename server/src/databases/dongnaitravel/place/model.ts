@@ -24,11 +24,11 @@ export default function () {
         isRecommended: Schema.Types.Boolean,
         createdAt: {
           type: Schema.Types.Number,
-          default: Date.now(),
+          default: Date.now,
         },
         updatedAt: {
           type: Schema.Types.Number,
-          default: Date.now(),
+          default: Date.now,
         },
       },
       {

@@ -3,38 +3,6 @@ import { HTTPUtils } from "./http";
 import type { Response, Request } from "express";
 import type { HTTPResponseDataType, InterchangeDateType } from "./http";
 
-/**
- * Hàm này giúp loại bỏ các tham chiếu vòng tròn trong đối tượng
- * để tránh lỗi khi chuyển đổi sang JSON
- */
-function removeCircularReferences(obj: any, seen = new WeakSet()): any {
-  // Đối với null hoặc các kiểu dữ liệu nguyên thủy, trả về ngay
-  if (!obj || typeof obj !== 'object') return obj;
-  
-  // Nếu đối tượng đã được thấy trước đó, có nghĩa là có tham chiếu vòng tròn
-  if (seen.has(obj)) return '[Circular Reference]';
-  
-  // Đánh dấu đối tượng này đã được xử lý
-  seen.add(obj);
-  
-  // Xử lý mảng
-  if (Array.isArray(obj)) {
-    return obj.map(item => removeCircularReferences(item, seen));
-  }
-  
-  // Xử lý đối tượng
-  const result: any = {};
-  for (const [key, value] of Object.entries(obj)) {
-    // Bỏ qua các thuộc tính đặc biệt hoặc các thuộc tính có tiền tố _
-    if (key.startsWith('_') || key === 'socket' || key === 'client' || key === 'parser') {
-      continue;
-    }
-    result[key] = removeCircularReferences(value, seen);
-  }
-  
-  return result;
-}
-
 export class ErrorUtils {
   /**
    * Use this function to wrap a function that can cause errors. The result of this function
@@ -71,9 +39,7 @@ export class ErrorUtils {
       let code = result.code === 200 ? 500 : result.code;
       result = HTTPUtils.generateHTTPResponseData(code, error.message);
     } finally {
-      // Xử lý dữ liệu để loại bỏ tham chiếu vòng tròn trước khi trả về
-      const safeResult = removeCircularReferences(result);
-      return res.status(safeResult.code).json(safeResult);
+      return res.status(result.code).json(result);
     }
   }
 
@@ -109,9 +75,7 @@ export class ErrorUtils {
       }
       let code = result.code === 200 ? 500 : result.code;
       result = HTTPUtils.generateHTTPResponseData(code, error.message);
-      // Xử lý dữ liệu để loại bỏ tham chiếu vòng tròn trước khi trả về
-      const safeResult = removeCircularReferences(result);
-      return res.status(safeResult.code).json(safeResult);
+      return res.status(result.code).json(result);
     }
   }
 
@@ -145,8 +109,7 @@ export class ErrorUtils {
       result.code = 1;
       result.message = error.message;
     } finally {
-      // Xử lý dữ liệu để loại bỏ tham chiếu vòng tròn
-      return removeCircularReferences(result);
+      return result;
     }
   }
 }

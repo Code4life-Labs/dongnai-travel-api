@@ -4,7 +4,7 @@ import { SimpleMemoryStore } from "../other/memory-store";
 // Import types
 import type { Query } from "mongoose";
 
-function buildBlogBaseFilter(query: Query<any, any>) {
+export function buildApproveFilter(query: Query<any, any>) {
   // Must have
   query.where("isApproved").equals(true);
 
@@ -18,8 +18,6 @@ function buildBlogBaseFilter(query: Query<any, any>) {
  * @returns
  */
 export function buildBlogTypeFilter(query: Query<any, any>, req: any) {
-  query = buildBlogBaseFilter(query);
-
   if (!req.query.type) return query;
   if (req.query.type === "all") return query;
 
@@ -41,8 +39,6 @@ export function buildBlogTypeFilter(query: Query<any, any>, req: any) {
  * @returns
  */
 export function buildBlogNameFilter(query: Query<any, any>, req: any) {
-  query = buildBlogBaseFilter(query);
-
   if (!req.query.name) return query;
 
   // Build query

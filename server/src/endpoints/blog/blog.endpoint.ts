@@ -18,7 +18,7 @@ db().then((models) => {
 });
 
 // Add your handlers here
-blogEndpoints.createHandler("/check").get((req, res, o) => {
+blogEndpoints.createHandler("/check").post((req, res, o) => {
   return checkBlogMetadata(DNTModels, req, res, o);
 });
 

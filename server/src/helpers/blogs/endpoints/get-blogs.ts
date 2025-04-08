@@ -3,8 +3,10 @@ import { buildBriefProjection } from "src/helpers/blogs/projections";
 import {
   buildBlogTypeFilter,
   buildBlogNameFilter,
+  buildApproveFilter,
 } from "src/helpers/blogs/filters";
 import { computeStateOfBlog } from "src/helpers/blogs/states-computer";
+import { SimpleMemoryStore } from "src/helpers/other/memory-store";
 
 // Impor services
 import { AuthService } from "src/services/auth";
@@ -32,10 +34,14 @@ export default async function getBlogs(
     .skip(skip)
     .limit(limit);
 
+  const userRoles = SimpleMemoryStore.get("user-roles");
+  const role = userRoles.find((t: any) => t.value === "admin");
+
   // Build filters & projections
   buildBlogTypeFilter(query, req);
   buildBlogNameFilter(query, req);
   buildBriefProjection(query);
+  if (res?.locals.tokenPayload.role !== "admin") buildApproveFilter(query);
 
   const blogs = await query.exec();
 

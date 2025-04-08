@@ -12,8 +12,8 @@ export default async function getPlaceTypes(
   // Get place from database
   let query = MC.PlaceTypes.find();
 
-  const place = await query.exec();
+  const placeTypes = await query.exec();
 
   // Return places
-  return place;
+  return placeTypes;
 }

@@ -20,9 +20,6 @@ import { SimpleMemoryStore } from "./helpers/other/memory-store";
 // Import types
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
 
-// Import ConfigUtils to initialize configuration with API keys
-import { ConfigUtils } from "./utils/config";
-
 const app = express();
 const router = express.Router();
 
@@ -37,9 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Apply router
 app.use(router);
-
-// Log that configuration is loaded with API keys
-console.log(`Starting ${ConfigUtils.getConfig().app} with API keys loaded from secrets`);
 
 async function main() {
   // Setup server instance

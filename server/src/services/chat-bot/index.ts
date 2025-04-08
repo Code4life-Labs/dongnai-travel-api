@@ -19,6 +19,9 @@ import AppConfig from "src/app.config.json";
 // Import types
 import { ChatbotRequest, ChatbotResponse, DialogFlowConfig, WeatherData, PlaceData } from "src/types/chatbot";
 
+// Điều chỉnh cho testing (đặt thành true để sử dụng mock data)
+const USE_MOCK_DATA = process.env.NODE_ENV !== "production";
+
 export class ChatbotService {
   nearByRadius!: string;
 
@@ -33,8 +36,117 @@ export class ChatbotService {
     this._apiKey = AppConfig.apis.googleTextToSpeech.apiKey;
     
     // Parse the JSON file content to DialogFlowConfig
-    const secretBuffer = FileUtils.readFile("secrets", "dialogflow.json");
-    this._secret = JSON.parse(secretBuffer.toString()) as DialogFlowConfig;
+    try {
+      const secretBuffer = FileUtils.readFile("secrets", "dialogflow.json");
+      this._secret = JSON.parse(secretBuffer.toString()) as DialogFlowConfig;
+    } catch (error) {
+      console.warn("Không thể đọc file dialogflow.json, sử dụng mock data");
+      this._secret = {
+        projectId: "mock-project-id",
+        clientEmail: "mock@example.com",
+        privateKey: "mock-private-key"
+      };
+    }
+  }
+
+  /**
+   * Get a welcome message for the user
+   * @param data User's request data
+   * @returns Welcome message response
+   */
+  async getWelcomeMessage(data: ChatbotRequest): Promise<ChatbotResponse> {
+    const result = await ErrorUtils.handleInterchangeError(this, async function () {
+      // If using mock data for development/testing
+      if (USE_MOCK_DATA) {
+        return {
+          response: "Xin chào! Tôi là TravelBot, trợ lý du lịch thông minh của DongNaiTravel. Tôi có thể giúp bạn tìm kiếm địa điểm du lịch, thời tiết, tạo lịch trình và nhiều thứ khác. Bạn cần giúp gì không?",
+          action: "input.welcome",
+          data: {
+            suggestions: [
+              { text: "Thời tiết ở Đồng Nai", action: "query-weather" },
+              { text: "Địa điểm du lịch nổi tiếng", action: "query-places" },
+              { text: "Tạo lịch trình du lịch", action: "query-itinerary" },
+              { text: "Hướng dẫn sử dụng", action: "query-help" }
+            ]
+          }
+        };
+      }
+
+      // Prepare information for DialogFlow
+      const projectId = this._secret.projectId;
+      const userSessionId = data.currentUserId;
+      
+      // Create credentials to request session client of dialogflow
+      const credentials = {
+        client_email: this._secret.clientEmail,
+        private_key: this._secret.privateKey,
+      };
+
+      // Create session client of DialogFlow
+      const dialogFlowSessionClient = new dialogFlow.SessionsClient({
+        credentials,
+      });
+
+      // Create session path
+      const sessionPath = dialogFlowSessionClient.projectAgentSessionPath(
+        projectId,
+        userSessionId
+      );
+
+      // Create request for DialogFlow with welcome intent
+      const req = {
+        session: sessionPath,
+        queryInput: {
+          text: {
+            text: "Xin chào",
+            languageCode: data.languageCode || "vi",
+          },
+        },
+      };
+
+      // Detect intent
+      const dialogFlowResponse = await dialogFlowSessionClient.detectIntent(req);
+      
+      if (!dialogFlowResponse || !dialogFlowResponse[0] || !dialogFlowResponse[0].queryResult) {
+        return {
+          response: "Xin chào! Tôi là TravelBot, trợ lý du lịch thông minh của DongNaiTravel. Bạn cần giúp gì không?",
+          action: "input.welcome",
+        };
+      }
+      
+      // Get action and response text from DialogFlow
+      const queryResult = dialogFlowResponse[0].queryResult;
+      const action = queryResult.action || "input.welcome";
+      const responseText = queryResult.fulfillmentMessages && 
+                          queryResult.fulfillmentMessages[0] && 
+                          queryResult.fulfillmentMessages[0].text && 
+                          queryResult.fulfillmentMessages[0].text.text && 
+                          queryResult.fulfillmentMessages[0].text.text[0] || 
+                          "Xin chào! Tôi là TravelBot, trợ lý du lịch thông minh của DongNaiTravel. Bạn cần giúp gì không?";
+      
+      return {
+        response: responseText,
+        action: action,
+        data: {
+          suggestions: [
+            { text: "Thời tiết ở Đồng Nai", action: "query-weather" },
+            { text: "Địa điểm du lịch nổi tiếng", action: "query-places" },
+            { text: "Tạo lịch trình du lịch", action: "query-itinerary" },
+            { text: "Hướng dẫn sử dụng", action: "query-help" }
+          ]
+        }
+      };
+    });
+    
+    // Ensure we always return a valid ChatbotResponse
+    if (!result) {
+      return {
+        response: "Xin chào! Tôi là TravelBot, trợ lý du lịch thông minh của DongNaiTravel. Xin lỗi vì sự cố kết nối. Tôi có thể giúp gì cho bạn?",
+        action: "input.welcome",
+      };
+    }
+    
+    return result.data as ChatbotResponse;
   }
 
   /**
@@ -383,6 +495,183 @@ export class ChatbotService {
     }
     
     return result.data as ChatbotResponse;
+  }
+
+  /**
+   * Test function for weather features
+   * @param params Test parameters
+   * @returns Test results
+   */
+  async testWeatherFeature(params: any): Promise<any> {
+    const { location, coordinates } = params || {};
+    
+    try {
+      let weatherData = null;
+      
+      if (coordinates) {
+        // Test with coordinates
+        const coords = {
+          latitude: parseFloat(coordinates.lat),
+          longitude: parseFloat(coordinates.lng)
+        };
+        
+        const weatherResponse = await weatherService.forecastWeather(coords);
+        if (weatherResponse?.data) {
+          weatherData = convertToWeatherData(weatherResponse.data);
+        }
+      } else if (location) {
+        // Test with location name
+        const geocodingResponse = await weatherService.requestGeoCodingDirect(location);
+        
+        if (geocodingResponse && geocodingResponse.data && geocodingResponse.data.coor) {
+          const weatherResponse = await weatherService.forecastWeather(geocodingResponse.data.coor);
+          if (weatherResponse?.data) {
+            weatherData = convertToWeatherData(weatherResponse.data);
+          }
+        }
+      } else {
+        // Test with default location (Dong Nai)
+        const defaultCoords = { latitude: 10.9778, longitude: 106.8511 };
+        const weatherResponse = await weatherService.forecastWeather(defaultCoords);
+        if (weatherResponse?.data) {
+          weatherData = convertToWeatherData(weatherResponse.data);
+        }
+      }
+      
+      return {
+        response: "Kết quả test thời tiết",
+        action: "input.get-weather",
+        data: weatherData,
+      };
+    } catch (error) {
+      console.error("Test weather feature error:", error);
+      return {
+        response: "Đã xảy ra lỗi khi test tính năng thời tiết.",
+        action: "input.error",
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
+  }
+
+  /**
+   * Test function for places features
+   * @param params Test parameters
+   * @returns Test results
+   */
+  async testPlacesFeature(params: any): Promise<any> {
+    const { query, radius, coordinates } = params || {};
+    
+    try {
+      // Use default coordinates for Dong Nai if not provided
+      const coords = coordinates ? {
+        latitude: parseFloat(coordinates.lat),
+        longitude: parseFloat(coordinates.lng)
+      } : { latitude: 10.9778, longitude: 106.8511 };
+      
+      // Use provided radius or default
+      const searchRadius = radius || this.nearByRadius;
+      
+      // Search for places
+      const placesResponse = await googleMapService.requestPlaces({
+        query: query || "du lịch",
+        radius: searchRadius,
+        location: coords
+      });
+      
+      if (placesResponse && placesResponse.data && placesResponse.data.results) {
+        const places: PlaceData[] = placesResponse.data.results.map((place: any) => ({
+          _id: place.place_id,
+          name: place.name,
+          address: place.formatted_address || place.vicinity,
+          location: {
+            latitude: place.geometry.location.lat,
+            longitude: place.geometry.location.lng,
+          },
+          description: place.types?.join(', '),
+          images: place.photos ? [`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${AppConfig.apis.googleMap.apiKey}`] : undefined,
+          avgRating: place.rating,
+        }));
+        
+        return {
+          response: `Kết quả tìm kiếm cho ${query || "du lịch"}`,
+          action: "input.suggest-place",
+          data: { places },
+        };
+      }
+      
+      return {
+        response: "Không tìm thấy địa điểm nào phù hợp.",
+        action: "input.suggest-place",
+      };
+    } catch (error) {
+      console.error("Test places feature error:", error);
+      return {
+        response: "Đã xảy ra lỗi khi test tính năng tìm kiếm địa điểm.",
+        action: "input.error",
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
+  }
+
+  /**
+   * Test function for directions features
+   * @param params Test parameters
+   * @returns Test results
+   */
+  async testDirectionsFeature(params: any): Promise<any> {
+    const { origin, destination, mode } = params || {};
+    
+    try {
+      if (!origin || !destination) {
+        return {
+          response: "Vui lòng cung cấp điểm bắt đầu và điểm kết thúc.",
+          action: "input.error",
+        };
+      }
+      
+      // Prepare direction request parameters
+      const directionParams: any = {
+        oriAddress: origin,
+        desAddress: destination,
+        oriPlaceId: null,
+        desPlaceId: null,
+        oriCoor: null,
+        desCoor: null,
+        modeORS: mode || "driving-car",
+        modeGCP: mode === "walking" ? "WALK" : "DRIVE",
+        typeOri: "address",
+        typeDes: "address",
+        routeModifiers: {
+          avoidTolls: false,
+          avoidHighways: false,
+          avoidFerries: false,
+        },
+        languageCode: "vi",
+      };
+      
+      // Get directions
+      const directionsResponse = await googleMapService.requestRouteDirection(directionParams);
+      
+      if (directionsResponse && directionsResponse.code === 0 && directionsResponse.data) {
+        return {
+          response: `Chỉ dẫn đường đi từ ${origin} đến ${destination}`,
+          action: "input.get-direction",
+          data: directionsResponse.data,
+        };
+      }
+      
+      return {
+        response: "Không thể tìm thấy chỉ dẫn cho tuyến đường này.",
+        action: "input.get-direction",
+      };
+    } catch (error) {
+      console.error("Test directions feature error:", error);
+      return {
+        response: "Đã xảy ra lỗi khi test tính năng chỉ đường.",
+        action: "input.error",
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
   }
 }
 

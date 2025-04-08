@@ -32,9 +32,15 @@ const _BaseGeometryValidator = Joi.object().messages({
   "object.base": `"geometry" should be an object`,
 });
 
-const _BaseDescriptionValidator = Joi.string().messages({
-  "string.base": `"description" should be a type of 'text'`,
-  "string.empty": `"description" cannot be empty`,
+const _BaseContentValidator = Joi.object({
+  vi: Joi.string().messages({
+    "string.base": `"vi" should be a type of 'text'`,
+    "string.empty": `"vi" cannot be empty`,
+  }),
+  en: Joi.string().messages({
+    "string.base": `"vi" should be a type of 'text'`,
+    "string.empty": `"vi" cannot be empty`,
+  })
 });
 
 const _BasePhoneNumberValidator = Joi.string().messages({
@@ -93,7 +99,7 @@ export const PlaceCreateValidator = Joi.object({
   placeId: _BasePlaceIdValidator.required(),
   addressComponents: _BaseAddressComponentsValidator,
   geometry: _BaseGeometryValidator,
-  description: _BaseDescriptionValidator.required(),
+  content: _BaseContentValidator,
   phoneNumber: _BasePhoneNumberValidator,
   name: _BaseNameValidator.required(),
   plusCode: _BasePlusCodeValidator,
@@ -113,7 +119,7 @@ export const PlaceUpdateValidator = Joi.object({
   placeId: _BasePlaceIdValidator,
   addressComponents: _BaseAddressComponentsValidator,
   geometry: _BaseGeometryValidator,
-  description: _BaseDescriptionValidator,
+  content: _BaseContentValidator,
   phoneNumber: _BasePhoneNumberValidator,
   name: _BaseNameValidator,
   plusCode: _BasePlusCodeValidator,

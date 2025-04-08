@@ -349,174 +349,155 @@ const banners = [
     endDate: 1744131600000,
     createdAt: 1743387229826,
   },
+  {
+    _id: ObjectId("67e9fc0160affd27666afa58"),
+    title: "Giới thiệu phố đi bộ Nguyễn Văn Trị và cầu Hoá An",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/pho-di-bo-nguyen-van-tri/cauhoaan-banner-1743387648347-724993282.jpg",
+    target: "https://vi.wikipedia.org/wiki/C%E1%BA%A7u_H%C3%B3a_An",
+    brand: {
+      name: "Phố đi bộ Nguyễn Văn Trị",
+      logoUrl: "",
+      website: "https://www.facebook.com/PhoDiBoNguyenVanTri",
+    },
+    isActive: true,
+    startDate: 1743387533551,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea011860affd27666afa6f"),
+    title: "Giới thiệu về đá Ba chồng",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/dinh-quan/dabachong-banner-1743388950042-837843514.jpg",
+    target: "https://vi.wikipedia.org/wiki/%C4%90%C3%A1_Ba_Ch%E1%BB%93ng",
+    brand: {
+      name: "Định Quán",
+      logoUrl: "",
+      website: "https://dinhquan.dongnai.gov.vn",
+    },
+    isActive: true,
+    startDate: 1743388307633,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea01a760affd27666afa73"),
+    title: "Giới thiệu khu du lịch Đảo ó",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/cti-travel/khudulichdaoo-banner-1743389093454-338576940.jpg",
+    target: "https://mia.vn/cam-nang-du-lich/khu-du-lich-dao-o-12896",
+    brand: {
+      name: "CTI Travel",
+      logoUrl: "",
+      website: "https://ctitravel.vn/",
+    },
+    isActive: true,
+    startDate: 1743388990699,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea027d60affd27666afa8a"),
+    title: "Giới thiệu khu du lịch sinh thái làng bưởi Tân Triều",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/nam-hue/langbuoitantrieu-banner-1743389308186-321834424.jpg",
+    target:
+      "https://mia.vn/cam-nang-du-lich/lang-buoi-tan-trieu-nuc-tieng-dong-nai-14216",
+    brand: {
+      name: "Nam Hue",
+      logoUrl: "",
+      website:
+        "https://www.facebook.com/p/Khu-Du-L%E1%BB%8Bch-Sinh-Th%C3%A1i-V%C6%B0%E1%BB%9Dn-L%C3%A0ng-B%C6%B0%E1%BB%9Fi-T%C3%A2n-Tri%E1%BB%81u-N%C4%83m-Hu%E1%BB%87-100063498191338",
+    },
+    isActive: true,
+    startDate: 1743389257753,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea034660affd27666afa8e"),
+    title: "Giới thiệu rừng Nam Cát Tiên",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/nam-cat-tien-national-park/namcattien-banner-1743389507935-906413665.jpg",
+    target: "https://www.klook.com/vi/blog/nam-cat-tien/",
+    brand: {
+      name: "Nam Cat Tien National Park",
+      logoUrl: "",
+      website: "https://cattiennationalpark.com.vn/",
+    },
+    isActive: true,
+    startDate: 1743389257753,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea03ae60affd27666afa92"),
+    title: "Giới thiệu núi Chứa Chan",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/xuan-loc/nuichuachan-banner-1743389613317-950229679.jpg",
+    target: "https://mia.vn/cam-nang-du-lich/nui-chua-chan-dong-nai-12379",
+    brand: {
+      name: "Xuân Lộc",
+      logoUrl: "",
+      website: "https://xuanloc.dongnai.gov.vn/",
+    },
+    isActive: true,
+    startDate: 1743389257753,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea040460affd27666afa96"),
+    title: "Giới thiệu khu du lịch Thác đá Hàn",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/thac-da-han/thacdahan-banner-1743389699782-857794613.jpg",
+    target: "https://mia.vn/cam-nang-du-lich/thac-da-han-12153",
+    brand: {
+      name: "Thác Đá Hàn",
+      logoUrl: "",
+      website: "https://www.facebook.com/thacdahan.vn",
+    },
+    isActive: true,
+    startDate: 1743389257753,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea044360affd27666afa9a"),
+    title: "Giới thiệu khu du lịch sinh thái Thác Giang Điền",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/thac-giang-dien/thacgiangdien-banner-1743389762597-47121423.jpg",
+    target:
+      "https://mia.vn/cam-nang-du-lich/thac-giang-dien-va-nhung-trai-nghiem-thu-vi-co-mot-khong-hai-12149",
+    brand: {
+      name: "Thác Giang Điền",
+      logoUrl: "",
+      website: "https://giangdien.vn/",
+    },
+    isActive: true,
+    startDate: 1743389257753,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  },
+  {
+    _id: ObjectId("67ea048e60affd27666afa9e"),
+    title: "Giới thiệu văn miếu Trấn Biên",
+    image:
+      "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/bien-hoa/vanmieutranbien-banner-1743389837474-472753606.jpg",
+    target:
+      "https://www.traveloka.com/vi-vn/explore/destination/van-mieu-tran-bien/321629",
+    brand: {
+      name: "Biên Hoà",
+      logoUrl: "",
+      website: "https://bienhoa.dongnai.gov.vn/",
+    },
+    isActive: true,
+    startDate: 1743389257753,
+    endDate: 1744131600000,
+    createdAt: 1743387229826,
+  }
 ];
-DongNaiTravel >
-  db.Banners.find()[
-    ({
-      _id: ObjectId("67e9fb4d60affd27666afa54"),
-      title: "Giới thiệu về khu du lịch Bửu Long",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/buu-long/buulong-banner-1743387468283-631478554.jpg",
-      target: "https://buulong.com.vn/",
-      brand: {
-        name: "Bửu Long",
-        logoUrl: "",
-        website: "https://buulong.com.vn/",
-      },
-      isActive: true,
-      startDate: 1743387311716,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67e9fc0160affd27666afa58"),
-      title: "Giới thiệu phố đi bộ Nguyễn Văn Trị và cầu Hoá An",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/pho-di-bo-nguyen-van-tri/cauhoaan-banner-1743387648347-724993282.jpg",
-      target: "https://vi.wikipedia.org/wiki/C%E1%BA%A7u_H%C3%B3a_An",
-      brand: {
-        name: "Phố đi bộ Nguyễn Văn Trị",
-        logoUrl: "",
-        website: "https://www.facebook.com/PhoDiBoNguyenVanTri",
-      },
-      isActive: true,
-      startDate: 1743387533551,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea011860affd27666afa6f"),
-      title: "Giới thiệu về đá Ba chồng",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/dinh-quan/dabachong-banner-1743388950042-837843514.jpg",
-      target: "https://vi.wikipedia.org/wiki/%C4%90%C3%A1_Ba_Ch%E1%BB%93ng",
-      brand: {
-        name: "Định Quán",
-        logoUrl: "",
-        website: "https://dinhquan.dongnai.gov.vn",
-      },
-      isActive: true,
-      startDate: 1743388307633,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea01a760affd27666afa73"),
-      title: "Giới thiệu khu du lịch Đảo ó",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/cti-travel/khudulichdaoo-banner-1743389093454-338576940.jpg",
-      target: "https://mia.vn/cam-nang-du-lich/khu-du-lich-dao-o-12896",
-      brand: {
-        name: "CTI Travel",
-        logoUrl: "",
-        website: "https://ctitravel.vn/",
-      },
-      isActive: true,
-      startDate: 1743388990699,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea027d60affd27666afa8a"),
-      title: "Giới thiệu khu du lịch sinh thái làng bưởi Tân Triều",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/nam-hue/langbuoitantrieu-banner-1743389308186-321834424.jpg",
-      target:
-        "https://mia.vn/cam-nang-du-lich/lang-buoi-tan-trieu-nuc-tieng-dong-nai-14216",
-      brand: {
-        name: "Nam Hue",
-        logoUrl: "",
-        website:
-          "https://www.facebook.com/p/Khu-Du-L%E1%BB%8Bch-Sinh-Th%C3%A1i-V%C6%B0%E1%BB%9Dn-L%C3%A0ng-B%C6%B0%E1%BB%9Fi-T%C3%A2n-Tri%E1%BB%81u-N%C4%83m-Hu%E1%BB%87-100063498191338",
-      },
-      isActive: true,
-      startDate: 1743389257753,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea034660affd27666afa8e"),
-      title: "Giới thiệu rừng Nam Cát Tiên",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/nam-cat-tien-national-park/namcattien-banner-1743389507935-906413665.jpg",
-      target: "https://www.klook.com/vi/blog/nam-cat-tien/",
-      brand: {
-        name: "Nam Cat Tien National Park",
-        logoUrl: "",
-        website: "https://cattiennationalpark.com.vn/",
-      },
-      isActive: true,
-      startDate: 1743389257753,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea03ae60affd27666afa92"),
-      title: "Giới thiệu núi Chứa Chan",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/xuan-loc/nuichuachan-banner-1743389613317-950229679.jpg",
-      target: "https://mia.vn/cam-nang-du-lich/nui-chua-chan-dong-nai-12379",
-      brand: {
-        name: "Xuân Lộc",
-        logoUrl: "",
-        website: "https://xuanloc.dongnai.gov.vn/",
-      },
-      isActive: true,
-      startDate: 1743389257753,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea040460affd27666afa96"),
-      title: "Giới thiệu khu du lịch Thác đá Hàn",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/thac-da-han/thacdahan-banner-1743389699782-857794613.jpg",
-      target: "https://mia.vn/cam-nang-du-lich/thac-da-han-12153",
-      brand: {
-        name: "Thác Đá Hàn",
-        logoUrl: "",
-        website: "https://www.facebook.com/thacdahan.vn",
-      },
-      isActive: true,
-      startDate: 1743389257753,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea044360affd27666afa9a"),
-      title: "Giới thiệu khu du lịch sinh thái Thác Giang Điền",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/thac-giang-dien/thacgiangdien-banner-1743389762597-47121423.jpg",
-      target:
-        "https://mia.vn/cam-nang-du-lich/thac-giang-dien-va-nhung-trai-nghiem-thu-vi-co-mot-khong-hai-12149",
-      brand: {
-        name: "Thác Giang Điền",
-        logoUrl: "",
-        website: "https://giangdien.vn/",
-      },
-      isActive: true,
-      startDate: 1743389257753,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    },
-    {
-      _id: ObjectId("67ea048e60affd27666afa9e"),
-      title: "Giới thiệu văn miếu Trấn Biên",
-      image:
-        "https://dongnaitravel.s3.ap-southeast-1.amazonaws.com/banner-images/bien-hoa/vanmieutranbien-banner-1743389837474-472753606.jpg",
-      target:
-        "https://www.traveloka.com/vi-vn/explore/destination/van-mieu-tran-bien/321629",
-      brand: {
-        name: "Biên Hoà",
-        logoUrl: "",
-        website: "https://bienhoa.dongnai.gov.vn/",
-      },
-      isActive: true,
-      startDate: 1743389257753,
-      endDate: 1744131600000,
-      createdAt: 1743387229826,
-    })
-  ];
 
 // Places
 const places = [
@@ -588,8 +569,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Công viên Suối Mơ cung cấp nhiều hoạt động giải trí như tắm hồ bơi tự nhiên, chèo SUP, đạp vịt, nhà phao liên hoàn và các trò chơi team building thú vị. Du khách cũng có thể tham gia các hoạt động cắm trại, tiệc BBQ và rèn luyện kỹ năng sống. Ngoài ra, nhà hàng Hoa Anh Đào trong khuôn viên phục vụ các món ăn dân dã với không gian thoáng đãng.",
+      en: "Suoi Mo Park offers various recreational activities such as bathing in natural swimming pools, SUP boarding, pedal boating, an inflatable house, and exciting team-building games. Visitors can also engage in camping, BBQ parties, and skill-building activities. Additionally, the Hoa Anh Dao restaurant within the premises serves local dishes in a spacious and airy setting.",
     },
     typeIds: ["amusement_park"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -665,8 +646,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Nhà hàng của resort phục vụ đa dạng các món ăn dân dã Việt Nam, chế biến từ nguyên liệu tươi ngon, mang đậm hương vị quê hương. Thực đơn bao gồm các món như hủ tiếu, bún bò, cơm sườn, canh chua cá kho tộ, sườn cọng nướng và bánh xèo, bánh khọt kèm rau sạch tự trồng. Đội ngũ nhân viên thân thiện và chuyên nghiệp luôn sẵn lòng phục vụ. Resort có 29 phòng nghỉ được trang bị hiện đại, với diện tích từ 24m² đến 42m², phù hợp cho cả nghỉ dưỡng ngắn và dài hạn. Không gian yên tĩnh, sạch sẽ và thoải mái, thu hút cả khách nội địa và quốc tế.​",
+      en: "The resort's restaurant offers a variety of Vietnamese rustic dishes made from fresh ingredients, capturing the essence of local flavors. The menu includes items like Hu Tieu, Bun Bo, grilled ribs, and traditional Vietnamese pancakes served with organic greens from their own garden. The friendly and professional staff are always ready to serve. The resort features 29 modern rooms ranging from 24m² to 42m², suitable for both short and long-term stays. Guests can enjoy a peaceful, clean, and comfortable environment, making it a popular choice among both domestic and international visitors.",
     },
     typeIds: ["resort"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -812,8 +793,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Homestay cung cấp các phòng nghỉ với tiện nghi cơ bản như máy lạnh, Wi-Fi miễn phí và phòng tắm riêng. Ngoài ra, du khách có thể tham gia các hoạt động như cho thuê xe đạp và khám phá khu vực xung quanh. Nhà nghỉ cũng có bãi đỗ xe miễn phí và cung cấp bữa sáng nhẹ cho khách. ",
+      en: "The homestay offers rooms equipped with basic amenities such as air conditioning, free Wi-Fi, and private bathrooms. Guests can also engage in activities like bicycle rentals to explore the surrounding area. The guest house provides free parking and offers a complimentary light breakfast.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -884,8 +865,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu nghỉ dưỡng được xây dựng bằng tre và gỗ theo kiến trúc truyền thống, tạo không gian thoáng đãng và gần gũi với thiên nhiên. Du khách có thể tham gia các hoạt động như leo núi, đạp xe, chèo thuyền kayak, cắm trại và khám phá hệ sinh thái phong phú của Vườn Quốc gia Cát Tiên. Ngoài ra, Nhà Dài Tà Lài còn tổ chức các hoạt động giáo dục môi trường và văn hóa cho trẻ em, góp phần nâng cao nhận thức cộng đồng về bảo vệ thiên nhiên.",
+      en: "The lodge is constructed using bamboo and wood in traditional architecture, providing a spacious and nature-connected environment. Guests can engage in activities such as mountain climbing, cycling, kayaking, camping, and exploring the rich biodiversity of Cat Tien National Park. Additionally, Ta Lai Longhouse organizes environmental and cultural educational programs for children, contributing to community awareness about nature conservation.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -956,8 +937,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Homestay được thiết kế theo kiểu nhà sàn truyền thống của người Chơ Ro, với vật liệu chủ yếu là tre, gỗ, tạo không gian thoáng mát và gần gũi với thiên nhiên. Du khách có thể tham gia các hoạt động như tham quan vườn cây ăn trái, câu cá, hoặc đơn giản là thư giãn trong khuôn viên xanh mát. Những bữa cơm gia đình ấm cúng với các món ăn dân dã được chế biến từ nguyên liệu tươi ngon tại địa phương sẽ mang lại trải nghiệm khó quên.",
+      en: "The homestay is designed in the traditional Chơ Ro stilt house style, primarily using bamboo and wood, creating a cool and nature-friendly atmosphere. Guests can engage in activities such as touring the fruit orchards, fishing, or simply relaxing in the lush surroundings. The warm family meals, featuring local dishes made from fresh ingredients, offer an unforgettable experience.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1048,8 +1029,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Homestay cung cấp các phòng nghỉ thoải mái với đầy đủ tiện nghi như máy lạnh, Wi-Fi miễn phí và minibar. Du khách có thể tham gia các hoạt động như thuê xe đạp để khám phá khu vực xung quanh hoặc tham gia các tour du lịch sinh thái do chủ nhà tổ chức. Nhà hàng tại homestay phục vụ các món ăn địa phương ngon miệng, được chế biến từ nguyên liệu tươi ngon.",
+      en: "The homestay offers comfortable rooms equipped with amenities such as air conditioning, free Wi-Fi, and a minibar. Guests can engage in activities like renting bicycles to explore the surrounding area or joining ecological tours organized by the host. The homestay's restaurant serves delicious local dishes made from fresh ingredients.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1122,8 +1103,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Sue's Homestay/Farmstay là một điểm đến lý tưởng cho những ai muốn trải nghiệm cuộc sống nông thôn Việt Nam, nằm tại Bình Lộc – Cây Da, xã Xuân Thiện, huyện Thống Nhất, tỉnh Đồng Nai, cách TP. Hồ Chí Minh khoảng 70 km. Homestay này do chị Sue sáng lập, cung cấp không gian nghỉ dưỡng gần gũi với thiên nhiên và hoạt động nông trại thú vị. Du khách có thể tham gia các hoạt động như thăm quan nông trại, tham gia các công việc như thu hoạch rau củ, chăm sóc động vật và tìm hiểu về nông nghiệp hữu cơ. Ngoài ra, homestay còn tổ chức các hoạt động ngoài trời như đạp xe, picnic và thưởng thức các món ăn truyền thống.",
+      en: "Sue's Homestay/Farmstay is an ideal destination for those who want to experience rural life in Vietnam, located in Binh Loc – Cay Da, Xuan Thien Commune, Thong Nhat District, Dong Nai Province, about 70 km from Ho Chi Minh City. Founded by Sue, this homestay offers a retreat close to nature with engaging farm activities. Guests can participate in activities like visiting the farm, harvesting vegetables, taking care of animals, and learning about organic farming. Additionally, the homestay organizes outdoor activities like cycling, picnics, and enjoying traditional local dishes.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1194,8 +1175,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "River Lodge là nơi nghỉ dưỡng nằm cạnh sông Đồng Nai yên bình, thuộc khu vực Nam Cát Tiên, tỉnh Đồng Nai, Việt Nam. Nơi đây cung cấp các nhà lều sạch sẽ và thoải mái, với Wi-Fi miễn phí tại tất cả các khu vực. Du khách có thể thư giãn tại hồ bơi và thưởng thức các bữa ăn ngon tại nhà hàng trong khuôn viên. Vị trí gần Vườn Quốc gia Nam Cát Tiên giúp du khách dễ dàng tham gia các hoạt động như đi bộ đường dài và chiêm ngưỡng thiên nhiên hoang dã.",
+      en: "River Lodge is a riverside retreat located in Nam Cat Tien, Dong Nai Province, Vietnam. It offers clean and comfortable tented accommodations with free Wi-Fi throughout the property. Guests can relax by the pool and enjoy meals at the on-site restaurant. Its proximity to Nam Cat Tien National Park allows visitors to engage in activities like hiking and wildlife observation.",
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1261,8 +1242,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Green Hope Lodge là điểm dừng chân lý tưởng cho những ai yêu thích thiên nhiên, tọa lạc tại Thôn 1, Xã Nam Cát Tiên, Huyện Tân Phú, Tỉnh Đồng Nai. Nơi đây cung cấp các phòng nghỉ gần sông Đồng Nai và vườn, thiết kế theo phong cách cổ điển, với các hoạt động như khám phá rừng mưa nhiệt đới tại Vườn Quốc gia Cát Tiên.",
+      en: "Green Hope Lodge is an ideal retreat for nature enthusiasts, located in Hamlet 1, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province. It offers riverside and garden-view rooms designed in a classic style, with activities such as exploring the tropical rainforest of Cat Tien National Park.",
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1338,8 +1319,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Green Bamboo Lodge Resort là khu nghỉ dưỡng sinh thái tọa lạc tại ấp 4, xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, cách Vườn Quốc gia Cát Tiên khoảng 100 m. Resort cung cấp các phòng nghỉ mộc mạc với tiện nghi như máy lạnh, minibar và phòng tắm riêng. Du khách có thể tham gia các hoạt động như đi bộ đường dài, câu cá và chèo thuyền kayak. Nhà hàng Ca Lang trong khuôn viên phục vụ các món ăn Việt Nam và phương Tây. Vị trí gần Vườn Quốc gia Cát Tiên tạo điều kiện thuận lợi cho việc tham quan và khám phá thiên nhiên.",
+      en: "Green Bamboo Lodge Resort is an eco-friendly retreat located in Hamlet 4, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, just 100 meters from Cat Tien National Park. The resort offers rustic rooms equipped with amenities such as air conditioning, minibars, and private bathrooms. Guests can engage in activities like hiking, fishing, and kayaking. The on-site Ca Lang Restaurant serves both Vietnamese and Western cuisines. Its proximity to Cat Tien National Park makes it an ideal base for nature exploration.",
     },
     typeIds: ["resort"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1415,8 +1396,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Nhà nghỉ Thủy Tiên Eco-Lodge tọa lạc tại Đảo Cát Tiên, thuộc xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai. Nơi đây cung cấp các phòng nghỉ máy lạnh với Wi-Fi miễn phí, khu vườn xanh mát và sân chơi cho trẻ em. Du khách có thể thưởng thức các bữa ăn tại nhà hàng trong khuôn viên, nơi phục vụ các món ăn địa phương và quốc tế. Vị trí gần cổng vào Vườn Quốc gia Cát Tiên thuận tiện cho việc tham quan và khám phá thiên nhiên.",
+      en: "Thuy Tien Eco-Lodge is located on Cat Tien Island in Nam Cat Tien Commune, Tan Phu District, Dong Nai Province. It offers air-conditioned rooms with free Wi-Fi, a lush garden, and a children's playground. Guests can enjoy meals at the on-site restaurant, which serves local and international dishes. Its proximity to the entrance of Cat Tien National Park makes it convenient for nature exploration.",
     },
     typeIds: ["guest_house"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1487,8 +1468,9 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Forest Side Eco Lodge là khu nghỉ dưỡng sinh thái tọa lạc tại Ấp 1, Xã Nam Cát Tiên, Huyện Tân Phú, Tỉnh Đồng Nai, Việt Nam. Nơi đây cung cấp các phòng nghỉ với Wi-Fi miễn phí và khu vườn xanh mát. Du khách có thể tham gia các hoạt động như cho thuê xe đạp và đi bộ đường dài. Vị trí gần Vườn Quốc gia Cát Tiên tạo điều kiện thuận lợi cho việc tham quan và khám phá thiên nhiên.",
+      en: "Forest Side Eco Lodge is an eco-friendly retreat located in Hamlet 1, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, Vietnam. It offers rooms with free Wi-Fi and a lush garden. Guests can enjoy activities such as bicycle rentals and hiking trails. Its proximity to Cat Tien National Park makes it convenient for nature exploration."
+
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1517,7 +1499,7 @@ const places = [
     name: "Cat Tien Farmer Lodge",
     url: "https://maps.google.com/?cid=18431596241475960191",
     website:
-      "https://cat-tien-farmer-lodge.business.site/?utm_source=gmb&utm_medium=referral",
+      "https://cat-tien-farmer-lodge.business.site/",
     isRecommended: false,
     phoneNumber: "097 494 07 45",
     photos: [
@@ -1570,8 +1552,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Cat Tien Farmer Lodge là khu nghỉ dưỡng sinh thái tọa lạc tại xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, cách Vườn Quốc gia Cát Tiên khoảng 5 phút đi bộ. Nơi đây cung cấp các phòng nghỉ với tầm nhìn ra vườn, nhà hàng phục vụ các món ăn địa phương và quốc tế, cùng khu vườn xanh mát và sân hiên phơi nắng. Du khách có thể tham gia các hoạt động như đi bộ đường dài và câu cá.",
+      en: "Cat Tien Farmer Lodge is an eco-friendly retreat located in Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, just a five-minute walk from Cat Tien National Park. It offers rooms with garden views, an on-site restaurant serving local and international cuisine, a lush garden, and a sun terrace. Guests can enjoy activities such as hiking and fishing.",
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1637,8 +1619,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Lava Rock Viet Nam Lodge, hay còn gọi là Anhfly Resort, tọa lạc tại xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, gần bến phà Cát Tiên, thuận tiện cho việc tham quan Vườn Quốc gia Cát Tiên. Homestay cung cấp các phòng nghỉ sạch sẽ với tiện nghi như máy lạnh và Wi-Fi miễn phí. Du khách có thể tham gia các hoạt động như đi bộ đường dài, câu cá và khám phá thiên nhiên. Nhà hàng trong khuôn viên phục vụ các món ăn Việt Nam với giá cả phải chăng. Giá phòng khoảng 200.000 VND/người, bao gồm bữa sáng.",
+      en: "Lava Rock Viet Nam Lodge, also known as Anhfly Resort, is located in Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, near the Cat Tien ferry terminal, providing easy access to Cat Tien National Park. The homestay offers clean rooms equipped with amenities such as air conditioning and free Wi-Fi. Guests can engage in activities like hiking, fishing, and nature exploration. The on-site restaurant serves affordable Vietnamese dishes. Room rates start from approximately 200,000 VND per person, including breakfast.",
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1704,8 +1686,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Nhà hàng Vạn Xuân Riverside cung cấp đa dạng các món ăn từ nhiều nền văn hóa, đáp ứng mọi khẩu vị của thực khách. Với đội ngũ nhân viên chuyên nghiệp và thân thiện, nhà hàng cam kết mang đến dịch vụ chất lượng và trải nghiệm ẩm thực đáng nhớ.",
+      en: "Vạn Xuân Riverside Restaurant offers a variety of dishes from diverse cuisines, catering to all tastes. With a professional and friendly staff, the restaurant is committed to providing quality service and a memorable dining experience.",
     },
     typeIds: ["restaurant"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1781,8 +1763,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Homestay Đất Việt là điểm dừng chân lý tưởng cho những ai yêu thích thiên nhiên và muốn khám phá Vườn Quốc gia Cát Tiên. Với không gian yên tĩnh và thoải mái, nơi đây hứa hẹn mang đến trải nghiệm nghỉ dưỡng đáng nhớ.​",
+      en: "Homestay Đất Việt is an ideal stop for nature enthusiasts and those wishing to explore Cat Tien National Park. With a peaceful and comfortable environment, it promises a memorable retreat experience.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1848,8 +1830,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Rice Straw Green Lodge-Resort tọa lạc tại Ấp 1, xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, gần Vườn Quốc gia Cát Tiên. Nơi đây cung cấp các phòng nghỉ với Wi-Fi miễn phí, khu vườn xanh mát, sân hiên và nhà hàng phục vụ các món ăn địa phương. Du khách có thể tham gia các hoạt động như đi bộ đường dài và câu cá.",
+      en: "Rice Straw Green Lodge-Resort is located in Hamlet 1, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, near Cat Tien National Park. It offers rooms with free Wi-Fi, a lush garden, terrace, and an on-site restaurant serving local cuisine. Guests can engage in activities such as hiking and fishing.",
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1920,8 +1902,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Orchard Home Resort là khu nghỉ dưỡng tọa lạc tại Ấp 5, xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, cách TP. Hồ Chí Minh khoảng 2 giờ lái xe. Nơi đây cung cấp các phòng nghỉ với tiện nghi như máy lạnh, Wi-Fi miễn phí và tầm nhìn ra vườn hoặc núi. Du khách có thể thư giãn tại hồ bơi ngoài trời, tham gia các hoạt động như đi bộ đường dài, câu cá, hoặc trải nghiệm dịch vụ spa. Nhà hàng trong khuôn viên phục vụ đa dạng các món ăn Việt Nam. Khu nghỉ dưỡng cũng có các khu vực tổ chức team building và lửa trại cho hoạt động tập thể.",
+      en: "Orchard Home Resort is located at Hamlet 5, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, approximately a 2-hour drive from Ho Chi Minh City. The resort offers rooms equipped with amenities such as air conditioning, free Wi-Fi, and views of the garden or mountains. Guests can relax at the outdoor pool, engage in activities like hiking and fishing, or enjoy spa services. The on-site restaurant serves a variety of Vietnamese dishes. The resort also features areas for team-building activities and campfires.",
     },
     typeIds: ["resort"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -1987,8 +1969,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Nam Cát Tiên Homestay tọa lạc tại Ấp 1, xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, cách cổng Vườn Quốc gia Cát Tiên khoảng 800m. Homestay cung cấp các phòng nghỉ với tiện nghi như máy lạnh, Wi-Fi miễn phí và khu vườn xanh mát. Du khách có thể tham gia các hoạt động như đi bộ đường dài và câu cá.",
+      en: "Nam Cát Tiên Homestay is located in Hamlet 1, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, approximately 800m from the entrance to Cat Tien National Park. The homestay offers rooms equipped with amenities such as air conditioning, free Wi-Fi, and a lush garden. Guests can engage in activities like hiking and fishing.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2059,8 +2041,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Cát Tiên Riverside cung cấp các phòng nghỉ với tầm nhìn ra núi và sông Đồng Nai. Du khách có thể tham gia các hoạt động như câu cá và chèo xuồng. Khu nghỉ dưỡng cũng có Wi-Fi miễn phí và chỗ đỗ xe riêng miễn phí.",
+      en: "Cat Tien Riverside offers rooms with views of the mountains and Dong Nai River. Guests can engage in activities such as fishing and canoeing. The resort also provides free Wi-Fi and complimentary private parking.",
     },
     typeIds: ["lodging"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2131,8 +2113,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Paradise on the Tree là điểm dừng chân lý tưởng cho những ai yêu thích thiên nhiên và muốn khám phá Vườn Quốc gia Cát Tiên. Với không gian yên tĩnh và thoải mái, homestay hứa hẹn mang đến trải nghiệm nghỉ dưỡng đáng nhớ.",
+      en: "Paradise on the Tree is an ideal stop for nature enthusiasts and those wishing to explore Cat Tien National Park. With a peaceful and comfortable environment, the homestay promises a memorable retreat experience.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2194,75 +2176,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
-    },
-    typeIds: ["homestay"].map((type) => {
-      return placeTypes.find((placeType) => placeType.value === type)._id;
-    }),
-    updatedAt: new Date("01-01-2025").getTime(),
-    createdAt: new Date("01-01-2025").getTime(),
-  },
-  {
-    _id: ObjectId("642d3ce958d06859327a5d23"),
-    geometry: {
-      location: {
-        lat: 11.4192159,
-        lng: 107.4429481,
-      },
-      viewport: {
-        northeast: {
-          lat: 11.4204696802915,
-          lng: 107.4442108802915,
-        },
-        southwest: {
-          lat: 11.4177717197085,
-          lng: 107.4415129197085,
-        },
-      },
-    },
-    name: "Cat Tien Farmstay",
-    url: "https://maps.google.com/?cid=11903071781018059245",
-    website: "http://www.cattienjunglelodge.com/",
-    isRecommended: false,
-    phoneNumber: "0251 3664 888",
-    photos: [
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686309/place_photos/dejdnkqqzevtef9gyg33.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686309/place_photos/njwugkpfv3pweg8kqpu2.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686310/place_photos/fetzc2e7anmg00d6yry1.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686309/place_photos/fvfonpdylaymqqmn268r.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686309/place_photos/xhwcshjvucwfidhs59ac.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686310/place_photos/knmrsaaoxecr9yid9cpw.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686310/place_photos/hjmrrb0nmpjhsw5gmsuk.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686310/place_photos/zsvrwpvg0hafetcfqce8.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686309/place_photos/wnfwqnm1h47x829vonu5.jpg",
-      "http://res.cloudinary.com/dbtb0sjby/image/upload/v1680686309/place_photos/hlxowrswmvrb008z4v7x.jpg",
-    ],
-    placeId: "ChIJU4KCjEh6dDER7cGOO7g0MKU",
-    plusCode: {
-      compoundCode: "CC9V+M5 Tân Phú, Đồng Nai, Việt Nam",
-      globalCode: "7P39CC9V+M5",
-    },
-    addressComponents: [
-      {
-        longName: "Tân Phú",
-        shortName: "Tân Phú",
-        types: ["administrative_area_level_2", "political"],
-      },
-      {
-        longName: "Đồng Nai",
-        shortName: "Đồng Nai",
-        types: ["administrative_area_level_1", "political"],
-      },
-      {
-        longName: "Việt Nam",
-        shortName: "VN",
-        types: ["country", "political"],
-      },
-    ],
-    content: {
-      vi: "",
-      en: "",
+      vi: "Cát Tiên Farmstay tọa lạc tại Ấp 4, xã Nam Cát Tiên, huyện Tân Phú, tỉnh Đồng Nai, cách cổng vào Vườn Quốc gia Cát Tiên khoảng 1 km. Nơi đây cung cấp các phòng nghỉ sạch sẽ với tiện nghi như máy lạnh, Wi-Fi miễn phí và khu vườn xanh mát. Du khách có thể tham gia các hoạt động như chèo thuyền kayak trên sông, đi bộ đường dài và khám phá thiên nhiên. Nhà hàng trong khuôn viên phục vụ các món ăn Việt Nam và quốc tế.",
+      en: "Cat Tien Farmstay is located in Hamlet 4, Nam Cat Tien Commune, Tan Phu District, Dong Nai Province, approximately 1 km from the entrance to Cat Tien National Park. It offers clean rooms equipped with amenities such as air conditioning, free Wi-Fi, and a lush garden. Guests can engage in activities like kayaking on the river, hiking, and nature exploration. The on-site restaurant serves Vietnamese and international dishes.",
     },
     typeIds: ["homestay"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2424,8 +2339,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu du lịch sinh thái Bò Cạp Vàng tọa lạc tại ấp 3, xã Phước Khánh, huyện Nhơn Trạch, tỉnh Đồng Nai, cách trung tâm TP. Hồ Chí Minh khoảng 30 km về phía Đông Nam. Nơi đây cung cấp nhiều hoạt động giải trí như trò chơi dưới nước, trò chơi trên cạn và dịch vụ cắm trại. Du khách có thể tham gia các hoạt động team building, thưởng thức ẩm thực địa phương và tham gia các sự kiện ngoài trời.",
+      en: "Bo Cap Vang Ecotourism Area is located at Hamlet 3, Phuoc Khanh Commune, Nhon Trach District, Dong Nai Province, about 30 km southeast of downtown Ho Chi Minh City. It offers various recreational activities such as water games, land games, and camping services. Visitors can participate in team-building activities, enjoy local cuisine, and join outdoor events.",
     },
     typeIds: ["ecotourism", "campground"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2506,8 +2421,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu du lịch Đảo Ó là điểm đến sinh thái nổi tiếng tại tỉnh Đồng Nai, cách TP. Hồ Chí Minh khoảng 80 km. Nơi đây cung cấp các hoạt động giải trí như câu cá, chèo thuyền, tắm hồ và tham quan cảnh quan thiên nhiên xung quanh. Khu du lịch cũng có các dịch vụ lưu trú như nhà nghỉ và lều trại, cùng với nhà hàng phục vụ các món ăn đặc sản miền Nam.",
+      en: "Dao O Ecotourism Area is a famous destination located in Dong Nai Province, about 80 km from Ho Chi Minh City. It offers recreational activities such as fishing, canoeing, swimming in the lake, and exploring the surrounding natural scenery. The resort also provides accommodation options like guesthouses and camping tents, along with an on-site restaurant serving Southern specialties.", 
     },
     typeIds: ["tourist_area"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2593,8 +2508,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Làng Du Lịch Sinh Thái Tre Việt tọa lạc tại số 25 Phan Văn Đáng, ấp Phước Lương, xã Phú Hữu, huyện Nhơn Trạch, tỉnh Đồng Nai, cách trung tâm TP. Hồ Chí Minh khoảng 15 km. Với diện tích gần 5 ha, khu du lịch mang đậm dấu ấn văn hóa Nam Bộ với kiến trúc chủ yếu từ tre, tạo không gian gần gũi và mộc mạc. Tại đây, du khách có thể tham gia nhiều hoạt động giải trí như hồ bơi, khu vui chơi nước, các trò chơi trên sông và nhiều hoạt động team building thú vị. Nhà hàng trong khuôn viên phục vụ đa dạng các món ăn đồng quê và hải sản tươi ngon. Giá vé tham quan dao động từ 80.000đ đến 300.000đ tùy theo gói dịch vụ.",
+      en: "Tre Viet Ecotourism Village is located at 25 Phan Van Dang, Phuoc Luong Hamlet, Phu Huu Commune, Nhon Trach District, Dong Nai Province, about 15 km from downtown Ho Chi Minh City. Covering nearly 5 hectares, the site showcases Southern Vietnamese culture with bamboo architecture, providing a close and rustic atmosphere. Visitors can engage in various recreational activities such as swimming pools, water play areas, river games, and exciting team-building activities. The on-site restaurant offers a variety of local and seafood dishes. Entrance fees range from 80,000 VND to 300,000 VND, depending on the service package.",
     },
     typeIds: ["ecotourism", "campground"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2660,8 +2575,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Thác Đá Hàn là khu du lịch sinh thái tọa lạc tại thị trấn Trảng Bom, huyện Trảng Bom, tỉnh Đồng Nai, cách TP. Hồ Chí Minh khoảng 70 km về phía Đông. Nơi đây nổi tiếng với ba dòng thác chính: Thác Chàng, Thác Nàng và Thác Đá Hàn, tạo nên khung cảnh thiên nhiên hùng vĩ và thơ mộng. Du khách có thể tham gia các hoạt động như tắm thác, cắm trại, câu cá và tổ chức picnic. Giá vé vào cổng dao động từ 15.000 VND đến 25.000 VND tùy theo ngày trong tuần và dịp lễ. Thời điểm lý tưởng để tham quan là từ tháng 11 đến tháng 4 năm sau, khi thời tiết khô ráo và mát mẻ.",
+      en: "Da Han Waterfall is an ecotourism site located in Trang Bom Town, Trang Bom District, Dong Nai Province, approximately 70 km east of Ho Chi Minh City. The site is renowned for its three main waterfalls: Thac Chang, Thac Nang, and Da Han, offering a majestic and poetic natural landscape. Visitors can engage in activities such as bathing in the waterfalls, camping, fishing, and organizing picnics. Entrance fees range from 15,000 VND to 25,000 VND, depending on the day of the week and public holidays. The ideal time to visit is from November to April, when the weather is dry and cool. ",
     },
     typeIds: ["scenic_spots", "campground"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2809,8 +2724,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu Du lịch sinh thái Thác Ba Giọt nằm ở xã Phú Hòa, huyện Định Quán, tỉnh Đồng Nai, cách thành phố Hồ Chí Minh khoảng 140 km. Nơi đây nổi tiếng với vẻ đẹp hoang sơ của thiên nhiên, với ba dòng thác đổ xuống tạo thành một cảnh quan tuyệt đẹp. Thác Ba Giọt không chỉ là một điểm đến lý tưởng cho những ai yêu thích khám phá thiên nhiên mà còn là nơi lý tưởng để thư giãn và trải nghiệm các hoạt động ngoài trời như cắm trại, câu cá và đi bộ đường dài. Khu vực này còn có nhiều dịch vụ du lịch như nhà hàng, khu nghỉ dưỡng và các hoạt động giải trí khác.",
+      en: "The Ba Giot Eco-Tourism Area is located in Phu Hoa commune, Dinh Quan district, Dong Nai province, about 140 km from Ho Chi Minh City. This place is famous for its pristine natural beauty, featuring three waterfalls that cascade down, creating a stunning landscape. Ba Giot Waterfall is not only an ideal destination for nature lovers but also a perfect spot for relaxation and outdoor activities such as camping, fishing, and hiking. The area also offers various tourism services including restaurants, resorts, and other recreational activities.",
     },
     typeIds: ["scenic_spots", "ecotourism", "campground"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -2881,8 +2796,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu Du lịch Thác Mai nằm ở xã Gia Canh, huyện Định Quán, tỉnh Đồng Nai, cách thành phố Hồ Chí Minh khoảng 130 km. Đây là một trong những điểm đến nổi tiếng với vẻ đẹp hoang sơ của thiên nhiên, với thác nước trong veo và cảnh quan xanh mát. Thác Mai không chỉ là nơi lý tưởng cho những ai yêu thích khám phá thiên nhiên mà còn là điểm đến lý tưởng cho các hoạt động như cắm trại, trekking và thưởng thức ẩm thực địa phương. Khu vực này còn có nhiều dịch vụ du lịch như nhà hàng, khu nghỉ dưỡng và các hoạt động giải trí khác.",
+      en: "Thac Mai Eco-Tourism Area is located in Gia Canh commune, Dinh Quan district, Dong Nai province, about 130 km from Ho Chi Minh City. It is one of the famous destinations with pristine natural beauty, featuring clear waterfalls and lush greenery. Thac Mai is not only an ideal place for nature lovers but also a perfect spot for activities such as camping, trekking, and enjoying local cuisine. The area also offers various tourism services including restaurants, resorts, and other recreational activities.",
     },
     typeIds: ["scenic_spots", "tourist_area", "campground"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3014,8 +2929,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Bàu Nước Sôi là một điểm đến hấp dẫn nằm trong Khu du lịch Thác Mai, nổi tiếng với hồ nước khoáng nóng tự nhiên có nhiệt độ khoảng 36 độ C. Du khách đến đây có thể thư giãn bằng cách ngâm chân hoặc tắm trong làn nước ấm, tận hưởng những lợi ích sức khỏe mà suối khoáng nóng mang lại, như làm mịn da, giảm các bệnh về thần kinh, phong thấp và đổ mồ hôi tay. Đáy bàu có lớp cát màu xám mịn, tạo cảm giác massage chân dễ chịu.",
+      en: "Bau Nuoc Soi is an attractive destination located within the Thac Mai Tourist Area, famous for its natural hot spring lake with a temperature of about 36 degrees Celsius. Visitors can relax by soaking their feet or bathing in the warm water, enjoying the health benefits that the hot spring offers, such as smoothing the skin and reducing neurological, rheumatic, and excessive sweating conditions. The bottom of the lake has a layer of fine gray sand, creating a comfortable foot massage sensation.",
     },
     typeIds: ["scenic_spots", "campground"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3086,8 +3001,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Vườn Quốc gia Cát Tiên là một khu bảo tồn thiên nhiên rộng lớn, trải dài trên địa phận ba tỉnh Đồng Nai, Lâm Đồng và Bình Phước. Nơi đây nổi tiếng với hệ sinh thái đa dạng, phong phú, bao gồm rừng nguyên sinh, đất ngập nước và nhiều loài động, thực vật quý hiếm. Vườn Quốc gia Cát Tiên là điểm đến lý tưởng cho những ai yêu thích khám phá thiên nhiên, đi bộ đường dài, cắm trại và tìm hiểu về đa dạng sinh học. Nơi đây cũng có giá trị lịch sử và văn hóa, với các di tích khảo cổ học và là nơi sinh sống của nhiều dân tộc thiểu số.",
+      en: "Cat Tien National Park is a vast nature reserve spanning three provinces: Dong Nai, Lam Dong, and Binh Phuoc. It is renowned for its diverse and rich ecosystem, including primary forests, wetlands, and numerous rare species of flora and fauna. Cat Tien National Park is an ideal destination for those who love exploring nature, hiking, camping, and learning about biodiversity. It also holds historical and cultural significance, with archaeological sites and as a home to various ethnic minority groups.",
     },
     typeIds: ["scenic_spots", "ecotourism"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3158,8 +3073,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu Bảo tồn Thiên nhiên - Văn hóa Đồng Nai là một khu vực rộng lớn với diện tích hơn 100.000 ha, có vai trò quan trọng trong việc bảo tồn đa dạng sinh học và các giá trị văn hóa lịch sử của tỉnh Đồng Nai. Nơi đây có hệ sinh thái rừng phong phú, hồ Trị An rộng lớn và là nơi sinh sống của nhiều loài động thực vật quý hiếm. Khu bảo tồn này không chỉ là điểm đến hấp dẫn cho du khách yêu thiên nhiên mà còn là địa điểm nghiên cứu khoa học quan trọng.",
+      en: "The Dong Nai Natural and Cultural Reserve is a vast area spanning over 100,000 hectares, playing a crucial role in preserving the biodiversity and historical cultural values of Dong Nai province. It features a rich forest ecosystem, the expansive Tri An Lake, and is home to many rare species of flora and fauna. This reserve is not only an attractive destination for nature-loving tourists but also an important scientific research site.",
     },
     typeIds: ["park"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3224,8 +3139,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu du lịch Bửu Long, còn được mệnh danh là 'Vịnh Hạ Long thu nhỏ' của miền Nam, là một điểm đến hấp dẫn tại Biên Hòa, Đồng Nai. Nơi đây có diện tích rộng lớn với hồ nước Long Ẩn thơ mộng, những ngọn núi đá vôi kỳ vĩ và nhiều công trình kiến trúc độc đáo. Du khách có thể tham gia các hoạt động vui chơi giải trí, tham quan các di tích lịch sử và tâm linh, cũng như thưởng thức ẩm thực địa phương.",
+      en: "Buu Long Tourist Area, also known as the 'Miniature Ha Long Bay' of the South, is an attractive destination in Bien Hoa, Dong Nai. It boasts a vast area with the poetic Long An Lake, majestic limestone mountains, and many unique architectural structures. Visitors can participate in recreational activities, visit historical and spiritual sites, as well as enjoy local cuisine.",
     },
     typeIds: ["tourist_area"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3301,8 +3216,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Đá Ba Chồng là một quần thể di tích thắng cảnh độc đáo tại Định Quán, Đồng Nai, nổi bật với ba hòn đá lớn chồng lên nhau một cách chênh vênh. Khu vực này không chỉ thu hút du khách bởi cảnh quan thiên nhiên kỳ lạ mà còn bởi giá trị lịch sử và văn hóa liên quan đến nền văn hóa Óc Eo cổ xưa. Du khách có thể chiêm ngưỡng vẻ đẹp của Đá Ba Chồng, khám phá các điểm tham quan lân cận như núi Đá Voi và hang Bạch Hổ, cũng như tìm hiểu về lịch sử và văn hóa của vùng đất này.",
+      en: "Da Ba Chong is a unique scenic relic in Dinh Quan, Dong Nai, nổi bật with three large stones stacked on top of each other precariously. This area not only attracts tourists with its strange natural landscape but also with its historical and cultural values related to the ancient Oc Eo culture. Visitors can admire the beauty of Da Ba Chong, explore nearby attractions such as Da Voi Mountain and Bach Ho Cave, as well as learn about the history and culture of this land.",
     },
     typeIds: ["scenic_spots"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3370,8 +3285,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Văn miếu Trấn Biên là một di tích lịch sử văn hóa quan trọng tại Biên Hòa, Đồng Nai, được xây dựng để tôn vinh Khổng Tử và các danh nhân văn hóa Việt Nam. Nơi đây không chỉ là một công trình kiến trúc cổ kính mà còn là trung tâm giáo dục, nơi lưu giữ và phát huy những giá trị văn hóa truyền thống của dân tộc. Du khách đến đây có thể tìm hiểu về lịch sử, kiến trúc và văn hóa Việt Nam, cũng như tham gia các hoạt động lễ hội truyền thống.",
+      en: "Tran Bien Temple of Literature is an important historical and cultural site in Bien Hoa, Dong Nai, built to honor Confucius and Vietnamese cultural figures. It is not only an ancient architectural work but also an educational center, preserving and promoting the traditional cultural values of the nation. Visitors can learn about Vietnamese history, architecture, and culture, as well as participate in traditional festival activities.",
     },
     typeIds: ["place_of_worship"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3442,8 +3357,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Núi Chứa Chan, còn gọi là núi Gia Lào hay Gia Ray, là ngọn núi cao thứ hai ở Đông Nam Bộ, thuộc huyện Xuân Lộc, Đồng Nai. Đây là điểm đến lý tưởng cho những ai thích leo núi, trekking và khám phá thiên nhiên hoang sơ. Trên núi có chùa Gia Lào linh thiêng, nơi du khách có thể chiêm bái và cầu nguyện. Từ đỉnh núi, du khách có thể ngắm nhìn toàn cảnh vùng đất Đồng Nai.",
+      en: "Nui Chua Chan, also known as Gia Lao or Gia Ray Mountain, is the second highest mountain in the Southeast region of Vietnam, located in Xuan Loc district, Dong Nai province. It is an ideal destination for those who enjoy climbing, trekking, and exploring pristine nature. On the mountain is the sacred Gia Lao Pagoda, where visitors can worship and pray. From the summit, visitors can admire the panoramic view of Dong Nai province.",
     },
     typeIds: ["scenic_spots"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3519,8 +3434,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Thác Giang Điền là một khu du lịch sinh thái nằm ở Trảng Bom, Đồng Nai, nổi tiếng với thác nước tự nhiên, hồ bơi và không gian xanh mát. Du khách có thể tận hưởng các hoạt động như tắm thác, bơi lội, cắm trại, vui chơi giải trí và thưởng thức ẩm thực địa phương. Thác Giang Điền là điểm đến lý tưởng cho những ai muốn thư giãn và hòa mình vào thiên nhiên.",
+      en: "Giang Dien Waterfall is an eco-tourism area located in Trang Bom, Dong Nai, famous for its natural waterfall, swimming pool, and green space. Visitors can enjoy activities such as bathing in the waterfall, swimming, camping, recreation, and enjoying local cuisine. Giang Dien Waterfall is an ideal destination for those who want to relax and immerse themselves in nature.",
     },
     typeIds: ["scenic_spots", "ecotourism"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3596,8 +3511,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Làng bưởi Năm Huệ Tân Triều là một điểm du lịch sinh thái nổi tiếng ở Đồng Nai, nơi du khách có thể tham quan những vườn bưởi trĩu quả, thưởng thức các món đặc sản từ bưởi như gỏi bưởi, chè bưởi, rượu bưởi và mua bưởi tươi ngon về làm quà. Làng bưởi này có lịch sử lâu đời và nổi tiếng với giống bưởi Tân Triều ngọt thanh, mọng nước.",
+      en: "Nam Hue Tan Trieu Grapefruit Village is a famous eco-tourism destination in Dong Nai, where visitors can visit orchards laden with grapefruit, enjoy grapefruit specialties such as grapefruit salad, grapefruit sweet soup, grapefruit wine, and buy fresh grapefruit as gifts. This grapefruit village has a long history and is famous for its sweet and juicy Tan Trieu grapefruit variety.",
     },
     typeIds: ["restaurant"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3821,8 +3736,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Công viên Biên Hùng là một công viên nằm ở trung tâm thành phố Biên Hòa, Đồng Nai. Đây là một không gian xanh mát, yên bình, nơi người dân địa phương thường đến để thư giãn, tập thể dục và vui chơi giải trí. Công viên có hồ nước, cây xanh và nhiều tiện ích công cộng khác.",
+      en: "Bien Hung Park is a park located in the center of Bien Hoa city, Dong Nai province. It is a green and peaceful space where local people often come to relax, exercise, and have fun. The park has a lake, trees, and many other public amenities.",
     },
     typeIds: ["park"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -3975,8 +3890,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Siêu Công viên nước The Amazing Bay - Vịnh Kỳ Diệu là một công viên nước lớn nhất Việt Nam, tọa lạc tại Biên Hòa, Đồng Nai. Công viên có nhiều khu vực vui chơi, hồ bơi, đường trượt nước và các hoạt động giải trí dưới nước phù hợp cho mọi lứa tuổi. Nơi đây hứa hẹn mang đến những trải nghiệm sảng khoái và đáng nhớ cho du khách.",
+      en: "The Amazing Bay Water Park is the largest water park in Vietnam, located in Bien Hoa, Dong Nai. The park has many play areas, swimming pools, water slides, and water entertainment activities suitable for all ages. It promises to bring refreshing and memorable experiences to visitors.",
     },
     typeIds: ["amusement_park"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -4668,8 +4583,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Du lịch vườn Chú Lộc La là một điểm đến hấp dẫn ở Long Khánh, Đồng Nai, nơi du khách có thể tham quan những vườn trái cây trĩu quả và thưởng thức các loại trái cây tươi ngon như chôm chôm, mít, ổi, sầu riêng, măng cụt, bưởi. Du khách còn có cơ hội trải nghiệm đi xe ba gác hoặc máy xới để tham quan vườn.",
+      en: "Chu Loc La Garden Tourism is an attractive destination in Long Khanh, Dong Nai, where visitors can visit orchards laden with fruit and enjoy fresh fruits such as rambutan, jackfruit, guava, durian, mangosteen, and grapefruit. Visitors also have the opportunity to experience a ride on a three-wheeled vehicle or a tiller to visit the garden.",
     },
     typeIds: ["tourist_area", "ecotourism"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;
@@ -4868,8 +4783,8 @@ const places = [
       },
     ],
     content: {
-      vi: "",
-      en: "",
+      vi: "Khu du lịch Suối Mơ là một điểm đến sinh thái hấp dẫn tại Đồng Nai, với hồ nước tự nhiên trong xanh, thác nước, bãi cát trắng và các hoạt động vui chơi giải trí như chèo thuyền, tắm suối, nhà phao liên hoàn. Nơi đây là lựa chọn lý tưởng để thư giãn, tận hưởng không khí trong lành và tham gia các hoạt động ngoài trời.",
+      en: "Suoi Mo Tourist Area is an attractive ecological destination in Dong Nai, with a clear natural lake, waterfalls, white sand beaches, and recreational activities such as boating, swimming, and an inflatable water park. This is an ideal choice for relaxing, enjoying the fresh air, and participating in outdoor activities.",
     },
     typeIds: ["ecotourism", "park"].map((type) => {
       return placeTypes.find((placeType) => placeType.value === type)._id;

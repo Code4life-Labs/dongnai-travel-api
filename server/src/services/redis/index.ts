@@ -3,9 +3,7 @@ import Queue from "bull";
 
 // Import utils
 import { ErrorUtils } from "src/utils/error";
-
-// Import AppConfig
-import AppConfig from "src/app.config.json";
+import { ConfigUtils } from "src/utils/config";
 
 export class RedisService {
   private _host!: string;
@@ -14,10 +12,12 @@ export class RedisService {
   private _password!: string;
 
   constructor() {
-    this._host = AppConfig.apis.redis.settings.host;
-    this._port = AppConfig.apis.redis.settings.port;
-    this._username = AppConfig.apis.redis.settings.username;
-    this._password = AppConfig.apis.redis.settings.password;
+    const redisConfig = ConfigUtils.getApiConfig("redis");
+    
+    this._host = redisConfig.settings.host;
+    this._port = redisConfig.settings.port;
+    this._username = redisConfig.settings.username;
+    this._password = redisConfig.settings.password;
   }
 
   /**

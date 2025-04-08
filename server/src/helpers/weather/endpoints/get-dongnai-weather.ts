@@ -5,6 +5,7 @@ import AppConfig from "src/app.config.json";
 import type { Request, Response } from "express";
 import type { HTTPResponseDataType } from "src/utils/http";
 import type { DongNaiTravelModelsType } from "src/databases/dongnaitravel";
+import { WeatherResponse, ForecastItem, WeatherForecast } from "src/types/weather";
 
 const DONGNAI_LAT = 10.9377;
 const DONGNAI_LON = 106.823;
@@ -41,7 +42,7 @@ export default async function getDongNaiWeather(
     });
 
     // Tạo một đối tượng mới để tránh circular references
-    const weatherData = {
+    const weatherData: WeatherForecast = {
       city: {
         id: response.data.city.id,
         name: response.data.city.name,
@@ -52,7 +53,7 @@ export default async function getDongNaiWeather(
         country: response.data.city.country,
         timezone: response.data.city.timezone,
       },
-      list: response.data.list.map((item: any) => ({
+      list: response.data.list.map((item: any): ForecastItem => ({
         dt: item.dt,
         main: {
           temp: item.main.temp,

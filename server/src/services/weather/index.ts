@@ -2,9 +2,16 @@ import axios from "axios";
 
 // Import utils
 import { ErrorUtils } from "src/utils/error";
+import { ConfigUtils } from "src/utils/config";
 
-// Import AppConfig
-import AppConfig from "src/app.config.json";
+// Import types
+import { Coordinates, WeatherForecast } from "src/types/weather";
+import { InterchangeDateType } from "src/utils/http";
+
+interface GeoCodingResponse {
+  name: string;
+  coor?: Coordinates;
+}
 
 export class WeatherService {
   units!: string;
@@ -15,19 +22,22 @@ export class WeatherService {
   private _defaultLanguage!: string;
 
   constructor() {
-    this.units = AppConfig.apis.openWeather.settings.units;
-    this.cnt = AppConfig.apis.openWeather.settings.cnt;
+    const weatherConfig = ConfigUtils.getApiConfig("openWeather");
+    
+    this.units = weatherConfig.settings.units;
+    this.cnt = weatherConfig.settings.cnt;
 
-    this._baseUrl = AppConfig.apis.openWeather.baseURL;
-    this._apiKey = AppConfig.apis.openWeather.apiKey;
-    this._defaultLanguage = AppConfig.apis.openWeather.settings.language;
+    this._baseUrl = weatherConfig.baseURL;
+    this._apiKey = weatherConfig.apiKey;
+    this._defaultLanguage = weatherConfig.settings.language;
   }
 
   /**
    * Use to get current weather
-   * @param coor
+   * @param coor Latitude and longitude coordinates
+   * @returns Current weather data
    */
-  async requestCurrentWeather(coor: any) {
+  async requestCurrentWeather(coor: Coordinates) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         lat: coor.latitude,
@@ -47,10 +57,10 @@ export class WeatherService {
 
   /**
    * Use to forecast weather
-   * @param coor
-   * @returns
+   * @param coor Latitude and longitude coordinates
+   * @returns Weather forecast data
    */
-  async forecastWeather(coor: any) {
+  async forecastWeather(coor: Coordinates) {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         lat: coor.latitude,
@@ -61,7 +71,7 @@ export class WeatherService {
         appid: this._apiKey,
       };
 
-      const response = await axios.get(`${this._baseUrl}/data/2.5/forecast`, {
+      const response = await axios.get<WeatherForecast>(`${this._baseUrl}/data/2.5/forecast`, {
         params,
       });
 
@@ -71,8 +81,8 @@ export class WeatherService {
 
   /**
    * Use to forecast weather by address
-   * @param address
-   * @returns
+   * @param address Location address string
+   * @returns Weather forecast data
    */
   async forecastWeatherByAddress(address: string) {
     return ErrorUtils.handleInterchangeError(this, async function () {
@@ -84,7 +94,7 @@ export class WeatherService {
         appid: this._apiKey,
       };
 
-      const response = await axios.get(`${this._baseUrl}/data/2.5/forecast`, {
+      const response = await axios.get<WeatherForecast>(`${this._baseUrl}/data/2.5/forecast`, {
         params,
       });
 
@@ -92,7 +102,12 @@ export class WeatherService {
     });
   }
 
-  async requestGeoCodingDirect(address: string) {
+  /**
+   * Get coordinates from location address
+   * @param address Location address string
+   * @returns Location name and coordinates
+   */
+  async requestGeoCodingDirect(address: string): Promise<InterchangeDateType<GeoCodingResponse>> {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         q: address,
@@ -104,6 +119,10 @@ export class WeatherService {
         params,
       });
 
+      if (!response.data || !response.data[0]) {
+        return { name: address };
+      }
+
       return {
         name: response.data[0].name,
         coor: {
@@ -114,7 +133,12 @@ export class WeatherService {
     });
   }
 
-  async requestGeoCodingReverse(coor: any) {
+  /**
+   * Get location name from coordinates
+   * @param coor Latitude and longitude coordinates
+   * @returns Location name
+   */
+  async requestGeoCodingReverse(coor: Coordinates): Promise<InterchangeDateType<GeoCodingResponse>> {
     return ErrorUtils.handleInterchangeError(this, async function () {
       const params = {
         lat: coor.latitude,
@@ -126,6 +150,10 @@ export class WeatherService {
       const response = await axios.get(`${this._baseUrl}/geo/1.0/reverse`, {
         params,
       });
+
+      if (!response.data || !response.data[0]) {
+        return { name: `${coor.latitude},${coor.longitude}` };
+      }
 
       return {
         name: response.data[0].name,

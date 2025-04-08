@@ -15,13 +15,12 @@ import { RootUploadDirPath } from "src/services/upload-file/middlewares";
 // Import utils
 import { ErrorUtils } from "src/utils/error";
 import { StringUtils } from "src/utils/string";
+import { ConfigUtils } from "src/utils/config";
 
 // Import settings
 import { getAWSSettings } from "../settings";
 
-// Import app configurations
-import AppConfig from "src/app.config.json";
-
+// Type definitions
 type ListFilesOptions = {
   prefixParts: Array<string>;
   pageSize: number;
@@ -54,23 +53,24 @@ class AWSS3Service {
 
   constructor() {
     const settings = getAWSSettings();
+    const awsConfig = ConfigUtils.getConfig().cloud.aws;
 
-    if (!AppConfig.cloud.aws.s3.buckets.main) {
+    if (!awsConfig.s3.buckets.main) {
       console.warn(
         "Main bucket settings are missing, you cannot use AWS SDK properly." +
           "Please add your AWS Configuration first"
       );
     }
 
-    if (!AppConfig.cloud.aws.s3.buckets.main.name) {
+    if (!awsConfig.s3.buckets.main.name) {
       console.warn("Name of main bucket is missing");
     }
 
-    if (!AppConfig.cloud.aws.s3.buckets.main.region) {
+    if (!awsConfig.s3.buckets.main.region) {
       console.warn("Region of main bucket is missing");
     }
 
-    this._rootBucket = AppConfig.cloud.aws.s3.buckets.main.name;
+    this._rootBucket = awsConfig.s3.buckets.main.name;
     this._rootUploadsFolder = RootUploadDirPath;
 
     const credentials = settings.AccessKey
@@ -81,7 +81,7 @@ class AWSS3Service {
       : undefined;
 
     this._client = new S3Client({
-      region: AppConfig.cloud.aws.s3.buckets.main.region,
+      region: awsConfig.s3.buckets.main.region,
       credentials,
     });
   }
@@ -96,7 +96,7 @@ class AWSS3Service {
   static getPublicUrl(
     bucket: string,
     key: string,
-    region: string = AppConfig.cloud.aws.s3.buckets.main.region
+    region: string = ConfigUtils.getConfig().cloud.aws.s3.buckets.main.region
   ) {
     return `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
   }

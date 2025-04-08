@@ -82,7 +82,7 @@
       }
     },
     "openAI": {
-      "apiKey": "",
+      "apiKey": "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",
       "baseURL": "https://maps.googleapis.com/maps/api",
       "settings": {}
     },
